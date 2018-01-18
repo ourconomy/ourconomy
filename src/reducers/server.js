@@ -3,7 +3,8 @@ import T from "../constants/ActionTypes";
 const initialState = {
   version: null,
   entries: {},
-  ratings: {}
+  ratings: {},
+  products: {}
 };
 
 module.exports = (state=initialState, action={}) => {
@@ -61,12 +62,44 @@ module.exports = (state=initialState, action={}) => {
       }
       return state;
 
+    case T.PRODUCTS_RESULT:
+      if(action.error) {
+        console.error("Error in server reducer: ", action);
+        return state;
+      }
+      if (payload != null) {
+        if (Array.isArray(payload)) {
+          payload.filter(e => e != null)
+           .forEach(e => { o[e.id] = e; });
+        } else {
+          o[payload.id] = payload;
+        }
+        return {
+          ...state,
+          products: {
+            ...state.products,
+            ...o
+          }
+        };
+      }
+      return state;
+
     case T.NEW_ENTRY_RESULT:
       o[payload.id] = payload;
       return {
         ...state,
         entries: {
           ...state.entries,
+          ...o
+        }
+      }
+      
+    case T.NEW_PRODUCT_RESULT:
+      o[payload.id] = payload;
+      return {
+        ...state,
+        products: {
+          ...state.products,
           ...o
         }
       }

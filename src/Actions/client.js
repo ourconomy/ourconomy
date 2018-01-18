@@ -29,11 +29,15 @@ const Actions = {
   toggleMenu          : () => ({ type: T.TOGGLE_MENU            }),
   showMenu            : () => ({ type: T.SHOW_MENU              }),
   showNewEntry        : () => ({ type: T.SHOW_NEW_ENTRY         }),
+  showNewProduct      : () => ({ type: T.SHOW_NEW_PRODUCT       }),
   showSearchResults   : () => ({ type: T.SHOW_SEARCH_RESULTS    }),
+  showProductSearchResults : () => ({ type: T.SHOW_PRODUCT_SEARCH_RESULTS }), 
   toggleLandingPage   : () => ({ type: T.TOGGLE_MENU            }),
   showImprint         : () => ({ type: T.SHOW_IMPRINT           }),
   cancelNew           : () => ({ type: T.CANCEL_NEW             }),
+  cancelNewProduct    : () => ({ type: T.CANCEL_NEW_PRODUCT     }),
   cancelEdit          : () => ({ type: T.CANCEL_EDIT            }),
+  cancelEditProduct   : () => ({ type: T.CANCEL_EDIT_PRODUCT    }),
   cancelRating        : () => ({ type: T.CANCEL_RATING          }),
   cancelWait          : () => ({ type: T.CANCEL_WAIT_IO         }),
   closeIoErrorMessage : () => ({ type: T.CLOSE_IO_ERROR_MESSAGE }),
@@ -105,6 +109,19 @@ const Actions = {
         dispatch(Actions.setZoom(mapConst.ENTRY_DEFAULT_ZOOM));
         dispatch(Actions.setCenter(center));
       }
+    },
+
+  setCurrentProduct: (id) =>
+    (dispatch, getState) => {
+      //our: dispatch(Actions.highlight(id ? [id] : []));
+      dispatch({
+        type: T.SET_CURRENT_PRODUCT,
+        payload: id,
+      });
+   //our:  if(id && center){
+   //    dispatch(Actions.setZoom(mapConst.ENTRY_DEFAULT_ZOOM));
+   //    dispatch(Actions.setCenter(center));
+   //  }
     },
 
   updateStateFromURL: (hash) => {

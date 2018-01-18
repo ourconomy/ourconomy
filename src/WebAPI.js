@@ -136,6 +136,22 @@ module.exports = {
     }
   },
 
+  getProducts: (ids = [], cb) => {
+
+    if (!Array.isArray(ids)) {
+      ids = [ids];
+    }
+
+    if (ids.length < 1) {
+      cb(new Error("no IDs were passed"));
+    } else {
+      request
+        .get('/effects/' + ids.join(','))
+        .use(prefix).set('Accept', 'application/json')
+        .end(jsonCallback(cb));
+    }
+  },
+
   saveNewEntry: (e, cb) => {
     request
       .post('/entries/')
@@ -172,6 +188,36 @@ module.exports = {
       .use(prefix)
       .set('Accept', 'application/json')
       .send(r)
+      .end((err, res) => {
+        if (err) {
+          cb(err);
+        } else {
+          cb(null, res.text);
+        }
+      });
+  },
+
+  saveNewProduct: (p, cb) => {
+    request
+      .post('/effects/')
+      .use(prefix)
+      .set('Accept', 'application/json')
+      .send(p)
+      .end((err, res) => {
+        if (err) {
+          cb(err);
+        } else {
+          cb(null, res.text.replace(/\"/g,""));
+        }
+      });
+  },
+
+  saveProduct: (p, cb) => {
+    request
+      .put('/effects/' + p.id)
+      .use(prefix)
+      .set('Accept', 'application/json')
+      .send(p)
       .end((err, res) => {
         if (err) {
           cb(err);

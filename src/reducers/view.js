@@ -97,6 +97,12 @@ module.exports = (state=initialState, action={}) => {
         menu: false,
         left: V.NEW
       }
+    case T.SHOW_NEW_PRODUCT:
+      return {
+        ...state,
+        menu: false,
+        left: V.NEW_PRODUCT
+      }
     case T.SHOW_NEW_RATING:
       return {
         ...state,
@@ -111,6 +117,19 @@ module.exports = (state=initialState, action={}) => {
           ...state,
           menu: false,
           left: V.EDIT
+        }
+      }
+      return {
+        ...state,
+        left: V.IO_ERROR
+      }
+
+    case T.EDIT_CURRENT_PRODUCT:
+      if (!action.error) {
+        return {
+          ...state,
+          menu: false,
+          left: V.EDIT_PRODUCT
         }
       }
       return {
@@ -136,19 +155,36 @@ module.exports = (state=initialState, action={}) => {
         left: null
       }
 
+    case T.CANCEL_NEW_PRODUCT:
+      return {
+        ...state,
+        left: V.RESULT_PRODUCT
+      }
     case T.CANCEL_RATING:
     case T.CANCEL_EDIT:
       return {
         ...state,
         left: V.ENTRY
       }
+    case T.CANCEL_EDIT_PRODUCT:
+      return {
+        ...state,
+        left: V.PRODUCT
+      }
     case T.NEW_ENTRY_RESULT:
-
       if (!action.error) {
         return {
           ...state,
           left: V.ENTRY
         }
+      }
+      return state;
+
+    case T.NEW_PRODUCT_RESULT: 
+      if (!action.error) {
+        return {
+          ...state,
+          left: V.PRODUCT }
       }
       return state;
 
@@ -168,6 +204,7 @@ module.exports = (state=initialState, action={}) => {
 
     case T.ENTRIES_RESULT:
     case T.NO_SEARCH_RESULTS:
+    case T.NO_PRODUCT_SEARCH_RESULT:
       return {
         ...state,
         waiting_for_search_results: false
@@ -177,6 +214,13 @@ module.exports = (state=initialState, action={}) => {
       return {
         ...state,
         left: action.payload != null ? V.ENTRY : V.RESULT,
+        menu: false
+      }
+
+    case T.SET_CURRENT_PRODUCT:
+      return {
+        ...state,
+        left: action.payload != null ? V.PRODUCT : V.RESULT_PRODUCT,
         menu: false
       }
 
@@ -202,6 +246,13 @@ module.exports = (state=initialState, action={}) => {
       return {
         ...state,
         left: V.RESULT,
+        waiting_for_search_results: true
+      }
+
+    case T.SHOW_PRODUCT_SEARCH_RESULTS:
+      return {
+        ...state,
+        left: V.RESULT_PRODUCT,
         waiting_for_search_results: true
       }
 

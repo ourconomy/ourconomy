@@ -201,6 +201,11 @@ class LandingPage extends Component {
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
+                    <a onClick={() => onClick('products')} href="#" className="pure-menu-link">
+                      Produkte{' '}<span style={{fontWeight:'bold',color:'rgb(170,  56,   108)'}}>Neu!</span>
+                    </a>
+                  </li>
+                  <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
                     <a onClick= {() => onClick(V.WORKSHOP)} href="#" className="pure-menu-link">
                       Infos
                     </a>

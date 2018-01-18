@@ -8,10 +8,13 @@ V                 = require "../constants/PanelView"
 C                 = require "../constants/Categories"
 Actions           = require "../Actions"
 EntryDetails      = require "./EntryDetails"
+ProductDetails    = require "./ProductDetails"
 ResultList        = require "./ResultList"
+ProductResultList = require "./ProductResultList"
 CityList          = require "./CityList"
 Info              = require "./Info"
 EntryForm         = require "./EntryForm"
+ProductForm       = require "./ProductForm"
 RatingForm        = require "./RatingForm"
 Message           = require "./Message"
 Modal             = require "./Modal"
@@ -20,7 +23,7 @@ SearchBar         = require "./SearchBar"
 LandingPage       = require "./LandingPage"
 SubscribeToBbox   = require "./SubscribeToBbox"
 Ratings           = require "./Ratings"
-{ EDIT, RATING }  = require "../constants/Form"
+{ EDIT, RATING, PRODUCT }  = require "../constants/Form"
 URLs              = require "../constants/URLs"
 { DIVERSITY, RENEWABLE, FAIRNESS, 
 HUMANITY, TRANSPARENCY, SOLIDARITY } = require "../constants/RatingContexts"
@@ -52,7 +55,7 @@ Main = React.createClass
     { dispatch, search, view, server, map, form, growler, url, user } = @props
 
     { highlight, addresses, cities } = search
-    { entries, ratings } = server
+    { entries, ratings, products } = server
     { waiting_for_search_results, explainRatingContext, selectedContext } = view
 
     if url.hash != window.location.hash
@@ -63,6 +66,8 @@ Main = React.createClass
       (x for id in search.result when (x=entries[id])?)
     invisibleEntries =
       (x for id in search.invisible when(x=entries[id])?)
+    resultProducts   =
+      (x for id in search.products when (x=products[id])?)
     rightPanelIsOpen = false  # right panel moved into landingpage
     mapCenter = 
       if e?.lat and e?.lng and c=search.current
@@ -87,6 +92,9 @@ Main = React.createClass
               switch id
                 when 'map'
                   dispatch Actions.toggleLandingPage()
+                when 'products'
+                  dispatch Actions.toggleLandingPage()
+                  dispatch Actions.showProductSearchResults()
                 when 'new'
                   dispatch Actions.toggleLandingPage()
                   dispatch Actions.showNewEntry()
@@ -135,12 +143,12 @@ Main = React.createClass
         div className:"left #{if view.showLeftPanel and not view.menu then 'opened' else 'closed'}",
 
           div className: "search integrated #{
-            if view.left in [V.RESULT] then 'open' else 'closed'
+            if view.left in [V.RESULT, V.RESULT_PRODUCT] then 'open' else 'closed'
           }",
             React.createElement SearchBar,
               searchText      : search.text
               categories      : search.categories
-              disabled        : view.left in [V.EDIT, V.NEW]
+              disabled        : view.left in [V.EDIT, V.NEW, V.EDIT_PRODUCT, V.NEW_PRODUCT]
               toggleCat       : (c) ->
                 if c is C.IDS.EVENT
                   dispatch Actions.showFeatureToDonate "events"
@@ -152,7 +160,7 @@ Main = React.createClass
                 dispatch Actions.search()
               onLenseClick    : ->
                 switch view.left
-                  when V.ENTRY
+                  when V.ENTRY  # what about V.PRODUCT?
                     dispatch Actions.setCurrentEntry null, null
                   else
                     dispatch Actions.setSearchText ''
@@ -164,11 +172,19 @@ Main = React.createClass
             nav className: "menu pure-g",
               switch view.left
                 when V.RESULT
-                  li
-                    onClick: -> dispatch Actions.showNewEntry()
-                    className:"pure-u-1",
-                      i className: "fa fa-plus"
-                      "Eintrag hinzufügen"
+                    li
+                      onClick: -> dispatch Actions.showNewEntry()
+                      key: "Eintr"
+                      className:"pure-u-1-1",
+                        i className: "fa fa-plus"
+                        "Eintrag hinzufügen"
+                when V.RESULT_PRODUCT
+                    li
+                      onClick: -> dispatch Actions.showNewProduct()
+                      key: "Produkt"
+                      className:"pure-u-1-1",
+                        i className: "fa fa-plus"
+                        "Produkt hinzufügen"
                 when V.ENTRY
                   [
                     li
@@ -182,6 +198,24 @@ Main = React.createClass
                         "zurück"
                     li
                       onClick: -> dispatch Actions.editCurrentEntry()
+                      key: "edit"
+                      className:"pure-u-1-2",
+                        i className: "fa fa-pencil"
+                        "bearbeiten"
+                  ]
+                when V.PRODUCT 
+                  [
+                    li
+                      onClick: ->   
+                        dispatch Actions.setCurrentProduct null
+                        dispatch Actions.showProductSearchResults()
+                        #dispatch Actions.setCenterInUrl map.center
+                      key: "back"
+                      className:"pure-u-1-2",
+                        i className: "fa fa-chevron-left"
+                        "zurück"
+                    li
+                      onClick: -> dispatch Actions.editCurrentProduct()
                       key: "edit"
                       className:"pure-u-1-2",
                         i className: "fa fa-pencil"
@@ -209,6 +243,28 @@ Main = React.createClass
                       ),
                         i className: "fa fa-floppy-o"
                         "speichern"
+                  ]
+                when V.NEW_PRODUCT, V.EDIT_PRODUCT
+                  [
+                    li
+                      key: "cancel"
+                      className:"pure-u-1-2",
+                      onClick: (->
+                        dispatch initialize PRODUCT.id, {}, PRODUCT.fields
+                        dispatch switch view.left
+                          when V.NEW_PRODUCT  then Actions.cancelNewProduct()
+                          when V.EDIT_PRODUCT then Actions.cancelEditProduct()
+                      ),
+                        i className: "fa fa-ban"
+                        "Produkt abbrechen"
+                    li
+                      key: "save"
+                      className:"pure-u-1-2",
+                      onClick: (=>
+                        @refs.product.submit()
+                      ),
+                        i className: "fa fa-floppy-o"
+                        "Produkt speichern"
                   ]
                 when V.NEW_RATING
                   [
@@ -285,6 +341,22 @@ Main = React.createClass
 
               when V.RESULT
                 div className: "result",
+                  if resultProducts #and resultProducts.length
+                    div null,
+                      div className: 'group-header',
+                        """
+                        Neu! Produktergebnisse:
+                        """
+                      React.createElement ProductResultList,
+                        waiting     : waiting_for_search_results
+                        products    : resultProducts
+                        onClick     : (id) -> dispatch Actions.setCurrentProduct id 
+
+                  div null,
+                    div className: 'group-header',
+                      """
+                      Initiativen\\Unternehmen:
+                      """
                   React.createElement ResultList,
                     waiting     : waiting_for_search_results
                     entries     : resultEntries
@@ -321,6 +393,18 @@ Main = React.createClass
                         onClick     : (id, center) -> dispatch Actions.setCurrentEntry id, center
                         onMouseEnter: (id) -> dispatch Actions.highlight id
                         onMouseLeave: (id) -> dispatch Actions.highlight()
+
+              when V.RESULT_PRODUCT
+                div className: "result",
+                  React.createElement ProductResultList,
+                    waiting     : waiting_for_search_results
+                    products    : resultProducts
+                    #ratings     : ratings
+                    #highlight   : highlight
+                    onClick     : (id, center) -> dispatch Actions.setCurrentEntry id, center #doesn't work for products yet
+                    #moreEntriesAvailable: search.moreEntriesAvailable
+                    #onMoreEntriesClick: () -> dispatch Actions.showAllEntries()
+
               when V.ENTRY
                 div className: "content",
                   React.createElement EntryDetails,
@@ -329,6 +413,15 @@ Main = React.createClass
                     entry   : entries[search.current] || null
                     ratings : (if entries[search.current] then (entries[search.current].ratings || []) else []).map((id) -> ratings[id])
                     onRate  : (id) => dispatch Actions.showNewRating id
+
+              when V.PRODUCT
+                div className: "content",
+                  React.createElement ProductDetails,
+                    entry   : products[search.current] || null #our: this element is still called entry because ProductDetails expects it, let's see what we do with search
+              #   React.createElement Ratings,
+              #     entry   : entries[search.current] || null
+              #     ratings : (if entries[search.current] then (entries[search.current].ratings || []) else []).map((id) -> ratings[id])
+              #     onRate  : (id) => dispatch Actions.showNewRating id
 
               when V.EDIT, V.NEW
                 div className: "content",
@@ -352,6 +445,20 @@ Main = React.createClass
                         zip         : data.zip
                         version     : (form[EDIT.id]?.values?.version or 0) + 1
                         categories  : [data.category]
+              when V.EDIT_PRODUCT, V.NEW_PRODUCT
+                div className: "content",
+                  React.createElement ProductForm,
+                    ref: 'product' # is this correct? Probably yes
+                    isEdit: form[EDIT.id]?.kvm_product_id?
+                    license: products[search.current]?.license # what do search?
+                    onSubmit: (data) ->
+                      dispatch Actions.saveProduct
+                        id          : form[PRODUCT.id]?kvm_product_id 
+                        title       : data.EffectName
+                        description : data.EffectDescription
+                        tags        : data.EffectTags?.split(',')
+                        origin      : data.EffectOrigin
+
               when V.NEW_RATING
                 div className: "content",
                   React.createElement RatingForm,

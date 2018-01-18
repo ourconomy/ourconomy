@@ -76,6 +76,10 @@ module.exports = (state=initialState, action={}) => {
       entry = action.payload;
       break;
 
+    //our: let's wait with implementation case T.SET_CURRENT_PRODUCT:
+    //   product = action.payload;
+    //   break;
+
     case T.SET_CENTER_IN_URL:
       center = action.payload;
       break;

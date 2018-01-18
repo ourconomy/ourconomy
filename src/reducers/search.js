@@ -13,6 +13,7 @@ const initialState = {
   invisible: [],
   addresses: [],
   cities: [],
+  products: [],
   searchByUrl: true,
   showingAllEntries: false,
   moreEntriesAvailable: false
@@ -97,10 +98,13 @@ module.exports = (state = initialState, action = {}) => {
 
     case T.SEARCH_RESULT:
       if (!action.error) {
+        //our: Delete this logging when it works
+        console.log("Reducer search:SEARCH_RESULT: action.payload.effects:" + action.payload.effects);
         return {
           ...state,
           result: action.payload.visible,
-          invisible: action.payload.invisible
+          invisible: action.payload.invisible,
+          products: action.payload.effects
         }
       }
       return state;
@@ -143,6 +147,32 @@ module.exports = (state = initialState, action = {}) => {
           ...state,
           current: p,
           highlight: [p]
+        }
+      }
+      return {
+        ...state,
+        current: null
+      }
+      break;
+
+    case T.NEW_PRODUCT_RESULT:
+      if (!action.error) {
+        var newProduct = state.products;
+        newProduct.push(action.payload.id);
+        return {
+          ...state,
+          products: newProduct
+        }
+      }
+      break;
+
+    case T.SET_CURRENT_PRODUCT:
+      const prod = action.payload;
+      if (prod != null) {
+        return {
+          ...state,
+          current: prod,
+          highlight: [prod]
         }
       }
       return {

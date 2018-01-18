@@ -1,7 +1,7 @@
 import T                          from "../constants/ActionTypes";
 import ServerConstants            from "../constants/Server";
 import WebAPI                     from "../WebAPI";
-import { EDIT, RATING, LOGIN, REGISTER } from "../constants/Form";
+import { EDIT, RATING, PRODUCT, LOGIN, REGISTER } from "../constants/Form";
 import { NEW_ENTRY_LICENSE }      from "../constants/App";
 import { initialize, stopSubmit } from "redux-form";
 import mapConst                   from "../constants/Map";
@@ -50,6 +50,21 @@ const Actions = {
           } else {
             dispatch({
               type: T.NO_SEARCH_RESULTS
+            });
+          }
+
+          //our: delete logging when works
+          console.log("Action:server: res.effects available to getProducts?: " + res.effects);
+          const prod_ids =
+            Array.isArray(res != null ? res.effects : void 0) ? res.effects : void 0; 
+          //our: delete logging when works
+          console.log("Action:server: res.effects is array: " + Array.isArray(res.effects));
+
+          if ((Array.isArray(prod_ids)) && prod_ids.length > 0) {
+            dispatch(Actions.getProducts(prod_ids));
+          } else {
+            dispatch({
+              type: T.NO_PRODUCT_SEARCH_RESULTS
             });
           }
         });
@@ -126,6 +141,17 @@ const Actions = {
       WebAPI.getRatings(ids, (err, res) => {
         dispatch({
           type: T.RATINGS_RESULT,
+          payload: err || res,
+          error: err != null
+        });
+      });
+    },
+
+  getProducts: (ids = []) => // does this var have to be prod_ids?
+    (dispatch) => {
+      WebAPI.getProducts(ids, (err, res) => {
+        dispatch({
+          type: T.PRODUCTS_RESULT,
           payload: err || res,
           error: err != null
         });
@@ -278,6 +304,32 @@ const Actions = {
       });
     },
 
+  editCurrentProduct: () =>
+    (dispatch, getState) => {
+      dispatch({
+        type: T.SHOW_IO_WAIT
+      });
+      WebAPI.getProducts([getState().search.current], (err, res) => {
+        if (!err) {
+          dispatch({
+            type: T.PRODUCTS_RESULT,
+            payload: res
+          });
+          const state = getState();
+          dispatch({
+            type: T.EDIT_CURRENT_PRODUCT,
+            payload: state.server.products[state.search.current]
+          });
+        } else {
+          dispatch({
+            type: T.EDIT_CURRENT_PRODUCT,
+            payload: err,
+            error: true
+          });
+        }
+      });
+    },
+
   createRating: (rating) =>
     (dispatch, getState) => {
       const r = {
@@ -310,6 +362,42 @@ const Actions = {
                 }
               });
               dispatch(initialize(RATING.id, {}, RATING.fields));
+            }
+          });
+        }
+      });
+    },
+
+  saveProduct: (p) =>
+    (dispatch, getState) => {
+      const saveFunc = (p != null ? p.id : void 0) ? WebAPI.saveProduct : WebAPI.saveNewProduct;
+      p.license = getLicenseForEntry(p.license);
+
+      saveFunc(p, (err, res) => {
+        if (err) {
+          dispatch(stopSubmit(PRODUCT.id, {
+            _error: err
+          }));
+        } else {
+          const id = (p != null ? p.id : void 0) || res;
+          WebAPI.getProducts([id], (err, res) => {
+            dispatch(initialize(PRODUCT.id, {}, PRODUCT.fields));
+            if (!err) {
+              dispatch({
+                type: T.SET_CURRENT_PRODUCT,
+                payload: id,
+              });	
+              dispatch({
+                type: T.NEW_PRODUCT_RESULT,
+                payload: res[0]
+              });
+              dispatch({
+                type: 'GROWLER__SHOW',
+                growler: {
+                  text: 'Eintrag wurde gespeichert.',
+                  type: 'growler--success'
+                }
+              });
             }
           });
         }
@@ -460,3 +548,4 @@ module.exports = {
   Actions: Actions,
   getLicenseForEntry: getLicenseForEntry
 };
+

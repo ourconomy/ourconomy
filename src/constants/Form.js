@@ -18,6 +18,17 @@ module.exports = {
     ]
   },
 
+  PRODUCT: {
+    id: "product",
+    fields: [
+      "EffectName",
+      "EffectDescription",
+      "EffectOrigin",
+      "EffectTags",
+      "EffectLicense"
+     ]
+  },
+
   RATING: {
     id: "rating",
     fields: [
