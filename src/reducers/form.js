@@ -18,15 +18,6 @@ const reducer = formReducer.plugin({
           kvm_flag_addressWasEnteredManually: false,
         };
 
-      case T.SHOW_NEW_PRODUCT:
-        return {
-          ...state,
-          values: { },
-          kvm_product_id: null,
-          //our: kvm_flag_markerWasEnteredManually: false,
-          //kvm_flag_addressWasEnteredManually: false,
-        };
-
       case T.EDIT_CURRENT_ENTRY:
         return {
           ...state,
@@ -37,17 +28,6 @@ const reducer = formReducer.plugin({
             category: action.payload.categories[0]
           },
           kvm_flag_id: action.payload.id
-        }
-      case T.EDIT_CURRENT_PRODUCT:
-        return {
-          ...state,
-          values: {
-            ...action.payload,
-            license: null,
-            tags: (action.payload.tags || []).join(','),
-            //category: action.payload.categories[0]
-          },
-          kvm_product_id: action.payload.id
         }
       case T.SET_MARKER:
         if (action.manual) {
@@ -112,6 +92,33 @@ const reducer = formReducer.plugin({
     }
   },
 
+  product: (state={}, action={}) => {
+
+    switch (action.type) {
+    case T.SHOW_NEW_PRODUCT:
+      return {
+        ...state,
+        values: { },
+        kvm_product_id: null,
+        //our: kvm_flag_markerWasEnteredManually: false,
+        //kvm_flag_addressWasEnteredManually: false,
+      };
+    case T.EDIT_CURRENT_PRODUCT:
+      return {
+        ...state,
+        values: {
+          ...action.payload,
+          license: null,
+          tags: (action.payload.tags || []).join(','),
+          //category: action.payload.categories[0]
+        },
+        kvm_product_id: action.payload.id
+      };
+    default:
+      return state;
+    }
+  },
+  
   rating: (state={}, action={}) => {
 
     const { payload } = action;

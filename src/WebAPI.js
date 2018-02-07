@@ -198,6 +198,8 @@ module.exports = {
   },
 
   saveNewProduct: (p, cb) => {
+    //our log, delete later:
+    console.log('%c WebAPI.saveNewProduct, value of p: ' + JSON.stringify(p), 'color: green; font-weight: bold' )
     request
       .post('/effects/')
       .use(prefix)
@@ -213,6 +215,8 @@ module.exports = {
   },
 
   saveProduct: (p, cb) => {
+    //our log, delete later:
+    console.log('%c WebAPI.saveProduct, value of p: ' + JSON.stringify(p), 'color: blue; font-weight: bold' )
     request
       .put('/effects/' + p.id)
       .use(prefix)

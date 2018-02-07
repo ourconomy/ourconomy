@@ -1,4 +1,8 @@
 const entryForm = (data) => {
+
+//our junk:
+console.log('data from validate.productForm: ' + JSON.stringify(data));
+
   let errors, h, l, ref;
   errors = {};
   if (data == null) {
@@ -210,56 +214,56 @@ const registerForm = (data) => {
 }
 
 const productForm = (data) => {
-  let errors, h, l, ref;
+  let errors, l;
   errors = {};
   if (data == null) {
     errors._error = "Ungültige Daten";
     return errors;
   }
-  if (data.EffectName == null) {
-    errors.EffectName = 'Pflichtangabe';
+  if (data.title == null) {
+    errors.title = 'Pflichtangabe';
   } else {
-    if (!((l = data.EffectName.length) <= 50)) {
-      if (errors.EffectName == null) {
-        errors.EffectName = "Zu langer Name: " + l + " statt max. 50 Zeichen";
+    if (!((l = data.title.length) <= 50)) {
+      if (errors.title == null) {
+        errors.title = "Zu langer Name: " + l + " statt max. 50 Zeichen";
       }
     }
-    if (!((l = data.EffectName.length) >= 3)) {
-      if (errors.EffectName == null) {
-        errors.EffectName = "Zu kurzer Name: " + l + " von mind. 3 Zeichen";
-      }
-    }
-  }
-  if (data.EffectDescription == null) {
-    errors.EffectDescription = 'Pflichtangabe';
-  } else {
-    if (!((l = data.EffectDescription.length) <= 250)) {
-      if (errors.EffectDescription == null) {
-        errors.EffectDescription = "Zu lange Beschreibung: " + l + " statt max. 250 Zeichen";
-      }
-    }
-    if (!((l = data.EffectDescription.length) >= 10)) {
-      if (errors.EffectDescription == null) {
-        errors.EffectDescription = "Zu wenig Text: " + l + " von mind. 10 Zeichen";
+    if (!((l = data.title.length) >= 3)) {
+      if (errors.title == null) {
+        errors.title = "Zu kurzer Name: " + l + " von mind. 3 Zeichen";
       }
     }
   }
-  if (data.EffectTags == null) {
-    errors.EffectTags = 'Pflichtangabe';
+  if (data.description == null) {
+    errors.description = 'Pflichtangabe';
   } else {
-    if ((typeof data.EffectTags) !== "string") {
-      errors.EffectTags = 'Ungültige Stichworte';
-    } else if (data.EffectTags.length < 3) {
-      errors.EffectTags = 'Mindestlänge von Stichworten: 3 Zeichen';
+    if (!((l = data.description.length) <= 250)) {
+      if (errors.description == null) {
+        errors.description = "Zu lange Beschreibung: " + l + " statt max. 250 Zeichen";
+      }
+    }
+    if (!((l = data.description.length) >= 10)) {
+      if (errors.description == null) {
+        errors.description = "Zu wenig Text: " + l + " von mind. 10 Zeichen";
+      }
     }
   }
-  if (data.EffectLicense == null) {
-    errors.EffectLicense = 'Lizenzzustimmung ist nötig';
+  if (data.tags == null) {
+    errors.tags = 'Pflichtangabe';
   } else {
-    if ((typeof data.EffectLicense) !== "boolean") {
-      errors.EffectLicense = 'Ungültige Zustimmung';
-    } else if (data.EffectLicense === false) {
-      errors.EffectLicense = 'Lizenzzustimmung ist nötig';
+    if ((typeof data.tags) !== "string") {
+      errors.tags = 'Ungültige Stichworte';
+    } else if (data.tags.length < 3) {
+      errors.tags = 'Mindestlänge von Stichworten: 3 Zeichen';
+    }
+  }
+  if (data.license == null) {
+    errors.license = 'Lizenzzustimmung ist nötig';
+  } else {
+    if ((typeof data.license) !== "boolean") {
+      errors.license = 'Ungültige Zustimmung';
+    } else if (data.license === false) {
+      errors.license = 'Lizenzzustimmung ist nötig';
     }
   }
   return errors;

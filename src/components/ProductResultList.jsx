@@ -17,6 +17,11 @@ const ProductResultListElement = ({entry, onClick}) => {
       <div className = "pure-g">
         <div className = "pure-u-23-24">
           <div>
+            <span className="category" style={{color:'rgb(255, 221,   0)'}}>
+             Produkt/Service 
+            </span>
+          </div>
+          <div>
             <span className="title">{entry.title}</span>
           </div>
           <div>

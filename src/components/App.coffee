@@ -160,7 +160,7 @@ Main = React.createClass
                 dispatch Actions.search()
               onLenseClick    : ->
                 switch view.left
-                  when V.ENTRY  # what about V.PRODUCT?
+                  when V.ENTRY  #our: what about V.PRODUCT?
                     dispatch Actions.setCurrentEntry null, null
                   else
                     dispatch Actions.setSearchText ''
@@ -172,19 +172,37 @@ Main = React.createClass
             nav className: "menu pure-g",
               switch view.left
                 when V.RESULT
-                    li
-                      onClick: -> dispatch Actions.showNewEntry()
-                      key: "Eintr"
-                      className:"pure-u-1-1",
-                        i className: "fa fa-plus"
-                        "Eintrag hinzufügen"
-                when V.RESULT_PRODUCT
+                  [
                     li
                       onClick: -> dispatch Actions.showNewProduct()
                       key: "Produkt"
-                      className:"pure-u-1-1",
+                      className:"pure-u-1-2",
                         i className: "fa fa-plus"
                         "Produkt hinzufügen"
+                    li
+                      onClick: -> dispatch Actions.showNewEntry()
+                      key: "Eintr"
+                      className:"pure-u-1-2",
+                        i className: "fa fa-plus"
+                        "Eintrag hinzufügen"
+                  ] 
+                when V.RESULT_PRODUCT
+                  [
+                    li
+                      onClick: -> 
+                        dispatch Actions.setCurrentEntry null, null
+                        dispatch Actions.showSearchResults()
+                      key: "back"
+                      className:"pure-u-1-2",
+                        i className: "fa fa-chevron-left"
+                        "zurück zur Karte"
+                    li
+                      onClick: -> dispatch Actions.showNewProduct()
+                      key: "Produkt"
+                      className:"pure-u-1-2",
+                        i className: "fa fa-plus"
+                        "Produkt hinzufügen"
+                  ] 
                 when V.ENTRY
                   [
                     li
@@ -209,7 +227,7 @@ Main = React.createClass
                       onClick: ->   
                         dispatch Actions.setCurrentProduct null
                         dispatch Actions.showProductSearchResults()
-                        #dispatch Actions.setCenterInUrl map.center
+                        #our dispatch Actions.setCenterInUrl map.center
                       key: "back"
                       className:"pure-u-1-2",
                         i className: "fa fa-chevron-left"
@@ -341,7 +359,7 @@ Main = React.createClass
 
               when V.RESULT
                 div className: "result",
-                  if resultProducts #and resultProducts.length
+                  if resultProducts #our  and resultProducts.length
                     div null,
                       div className: 'group-header',
                         """
@@ -401,8 +419,8 @@ Main = React.createClass
                     products    : resultProducts
                     #ratings     : ratings
                     #highlight   : highlight
-                    onClick     : (id, center) -> dispatch Actions.setCurrentEntry id, center #doesn't work for products yet
-                    #moreEntriesAvailable: search.moreEntriesAvailable
+                    onClick     : (id) -> dispatch Actions.setCurrentProduct id
+                    #our: moreEntriesAvailable: search.moreEntriesAvailable
                     #onMoreEntriesClick: () -> dispatch Actions.showAllEntries()
 
               when V.ENTRY
@@ -425,6 +443,10 @@ Main = React.createClass
 
               when V.EDIT, V.NEW
                 div className: "content",
+                  #our hack:
+                  console.log 'kvm form obj.: ' + JSON.stringify form
+                  console.log 'server.entries: ' + JSON.stringify server.entries
+                  console.log 'kvm entry id: ' + form[EDIT.id].kvm_flag_id
                   React.createElement EntryForm,
                     ref: 'form'
                     isEdit: form[EDIT.id]?.kvm_flag_id?
@@ -447,17 +469,22 @@ Main = React.createClass
                         categories  : [data.category]
               when V.EDIT_PRODUCT, V.NEW_PRODUCT
                 div className: "content",
+                  #our hack:
+                  console.log 'kvm form obj.: ' + JSON.stringify form
+                  console.log 'server.products: ' + JSON.stringify server.products
+                  console.log 'kvm prod id: ' + form[PRODUCT.id].kvm_product_id
                   React.createElement ProductForm,
-                    ref: 'product' # is this correct? Probably yes
-                    isEdit: form[EDIT.id]?.kvm_product_id?
-                    license: products[search.current]?.license # what do search?
+                    ref: 'product' 
+                    isEdit: form[PRODUCT.id]?.kvm_product_id?
+                    license: products[search.current]?.license 
                     onSubmit: (data) ->
                       dispatch Actions.saveProduct
-                        id          : form[PRODUCT.id]?kvm_product_id 
-                        title       : data.EffectName
-                        description : data.EffectDescription
-                        tags        : data.EffectTags?.split(',')
-                        origin      : data.EffectOrigin
+                        id          : form[PRODUCT.id]?.kvm_product_id 
+                        title       : data.title
+                        description : data.description
+                        tags        : data.tags?.split(',')
+                        origin      : data.origin
+                        version     : (form[PRODUCT.id]?.values?.version or 0) + 1
 
               when V.NEW_RATING
                 div className: "content",

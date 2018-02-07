@@ -1,3 +1,16 @@
+# The products and services version of Karte von morgen
+
+This custom version of [Karte von morgen](https://github.com/flosse/kartevonmorgen) brings products and services to your sustainable world.  
+
+![The new menu entry for products](produkte_neu.png)  ![products and companies in the result list](produkte_ergebnis.png)
+
+Technically, virtually everything that exists for 'entries' in the codebase has been replicated for 'products' -- except the ResultList component and its items. 
+Products and services are called _products_ in this fork of Karte von morgen. 
+Currently, they cannot yet be rated nor do they have categories. 
+The special backend for this version of the map is the [ourconomy version of Open Fair DB](https://github.com/ourconomy/openfairdb). 
+
+Below, the original announcement of Karte von morgen:  
+
 # Karte von morgen
 
 ![Screenshot](https://raw.githubusercontent.com/flosse/kartevonmorgen/master/screenshot.jpg)

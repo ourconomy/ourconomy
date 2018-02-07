@@ -372,6 +372,8 @@ const Actions = {
     (dispatch, getState) => {
       const saveFunc = (p != null ? p.id : void 0) ? WebAPI.saveProduct : WebAPI.saveNewProduct;
       p.license = getLicenseForEntry(p.license);
+      //our log, delete when works
+      console.log('saveProduct Action, value of p: ' + JSON.stringify(p));
 
       saveFunc(p, (err, res) => {
         if (err) {
@@ -394,7 +396,7 @@ const Actions = {
               dispatch({
                 type: 'GROWLER__SHOW',
                 growler: {
-                  text: 'Eintrag wurde gespeichert.',
+                  text: 'Produkt wurde gespeichert.',
                   type: 'growler--success'
                 }
               });

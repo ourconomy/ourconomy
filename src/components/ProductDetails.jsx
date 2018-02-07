@@ -1,97 +1,98 @@
-import React, { Component }   from "react";
-import Address                from "./AddressLine";
-import { pure }               from "recompose";
-import { NAMES, CSS_CLASSES } from "../constants/Categories";
-import styled                 from "styled-components";
-import Colors                 from "./styling/Colors"
-import Ratings                from "./Ratings"
+    import React, { Component }   from "react";
+    import Address                from "./AddressLine";
+    import { pure }               from "recompose";
+    import { NAMES, CSS_CLASSES } from "../constants/Categories";
+    import styled                 from "styled-components";
+    import Colors                 from "./styling/Colors"
+    import Ratings                from "./Ratings"
 
-const TagsWrapper = styled.div `
-  margin-top: 0.5em;
-`;
+    const TagsWrapper = styled.div `
+      margin-top: 0.5em;
+    `;
 
-const TagList = styled.ul `
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
+    const TagList = styled.ul `
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    `;
 
-const Tag = styled.li `
-  display:       inline-block;
-  margin-right:  0.2em;
-  background:    #777;
-  color:         #fff;
-  border-radius: 0.3em;
-  padding:       0.1em;
-  padding-left:  0.4em;
-  padding-right: 0.4em;
-  font-size:     0.9em;
-`;
+    const Tag = styled.li `
+      display:       inline-block;
+      margin-right:  0.2em;
+      background:    #777;
+      color:         #fff;
+      border-radius: 0.3em;
+      padding:       0.1em;
+      padding-left:  0.4em;
+      padding-right: 0.4em;
+      font-size:     0.9em;
+    `;
 
-const Tags = (tags=[]) =>
-  <TagsWrapper className = "pure-g">
-    <i className = "pure-u-2-24 fa fa-tags" />
-    <span className = "pure-u-22-24">
-      <TagList>
-      { tags
-          .filter(t => t != "")
-          .map(t => <Tag key={t}>{t}</Tag>)
-      }
-      </TagList>
-    </span>
-  </TagsWrapper>
+    const Tags = (tags=[]) =>
+      <TagsWrapper className = "pure-g">
+        <i className = "pure-u-2-24 fa fa-tags" />
+        <span className = "pure-u-22-24">
+          <TagList>
+          { tags
+              .filter(t => t != "")
+              .map(t => <Tag key={t}>{t}</Tag>)
+          }
+          </TagList>
+        </span>
+      </TagsWrapper>
 
-const EntryDetailPage = styled.div`
-  padding:  1em;
-  max-width: 500px;
-`;
+    const EntryDetailPage = styled.div`
+      padding:  1em;
+      max-width: 500px;
+    `;
 
-const EntryLink = styled.a`
-  color: ${Colors.darkGray};
-  text-decoration: none;
-`;
+    const EntryLink = styled.a`
+      color: ${Colors.darkGray};
+      text-decoration: none;
+    `;
 
-const EntryTitle = styled.h3`
-  margin-top:  0;
-  color:       ${Colors.anthracite};
-`;
+    const EntryTitle = styled.h3`
+      margin-top:  0;
+      color:       ${Colors.anthracite};
+    `;
 
-const EntryDescription = styled.p`
-  color: ${Colors.darkGray};
-`;
+    const EntryDescription = styled.p`
+      color: ${Colors.darkGray};
+    `;
 
-const CategoryDescription = styled.div`
-  text-align:      right;
-  text-transform:  uppercase;
-  color:    ${props => Colors[props.category]};
-`;
+    const CategoryDescription = styled.div`
+      text-align:      right;
+      text-transform:  uppercase;
+      color:    ${props => Colors[props.category]};
+    `;
 
-const EntryDetailsDetails = styled.div`
-  font-family: Museo;
-`;
+    const EntryDetailsDetails = styled.div`
+      font-family: Museo;
+    `;
 
-class ProductDetails extends Component {
+    class ProductDetails extends Component {
 
-  render() {
-    const { entry } = this.props;
+      render() {
+        const { entry } = this.props;
 
-    if (!entry) {
-      return(
-        <EntryDetailPage>
-          <span>Eintrag wird geladen...</span>
-        </EntryDetailPage>
-      );
-    } 
+        if (!entry) {
+          return(
+            <EntryDetailPage>
+              <span>Eintrag wird geladen...</span>
+            </EntryDetailPage>
+          );
+        } 
     else {
       return (
     <EntryDetailPage> 
       <CategoryDescription category={CSS_CLASSES[entry.categories && entry.categories[0]]}>
-        <span>{NAMES[entry.categories && entry.categories[0]]}</span>
+        <span style={{color:'rgb(255, 221,   0)'}}>Produkt/Service</span>
       </CategoryDescription>
       <div>
         <EntryTitle>{entry.title}</EntryTitle>
         <EntryDescription>{entry.description}</EntryDescription>
-        <p>Liste der Bestandteile: (geplant)</p>
+        {//our: <p>Liste der Bestandteile: (geplant)</p>
+        }
         <EntryDescription>von: {entry.origin}</EntryDescription>
         <EntryDetailsDetails>{[
           (entry.homepage ?
