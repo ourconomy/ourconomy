@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo                 from "../img/logo.png";
+import oclogo               from "../img/ourconomy-logo.png";
 import CityList             from "./CityList";
 import Info                 from "./Info";
 import Workshop             from "./Workshop";
@@ -186,10 +187,16 @@ class LandingPage extends Component {
         <div className = "banner">
           <div className = "content pure-g">
             <div className = "logo-wrapper pure-u-11-24 pure-u-md-1-3">
-              <div className = "logo">
-                <a onClick={() => onClick('landing')} href="#">
-                  <img className="logo pure-img" src={logo} />
-                </a>
+              <div className = "pure-u-1 pure-menu-horizontal">
+                <div className = "logo pure-u-1-2 pure-u-md-1-2">
+                  <a onClick={() => onClick('landing')} href="#">
+                    <img className="logo pure-img" src={logo} />
+                  </a>
+                </div> 
+                <div className= "pure-u-1-2 pure-u-md-1-2" >
+                  <span style={{align: 'left',fontSize:'0.7em',color:'rgb(102, 102, 102)'}}>featuring{' '}<img className="pure-img" width={170} src={oclogo} />
+                  </span>
+                </div>
               </div>
             </div>
             <div className="menu-wrapper pure-u-1 pure-u-md-2-3">
