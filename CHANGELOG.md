@@ -1,4 +1,27 @@
+## v0.1.23 (2018-02-21)
+- fix(rating): correct rating labels
+- fix(widgets): fix bugs in widgets introduced by i18n v0.1.22
+- fix(modal): fix bug that prevented modal to show
+- fix(locate-button): put locate-button behind left sidebar on mobile, use leaflets css class for locate-button, don't show locate button in map-widget
+- fix(i18n): some small fixes where i18n has been forgotten, use 'von übermorgen' again instead of 'visionär'
+- new(LandingPage): add Linus to Team
+
+## v0.1.22 (2018-02-14)
+- i18n: internationalize the app and provide translations for german and english
+- OSM: prepare for openfairdb with entries from OpenStreetMap:
+    - changed search API to include location of each entry in the results
+    - show entries that don't have a category yet (don't filter these out on default, only when clicking on filters)
+- new(map): replace pins of entries with rating <= 0 by circles (necessary as we get lots of entries by OSM)
+- new(map): show pins while adding or editing an entry
+- new(map): move locate button on the map, away from the searchbar
+- new(timedActions): use timeout for search (don't continuously search when zooming, moving the map, or typing very fast)
+- new(ratingForm): add more info text in rating form
+- new(landingPage): change the content of landing page pages, and rearrange them to 'about us', 'contact', 'donate'
+- new(landingPage): change team descriptions and add/remove team members
+- fix(IE): use use babel-polyfill to fix IE11 bug
+
 ## v0.1.21 (2017-12-08)
+- edit(LandingPage): change team and partners in landing page
 - new(prototype): show 'prototype'-banner when packing with 'npm run pack-prototype'
 - new(EntryForm): show either CC0 or ODBL license (OSM)
 - new(EntryForm): when saving entry use ODBL license for OSM entries and CC0 otherwise (OSM)

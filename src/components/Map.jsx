@@ -1,13 +1,28 @@
 import "./Map.styl"
-
 import React, { Component }         from "react"
-import { Map, TileLayer, Marker }   from "react-leaflet"
+import { Map, TileLayer, Marker, CircleMarker, Circle }   from "react-leaflet"
 import { icons }                    from "vm-leaflet-icons"
 import URLs                         from "../constants/URLs"
 import { pure }                     from "recompose"
-import { NAMES, CSS_CLASSES, IDS }  from  "../constants/Categories"
+import { IDS }                      from  "../constants/Categories"
+import COLORS                       from "./styling/Colors"
+import { avg_rating_for_entry }     from "../rating"
+import styled                       from "styled-components";
+import T                            from "prop-types";
 
 const { INITIATIVE, EVENT, COMPANY } = IDS;
+
+const LocateButtonContainer = styled.div`
+  bottom: 85px;
+  position: absolute;
+  z-index: 0;
+`;
+
+const LocateButton = styled.a `
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+`;
 
 class KVMMap extends Component {
 
@@ -21,6 +36,19 @@ class KVMMap extends Component {
         return icons.company;
       default:
         return icons.unknown;
+    }
+  }
+
+  getCategoryColorById(id){
+    switch (id) {
+      case INITIATIVE:
+        return COLORS.initiative;
+      case EVENT:
+        return COLORS.event;
+      case COMPANY:
+        return COLORS.company;
+      default:
+        return COLORS.otherCategory;
     }
   }
 
@@ -63,27 +91,104 @@ class KVMMap extends Component {
       onZoomend,
       onClick,
       onMarkerClick,
-      loggedIn
+      ratings,
+      showLocateButton
     } = this.props;
+
 
     if (entries && entries.length > 0 ) {
       entries.forEach(e => {
-        markers.push(
-          <Marker
-            onClick   = { () => { onMarkerClick(e.id) }}
-            key       = { e.id }
-            position  = {{ lat: e.lat, lng: e.lng }}
-            opacity   = { highlight.length > 0
-                            ? highlight.indexOf(e.id) < 0 ? 0.3 : 1
-                            : 1
-                        }
-            icon      = { this.getIconById(e.categories[0]) }
-            />
-          )
-      })
+        let avg_rating = null;
+
+        if(e.ratings.length > 0 && Object.keys(ratings).length > 0){
+          const ratings_for_entry = (e.ratings || []).map(id => ratings[id]);
+          avg_rating = avg_rating_for_entry(ratings_for_entry);
+        }
+
+        if(e.ratings.length > 0 && avg_rating && avg_rating > 0){
+          if(highlight.indexOf(e.id) == 0 || highlight.length == 0){
+            markers.push(
+              <Marker
+                key       = { e.id }
+                onClick   = { () => { onMarkerClick(e.id) }}
+                position  = {{ lat: e.lat, lng: e.lng }}
+                icon      = { this.getIconById(e.categories[0]) }
+                opacity   = { 1 }
+              />
+            );
+          } else if(highlight.length > 0){
+            markers.push(
+              <Marker
+                key       = { e.id }
+                onClick   = { () => { onMarkerClick(e.id) }}
+                position  = {{ lat: e.lat, lng: e.lng }}
+                icon      = { this.getIconById(e.categories[0]) }
+                opacity   = { 0.5 }
+              />
+            );
+          }
+        } else {
+          // to make clicking the circle easier add a larger circle with 0 opacity:
+          markers.push(
+            <CircleMarker
+              onClick   = { () => { onMarkerClick(e.id) }}
+              key       = { e.id + "-overlay"}
+              center    = {{ lat: e.lat, lng: e.lng }}
+              opacity   = { 1 }
+              radius    = { 10 }
+              weight    = { 0 }
+              fillColor = { this.getCategoryColorById(e.categories[0]) }
+              fillOpacity = { 0.0 }
+            />);
+
+          if(highlight.indexOf(e.id) == 0 || highlight.length == 0){
+            markers.push(
+              <CircleMarker
+                onClick   = { () => { onMarkerClick(e.id) }}
+                key       = { e.id }
+                center    = {{ lat: e.lat, lng: e.lng }}
+                opacity   = { 1 }
+                radius    = { 5 }
+                color     = { "#555" }
+                weight    = { 0.7 }
+                fillColor = { this.getCategoryColorById(e.categories[0]) }
+                fillOpacity = { 1.0 }
+              />);
+          } else if(highlight.length > 0){
+            markers.push(
+              <CircleMarker
+                onClick   = { () => { onMarkerClick(e.id) }}
+                key       = { e.id }
+                center    = {{ lat: e.lat, lng: e.lng }}
+                opacity   = { 1 }
+                radius    = { 5 }
+                color     = { "#555" }
+                weight    = { 0.7 }
+                fillColor = { this.getCategoryColorById(e.categories[0]) }
+                fillOpacity = { 0.5 }
+              />);
+          }
+        }
+
+        if(highlight.length > 0 && highlight.indexOf(e.id) == 0){
+          markers.push(
+            <CircleMarker
+              onClick   = { () => { onMarkerClick(e.id) }}
+              key       = { e.id + "-highlight"}
+              center    = {{ lat: e.lat, lng: e.lng }}
+              opacity   = { 1 }
+              radius    = { 5.5 }
+              color     = { "#000" }
+              fillColor = { this.getCategoryColorById(e.categories[0]) }
+              weight    = { 2.5 }
+              fillOpacity = { 1 }
+            />);
+        }
+      });
     }
 
     return (
+        <div>
         <Map
         style = {{
           height:   "100%",
@@ -116,14 +221,29 @@ class KVMMap extends Component {
             ? <Marker position = { marker } icon = { this.getIconById(parseInt(this.props.category)) } />
             : null
           }
-        </Map>)
+          }
+        </Map>
+        {showLocateButton ?
+          <div className="leaflet-control-container">
+            <LocateButtonContainer className="leaflet-right">
+                <div className = "leaflet-control-locate leaflet-bar leaflet-control">
+                  <LocateButton
+                    className   = "leaflet-bar-part leaflet-bar-part-single" //"locate-icon"
+                    onClick     = { this.props.onLocate }
+                    title       = "Zeige meine Position" >
+                    <i className = "fa fa-location-arrow" />
+                  </LocateButton>
+                </div>
+            </LocateButtonContainer>
+          </div>
+          : null }
+        </div>)
     }
 }
 
-const T = React.PropTypes;
-
 KVMMap.propTypes = {
     entries       : T.array,
+    ratings       : T.object,
     highlight     : T.array,
     center        : T.object,
     zoom          : T.number,
@@ -131,7 +251,9 @@ KVMMap.propTypes = {
     onClick       : T.func,
     onMoveend     : T.func,
     onZoomend     : T.func,
-    onMarkerClick : T.func
+    onMarkerClick : T.func,
+    onLocate      : T.func,
+    showLocateButton : T.bool
 };
 
 module.exports = pure(KVMMap);

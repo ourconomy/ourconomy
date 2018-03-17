@@ -1,3 +1,7 @@
+// for Internet Explorer:
+if (!window.location.origin) {
+  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+}
 const URL = location.origin + "/api";
 
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org";
@@ -37,7 +41,7 @@ module.exports = {
       .query({
         text: txt.trim()
       })
-      .query('categories=' + cats.join(','))
+      .query((cats.length > 0) ? ('categories=' + cats.join(',')) : "")
       .query('bbox=' + bbox.join(','))
       .set('Accept', 'application/json')
       .end(jsonCallback(cb));
@@ -306,20 +310,20 @@ module.exports = {
       .end(cb);
   },
 
-  confirmEmail: (u_id, cb) => {
+  confirmEmail: (username, cb) => {
     request
       .post('/confirm-email-address')
       .set('Accept', 'application/json')
       .use(prefix)
       .send({
-        u_id
+        username
       })
       .end(cb);
   },
 
-  deleteAccount: (u_id, cb) => {
+  deleteAccount: (username, cb) => {
     request
-      .delete('/users/' + u_id)
+      .delete('/users/' + username)
       .set('Accept', 'application/json')
       .use(prefix)
       .withCredentials()

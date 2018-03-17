@@ -1,0 +1,434 @@
+{
+	"entryForm":{
+		"chooseCategory":"Select category",
+		"location":"Location",
+		"clickMap":"(click on the map)",
+		"contact":"Contact",
+		"iHaveRead":"I have read and accept the Terms of the ",
+		"creativeCommonsLicense":"Creative-Commons License CC0",
+		"openDatabaseLicense":"OpenDatabase License",
+		"licenseAccepted":"",
+		"license":"License",
+		"title":"Title",
+		"description":"Description",
+		"tags":"Tags (separate by comma)",
+		"homepage":"Homepage",
+		"phone":"Phone",
+		"street":"Address",
+		"city":"City",
+		"zip":"ZIP Code",
+		"email":"Email",
+		"clickOnMap":"or click on the map...",
+		"contact":"Contact (optional)",
+		"cancel":"cancel",
+		"save":"save",
+		"editEntryHeading":"Edit entry",
+		"newEntryHeading":"New entry",
+		"savingError":"Error while trying to save the entry...",
+		"valueError":"Something is missing, please check below.",
+		"requiredField":"required field",
+		"titleTooLong":"Title too long",
+		"titleTooShort":"Title too short",
+		"maxNumCharactersTitle":"out of max. 50 characters",
+		"minNumCharactersTitle":"characters, minimum: 3",
+		"invalidValues":"Invalid values",
+		"descriptionTooLong":"Description too long",
+		"descriptionTooShort":"Description too short",
+		"maxNumCharactersDescription":"out of max. 250 characters",
+		"minNumCharactersDescription":"characters, minimum: 10",
+		"invalidLatitude":"Invalid Latitude",
+		"invalidLongitude":"Invalid Longitude",
+		"invalidCategory":"Invalid Category",
+		"invalidTags":"Invalid tags",
+		"minNumCharactersTags":"please provide tags with a minimum of 3 characters",
+		"acceptLicense":"Please accept the license",
+		"invalidLicenseAgreement":"Invalid License Agreement",
+		"invalidURL":"Invalid URL",
+		"httpMissing":"\"http://\" or \"https://\" missing"
+	},
+	"entryDetails":{
+		"loadingEntry": "loading entry...",
+		"back" : "back"
+	},
+	"login":{
+		"requiredField":"required field",
+		"loginFailed":"Logging in failed",
+		"invalidValues":"Invalid values",
+		"invalidUsername":"Invalid username",
+		"invalidPassword":"Invalid password",
+		"invalidPasswordOrUsername":"Wrong username or password.",
+		"emailUnconfirmed":"Your email-address is not yet confirmed. Please check your inbox, as well as spam-folder, if necessary.",
+		"minNumCharactersUsername":"characters, minimum: 3",
+		"minNumCharactersPassword":"characters, minimum: 3",
+		"username":"username",
+		"password":"password",
+		"loginButton":"Log In",
+		"registerText":"You don't have an account yet?",
+		"registerLink":"Sign up now (it's free)"
+	},
+	"register":{
+		"heading":"Sign up",
+		"genericError":"Error while signing up. This username or email-address seems to already be in use.",
+		"username":"username",
+		"email":"email-address",
+		"password1":"password",
+		"password2":"repeat password",
+		"submitButton":"register",
+		"loginText":"Already have an account? You can",
+		"loginLink":"log in here",
+		"requiredField":"required field",
+		"invalidValues":"Invalid values",
+		"invalidUsername":"Invalid username",
+		"invalidPassword":"Invalid password",
+		"minNumCharactersUsername":"characters, minimum: 3",
+		"minNumCharactersPassword":"characters, minimum: 3",
+		"invalidEmail":"Invalid email-address",
+		"repeatPassword":"Please repeat the password here",
+		"passwordsDontAgree":"You entered two different passwords"
+	},
+	"ratings":{
+		"requiredField":"required field",
+		"rating":"rating",
+		"rating-heading":"Rating",
+		"ratings":"ratings",
+		"heading":"Ratings",
+		"noRatingsYet":"There are no ratings for this entry yet.",
+		"giveFirstRating":"be the first to rate this entry",
+		"newRating":"rate this entry",
+		"contextName":{
+			"diversity":"Diversity",
+		    "renewable":"Renewability",
+		    "fairness":"Fairness",
+		    "humanity":"Humanity",
+		    "transparency":"Transparency",
+		    "solidarity":"Solidarity"
+		},
+		"contextExplanation":{
+			"diversity": "Ecological diversity, organic certifications, few additives etc.",
+		    "renewable": "Environmental protection, short transport routes, efficient/ low use of resources and energy, circular economy etc.",
+		    "fairness": "Safe, inclusive, fair and appropriate working conditions throughout the entire value chain.",
+		    "humanity": "Do all participants have room for their own ideas, further development and cultural diversity? Are there rights to participate and democratic processes?",
+		    "transparency": "Are production, financing and retail-chains publicly comprehensible? ",
+		    "solidarity": "Cooperative working, sustainable and ethical financing and investments, in consideration of all consumer budgets, etc."
+		},
+		"valueName":{
+			"minusOne":"so yesterday",
+			"zero":"standard",
+			"one":"of tomorrow",
+			"two":"visionary"
+		},
+		"valueNameExplanation":{
+			"minusOne":"a few aspects to criticise",
+			"zero":"not particularly sustainable",
+			"one":"pioneering",
+			"two":"It can't get any better than that!"
+		}
+	},
+	"ratingForm":{
+		"newRatingFor":"New rating for",
+		"introText":"Our ratings make sustainable entries more visible than less sustainable entries. Well rated entries are higher ranked within the von morgen map and its search results.",
+		"moreInfoLink":"more info",
+		"savingError":"Your rating couldn't be saved.",
+		"valuesError":"Something is missing, please check below.",
+		"chooseContext":"Choose a sustainability criteria to rate",
+		"title":"Title",
+		"comment":"Comment/Explanation",
+		"reference":"Reference (e.g. a link or \"I work there.\" etc.)",
+		"ratingHeading":"Rating",
+		"cancel":"cancel",
+		"save":"save rating",
+		"requiredField":"required field",
+		"titleTooLong":"Title too long",
+		"titleTooShort":"Title too short",
+		"maxNumCharactersTitle":"out of max. 40 characters",
+		"minNumCharactersTitle":"characters, minimum: 3",
+		"invalidRatingContext":"Invalid Rating Context",
+		"invalidRating":"Invalid Rating",
+		"commentTooLong":"Comment too long",
+		"commentTooShort":"Comment too short",
+		"maxNumCharactersComment":"out of max. 500 characters",
+		"minNumCharactersComment":"characters, min: 10"
+	},
+	"subscribeToBbox" : {
+		"changeSubscription":{
+			"heading":"Your subscription",
+			"text1":"You have subscribed to a map section and will be notified by email of new entries and changes within this area.",
+			"text2":"If you want to change the subscribed map section, navigate to the map section you are interested in and then click on \"change\""
+		},
+		"newSubscription":{
+			"heading":"Subscribe to map section",
+			"text1":"Navigate to the map section you are interested in and click on \"subscribe\". You will then be kept up to date with new entries and changes within this region by email.",
+			"text2":"You can unsubscribe or change your subscription at any time here."
+		},
+		"cancel": "cancel",
+		"edit": "edit",
+		"unsubscribe": "unsubscribe",
+		"back": "cancel",
+		"subscribe": "subscribe"
+	},
+	"search-results" : {
+		"cities" : "cities",
+		"results-out-of-bbox" : "More results outside the visible map area:"
+	},
+	"loading-entries" : {
+		"cancel" : "back"
+	},
+	"io-error" : {
+		"message" : " Can't reach the server. Please check your internet connection or try again later.",
+		"close" : "close"
+	},
+	"landingPage" : {
+		"menu" : {
+			"map" : "Map",
+			"infos" : "About us",
+			"contact" : "Contact",
+			"donate" : "Donate",
+			"login" : "Login",
+			"logout" : "Logout"
+		},
+		"slogan" : "Mapping for Good",
+		"city-search" : {
+			"placeholder" : "Which place would you like to discover?",
+			"error" : "Error while searching for cities",
+			"no-results" : "Could not find any city with that name.",
+			"show-map" : "Show map..."
+		},
+		"subscribeToBbox" : {
+			"message" : "You are logged in. I you like you can",
+			"new-link" : "stay informed about changes in your city",
+			"edit-link" : "change or unsubscribe your subscribed map section"
+		},
+		"donate" : {
+			"heading" : "Be part of something good for our future.",
+			"paragraph1" : "The von morgen map shall always be free of charge to our community. That is why our software is developed open sourced. Solidarity-based donations from users and the mapped projects and companies enable our technical development and maintenance. For this, we recommend a monthly contribution of €15 to €25 per month for companies and up to €3 per month for projects and users to ensure organic growth and help the von morgen map to remain independent.",
+			"betterplace-link" : "You can place donations for „von morgen - Mapping for Good“ at www.betterplace.org.",
+			"paragraph2" : {
+				"heading" : "Donation Account:",
+				"bank-details1": "Ideen hoch drei e.V. ",
+				"bank-details2": "IBAN: DE05 4306 0967 4031 0759 00",
+				"bank-details3": "BIC: GENODEM1GLS  at GLS Bank",
+				"bank-details4": "Intended purpose: von morgen. Mapping for Good",
+				"text" : "Our platform \"von morgen\" will be additionally financed by funding means from various programmes and competitions. Our team is still working on a voluntary basis, but we want to professionalize our development and support structures to be able to sustain ourselves prospectively."
+			},
+			"paragraph3": {
+				"heading": "Pioneer regions for a world of tomorrow",
+				"text1": "We see ourselves as a visionary and multifaceted networking initiative that aims to make positive change visible in our society. In order to ensure this in the best possible way, we are currently developing pioneer regions, which will be moderated locally by a local scout. You are an expert to your region and want to be part of a pioneer region? Then feel free to contact us by mail or through this",
+				"form-link": "Form",
+				"text2": ". Together we will make a world of tomorrow visible today.",
+				"text3": "You can find a current overview of all the features that will be developed for the von morgen map on our betterplace donation page:",
+				"text4": "Ressources are also needed for fixing bugs, optimizations and updates.",
+				"text5": "We are happy about every small and big contribution.",
+				"text6": "Thank you very much!",
+				"text7": "the von morgen Team"
+
+			}
+		},
+		"user" : {
+			"register-success" : {
+				"text1" : "You have successfully registered. Please confirm your email-address. You can then",
+				"text2" : "log yourself in. For this, we've just send you",
+				"text3" : "an email."
+			},
+			"confirming-email-address" : {
+				"text" : "Your email-address is being confirmed."
+			},
+			"confirm-email-error" : {
+				"message" : "Ops! There was an error confirming your email address. Please try again with a new username to",
+				"link" : "sign up."
+			},
+			"email-confirmed" : {
+				"text1": "Your email address has been confirmed.",
+				"text2": "You can now",
+				"link": "log in."
+			},
+			"logged-out" : "You're logged out."
+		},
+		"join" : {
+			"heading" : "Become a part of our team.",
+			"paragraph1": "We are a team across Germany and are always looking for new team members! You can find our current openings here:",
+			"paragraph2": "We are looking for local scouts, that are experts to their regions or are familiar with topics of the sustainable conversation: as our direct contact locally, you will ensure the quality of the map entries, organize events and workshops and show your city from its best side!",
+			"paragraph3": "Do you have any questions or did we spark your interest? We look forward to hear from you:"
+		},
+		"footer" : {
+			"heading": "Tomorrow starts today.",
+			"contact": "Contact: ",
+			"social-media": "Social Media: ",
+			"open-source": "Open Source: ",
+			"imprint": "Imprint"
+		}
+	},
+	"landingExplain" : {
+		"chapter1" : {
+			"heading" : "The world is full of explorers, and full of things to be explored.",
+			"paragraph1" : {
+				"heading" : "Discover places from an inspiring point of view.",
+				"text" : "Our map invites you to explore forward-thinking projects, companies and soon to come events in your area."
+			},
+			"paragraph2" : {
+				"heading" : "Be a part of it! ",
+				"text" : "Find all the information you need to get in touch with projects you want to engage with. Stop by to say Hello! "
+			},
+			"paragraph3" : {
+				"heading" : "Let’s create a world for tomorrow.",
+				"text" : "Together, we want to show and embrace the positive change in our society."
+			}
+		},
+		"chapter2" : {
+			"heading" : "How to use the von morgen map"
+		},
+		"chapter3" : {
+			"heading" : "We have a vision",
+			"text" : {
+				"1" : "von morgen supports creativity, sustainability and joint action.",
+				"2" : "We believe in a modern society in wich we all can embrace a self-determined, content and environmental-friendly life. Our goal: a benevolent future."
+			}
+		},
+		"chapter4" : {
+			"heading" : "Are you with us?",
+			"text" : {
+				"1" : "Support our project",
+				"2" : "Become a local scout",
+				"3" : "Join our team"
+			},
+			"learnMore" : "more"
+		},
+		"chapter5" : {
+			"heading" : "Our team",
+			"text" : "Das Team von morgen ist so bunt wie der Wandel. Ehemalige entwicklungspolitische Freiwillige, Studierende, Wandelgestalter*innen und Stipendiaten - Menschen, die sich ehrenamtlich für die Gesellschaft von morgen einsetzen wollen.",
+			"new-members" : "We are always looking for new members!",
+			"graphic-design" : "Graphic Design",
+			"software-development" : "Software Development",
+			"pr-marketing" : "PR & Marketing",
+			"communication-marketing" : "Communication & Marketing",
+			"thao" : "Content & Communication",
+			"project-development" : "Project Development",
+			"chair" : "Chair",
+			"lisa1" : "Political Scientist",
+			"lisa2" : "Strategy & Impact",
+			"marten" : "Mindfulness and Change Psychology",
+			"florian" : "Software Development",
+			"louisa" : "Social Worker",
+			"anja" : "Designer",
+			"xueqian" : "Consultant",
+			"linus" : "Global Sociology"
+		},
+		"chapter6" : {
+			"heading" : "A project by"
+		},
+		"chapter7" : {
+			"heading" : "Our partners",
+			"boell-foundation" : "In its pilot phase this project has been supported by the Heinrich-Böll-Foundation."
+		}
+	},
+	"donate" : {
+		"heading" : "Doing something good for tomorrow.",
+		"text" : {
+			"1" : "Our platform von morgen is financed by subsidies from various programs and competitions, as well as by donations. We ourselves, as team members of von morgen, are volunteers.",
+			"2" : "We would like to use the contributions for the further development of von morgen. Various features are planned.",
+			"3" : "Have a look at our Crowdfunding-Campaign here:",
+			"4" : "We are looking forward to every small and big contribution and hope to be available in your city soon."
+		},
+		"ending" : "Thank you very much, the von morgen Team"
+	},
+	"join" : {
+		"heading" :{
+			"1":"Become a part of our team",
+			"2":"Become a local scout"
+		},
+		"text" : {
+			"1" : "We are a team across Germany and are always looking for new team members! You can find our current openings here:",
+			"2" : "We are looking for local scouts, that are experts to their regions or are familiar with topics of the sustainable conversation: as our direct contact locally, you will ensure the quality of the map entries, organize events and workshops and show your city from its best side!",
+			"3" : "Do you have any questions or did we spark your interest? We look forward to hear from you:"
+		}
+	},
+	"info" : {
+		"heading1": "The Project",
+		"facebook":"News and Updates on",
+		"betterplace":"Reports on current developments on",
+		"betterplace-link":"our blog at Betterplace",
+		"text1" : {
+			"1":"Our interactive map shows you places in your area that are already committed to a world of tomorrow.",
+			"2":"You are part of a project that is looking for new team members?",
+			"3":"You know a company that operates sustainably?",
+			"4":"On our website, you can bring awareness to all of these - and thus share a place designed by people that is close to your heart.",
+			"5":"We are looking for a variety of ideas, projects and companies to counteract the current social, ecological and economic upheavals. We would like to bring them all together and create a joint online presence, and thus an increased attention in society for these pioneering projects.",
+			"6":"Following the wiki-principle, all users, projects and companies can mark themselves and others on the map and thus reach their communities and the ones yet to discover them. But this is more than just an online-platform: local scouts ensure the quality of the map entries on site, maintain editorial standards, and have the task to support local exchanges between citizens, projects and companies through events and workshops.",
+			"7":"von morgen asks for values that underpin and move our society. We bring together good people with good places."
+		},
+		"heading2":"Background and Vision",
+		"text2":{
+			"goalLink":"What is the goal of von morgen?",
+			"ratingsLink":"What are sustainability criteria?",
+			"regionalpilotLink":"What are local scouts?",
+			"embedMapLink":"How can I embed the map on my homepage?",
+			"joinLink":"How can I be part of the team or support the von morgen map?"
+		},
+		"heading3":"We love Open Source!",
+		"text3":"We want to set a good example and therefore develop the software transparently and openly. The source code of this project can be found under:",
+		"heading4":"Workshops and events von morgen",
+		"text4":"Together with our partner, the non-profit association Ideen³ e. V. and the \"Ideenwerkstatt Bildungsagenten\", we offer workshops on various topics to support the socio-ecological transformation.",
+		"clientVersion":"Version dieses Clients:",
+		"serverVersion":"Version des Servers:"
+	},
+	"category":{
+		"initiative":"Project",
+		"event":"Event",
+		"company":"Company"
+	},
+	"searchbar":{
+		"placeholder":"What are you looking for? (# for tags)"
+	},
+	"resultlist":{
+		"showMoreEntries":"Show more entries...",
+		"entriesLoading":"Entries are loaded...",
+		"noEntriesFound":"No entries found.",
+		"addEntry":"add a new entry",
+		"entriesLoading":"loading entries..."
+	},
+	"growler":{
+		"INFO FOR TRANSLATORS":"Growler is the green or red bar that appears at the top of the screen for example when saving an entry",
+		"genericError":"Ops! An error has occurred...",
+		"subscriptionChanged":"You subscription has been changed.",
+		"subscriptionAdded":"You subscribed to a map section.",
+		"unsubscribingSuccessfull":"You unsubscribed from the map section",
+		"entrySaved":"Entry has been saved.",
+		"ratingSaved":"Rating has been saved."
+	},
+	"contact":{
+		"heading":"Contact",
+		"text1":"The von morgen team, represented by",
+		"showOnKVM":"Show on the map"
+	},
+	"imprint":{
+		"contact":"Contact",
+		"imprint":"Imprint",
+		"heading1":"Legal entity in the sense of non-profit status",
+		"representedByChair":"Represented by the Chair of Directors",
+		"heading2":"Concept",
+		"kvmTeamRepresentedBy":"The von morgen Team, represented by",
+		"heading3":"Responsible for the content according to § 55 Abs. 2 RStV",
+		"heading4":"Design",
+		"heading5":"Illustrations",
+		"heading6":"Implementation and Programming"
+	},
+	"businesscardWidget":{
+		"showOnMap":"Show on the map..."
+	},
+	"mapWidget":{
+		"showLargeMap":"Open large map..."
+	},
+	"modal":{
+		"locate":{
+			"inProgress":"We are looking for your current location...",
+			"cancel":"Cancel",
+			"failed":"Your location cannot be determined. Location tracking is disabled in the browser or system settings, or GPS has no reception.",
+			"close":"Close",
+			"tryAgain":"Try again."
+		},
+		"events":{
+			"text":"Events are not yet supported at the moment. \n\n Whether it's a conference, workshop or festival - they are part of the von morgen map. We are also planning an event calendar that displays and exports the results. \n\n To make this feature available soon, take part in our fund-raising campaign on www.betterplace.org!",
+			"close":"Close",
+			"donate":"Donate"
+		}
+	}
+}

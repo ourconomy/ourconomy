@@ -1,88 +1,80 @@
-import React    from "react";
-import { pure } from "recompose";
-import URLs     from "../constants/URLs";
+import React, { Component } from "react";
 import pkg      from "../../package.json";
+import team1    from "../img/team_am_tisch.jpg";
+import team2    from "../img/team_in_action.jpg";
+import slider   from "../img/Slider.jpg";
+import URLs     from "../constants/URLs";
+import i18n     from "../i18n";
 
-class Info extends React.Component {
-
-  render () {
-
-    let sv = null;
-
-    if (this.props.server && this.props.server.version) {
-      sv = <p className = "version">{
-        "Version des Servers: v" + this.props.server.version
-        }</p>;
-    }
-
-    return (
-      <div className = "info">
-        <h2>Das Projekt</h2>
-        <p>
-          Unsere interaktive Karte zeigt dir Orte in deiner Umgebung,
-          an denen man sich schon heute für eine Welt von morgen einsetzt.
-        </p>
-        <p>
-          Du hast eine Initiative, für die du Mitstreiter suchst?
-          Du kennst ein Unternehmen, das nachhaltig wirtschaftet?
-        </p>
-        <p>
-          Auf unserer Website kannst du andere darauf
-          aufmerksam machen – und dich so für eine Sache
-          einsetzen, die dir persönlich am Herzen liegt.
-        </p>
-        <p>
-          Wir sind auf der Suche nach vielfältigen Projekten, Initiativen und
-          Unternehmen, die den aktuellen sozialen, ökologischen und ökonomischen
-          Umbrüchen alternativ entgegen wirken.
-          Ihnen möchten wir einen gemeinsamen Online-Auftritt und damit eine
-          erhöhte Aufmerksamkeit ermöglichen.
-        </p>
-        <p>
-          Nach dem Wiki-Prinzip können alle Nutzer, Initiativen und Unternehmen
-          sich und andere auf der Karte eintragen und so ihre Mitmenschen
-          erreichen.
-          Doch von morgen ist mehr als eine Onlineplattform: Regionalpiloten
-          sichern vor Ort die Qualität der Karteneinträge und haben neben einer
-          redaktionellen Funktion die Aufgabe durch Bildungsveranstaltungen und
-          Aktionen den regionalen Austausch zwischen Bürgern, Initiativen und
-          Unternehmen zu stärken.
-        </p>
-        <p>
-          von morgen fragt nach Werten, die unsere Gesellschaft fundieren und
-          bewegen.
-          Wir zeigen Menschen, die Guten tun, wo es Gutes gibt.
-        </p>
-        <p>
-          <i className = "fa fa-globe" />
-          <a target="_blank" href = {URLs.PROTOTYPE.link} >{ URLs.PROTOTYPE.name }</a>
-          <br />
-          <i className = "fa fa-facebook" />
-          <a target="_blank" href = { URLs.FACEBOOK.link }>{ URLs.FACEBOOK.name }</a>
-          <br />
-          <i className = "fa fa-envelope-o" />
-          <a target="_blank" href = {URLs.MAIL.link}>{ URLs.MAIL.name }</a>
-          <br />
-          <i className = "fa fa-github" />
-          <a target="_blank" href = {URLs.REPOSITORY.link}>{ URLs.REPOSITORY.name }</a>
-        </p>
-        <br />
-        <br />
-        <h2>Wir lieben Open Source!</h2>
-        <p>
-          Wir wollen mit gutem Beispiel vorangehen und entwickeln daher
-          die Software transparent und offen.
-          Den Quellcode des Gemeinschaftsprojekts findest du unter:
-        </p>
-        <p>
-          <a target="_blank" href = {URLs.REPOSITORY.link}>{ URLs.REPOSITORY.name }</a>
-        </p>
-        <p className = "version">{
-           "Version dieses Clients: v" + pkg.version
-        }</p>
-        {sv }
-      </div>);
-  }
+const t = (key) => {
+  return i18n.t("info." + key);
 }
 
-module.exports = pure(Info);
+module.exports = ({serverVersion}) =>
+    <div className="info">
+        <h2>{t("heading1")}</h2>
+        <p>
+            {t("facebook")} <a target="_blank" href='https://www.facebook.com/vonmorgen'>Facebook</a><br />
+            {t("betterplace")} <a target="_blank" href='https://www.betterplace.org/de/projects/36213/newsroom'>{t("betterplace-link")}</a>
+        </p>
+        <br />
+
+        <p>
+          {t("text1.1")}
+        </p>
+        <p>
+          {t("text1.2")}<br />
+          {t("text1.3")}<br />
+          {t("text1.4")}
+        </p>
+        <p>{t("text1.5")}</p>
+        <p>{t("text1.6")}</p>
+        <p>{t("text1.7")}</p>
+    <img className="landing-img" src={team1}/><br /><br />
+      <h3>{t("heading2")}</h3>
+        <a target="_blank" href='http://bildungsagenten.org/kartevonmorgen/'>{t("text2.goalLink")}</a><br />
+        <a target="_blank" href='http://bildungsagenten.org/kartevonmorgen/2/'>{t("text2.ratingsLink")}</a><br />
+        <a target="_blank" href='http://bildungsagenten.org/kartevonmorgen/3/'>{t("text2.regionalpilotLink")}</a><br />
+        <a target="_blank" href='http://bildungsagenten.org/kartevonmorgen/3/#Widget_zum_Einbetten'>{t("text2.embedMapLink")}</a><br />
+        <a target="_blank" href='http://bildungsagenten.org/kartevonmorgen/4/'>{t("text2.joinLink")}</a><br />
+        <p>
+        <br />
+        <i className = "fa fa-facebook" />
+        {" "}<a target="_blank" href = { URLs.FACEBOOK.link }>{ URLs.FACEBOOK.name }</a>
+        <br />
+        <i className = "fa fa-envelope-o" />
+        {" "}<a target="_blank" href = {URLs.MAIL.link}>{ URLs.MAIL.name }</a>
+        <br />
+
+        </p>
+        <br />
+        <br />
+        <h3>{t("heading3")}</h3>
+        <p>
+          {t("text3")}
+        </p>
+        <p>
+          <i className = "fa fa-github" />
+          {" "}<a target="_blank" href = {URLs.REPOSITORY.link}>{ URLs.REPOSITORY.name }</a>
+        </p>
+
+
+        <img className="landing-img" src={team2} /><br /><br />
+        <h3>{t("heading4")}</h3>
+            <p>
+                {t("text4")}<br />
+                <a target="_blank" href="http://bildungsagenten.org">www.bildungsagenten.org</a>
+            </p>
+
+        <img className="landing-img" src={slider} />
+        <p className="version">{
+            t("clientVersion") + " " + pkg.version
+        }
+        </p>
+        {serverVersion
+            ?   <p className="version">
+                    {t("serverVersion") + " " + serverVersion}
+                </p>
+            : ""
+        }
+    </div>

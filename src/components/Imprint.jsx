@@ -1,10 +1,15 @@
 import React  from "react"
 import URLs   from "../constants/URLs"
+import i18n   from "../i18n";
+
+const t = (key) => {
+  return i18n.t("imprint." + key);
+}
 
 const Imprint = () =>
 
   <div className="info">
-    <h3>Kontakt</h3>
+    <h3>{t("contact")}</h3>
     <p>
       <i className = "fa fa-globe" />
       <a target="_blank" href = { URLs.PROTOTYPE.link } >{ URLs.PROTOTYPE.name }</a>
@@ -18,61 +23,66 @@ const Imprint = () =>
       <i className = "fa fa-github" />
       <a target="_blank" href = { URLs.REPOSITORY.link } >{ URLs.REPOSITORY.name }</a>
     </p>
-    <h3>Impressum</h3>
-  <h4>Rechtlicher Träger im Sinne der Gemeinnützigkeit</h4>
-      Ideen³ e.V. // Räume für Entwicklung, Vertreten durch den Vorstand Helmut Wolman
-      <br />
-      Görreshof 180, 53347 Alfter
-      <br />
-      <a href = "http://ideenhochdrei.org">Ideenhochdrei.org</a>
-      <br />
-      <a href = "mailto:info@ideenhochdrei.org">
-        info@ideenhochdrei.org
-      </a>
-  
-    
-    <h4>Konzept</h4>
-      Helmut Wolman
-      <br />
-      Turley-Platz 9
-      <br />
-      68167 Mannheim
-      <br />
-      <a href = "mailto:helmut.wolman@kartevonmorgen.org">
-        helmut.wolman@kartevonmorgen.org
-      </a>
-  
-  <h4>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</h4>
-      T. Thao Tran
-      <br />
-      <a href = "mailto:thao.tran@kartevonmorgen.org">
-        thao.tran@kartevonmorgen.org
-      </a>
+    <h3>{t("imprint")}</h3>
+      <h4>{t("heading1")}</h4>
+        Ideen³ e.V. // Räume für Entwicklung
+        <br />
+        {t("representedByChair")} Helmut Wolman
+        <br />
+        Görreshof 180, 53347 Alfter
+        <br />
+        <a target="_blank" href = "http://ideenhochdrei.org">Ideenhochdrei.org</a>
+        <br />
+        <a href = "mailto:info@ideenhochdrei.org">
+          info@ideenhochdrei.org
+        </a>
 
-    <h4>Design</h4>
-      Anja Dannemann
-      <br />
-      <a href= "mailto:anja.dannemann@kartevonmorgen.org">
-        anja.dannemann@kartevonmorgen.org
-      </a>
+      <h4 className="imprint-heading">{t("heading2")}</h4>
+        {t("kvmTeamRepresentedBy")}
+        <br />
+        Helmut Wolman
+        <br />
+        Turley-Platz 9
+        <br />
+        68167 Mannheim
+        <br />
+        <a href = "mailto:helmut.wolman@kartevonmorgen.org">
+          helmut.wolman@kartevonmorgen.org
+        </a>
 
-    <h4>Illustrationen</h4>
-      Lisa Tegtmeier
-      <br />
-      <a href = "http://www.lisategtmeier.de">
-       www.lisategtmeier.de
-      </a>
+      <h4 className="imprint-heading">{t("heading3")}</h4>
+        {t("kvmTeamRepresentedBy")}
+        <br />
+        T. Thao Tran
+        <br />
+        <a href = "mailto:thao.tran@kartevonmorgen.org">
+          thao.tran@kartevonmorgen.org
+        </a>
 
-    <h4>Umsetzung & Programmierung</h4>
-      <a href="https://slowtec.de/">slowtec GmbH</a>
-      <br />
-      Friedrichsberg 55
-      <br />
-      70567 Stuttgart
-      <br />
-      <a href = "mailto:markus@kartevonmorgen.org">
-        markus@kartevonmorgen.org
-      </a>
+      <h4 className="imprint-heading">{t("heading4")}</h4>
+        Anja Dannemann
+        <br />
+        <a href= "mailto:anja.dannemann@kartevonmorgen.org">
+          anja.dannemann@kartevonmorgen.org
+        </a>
+
+      <h4 className="imprint-heading">{t("heading5")}</h4>
+        Lisa Tegtmeier
+        <br />
+        <a target="_blank" href = "http://www.lisategtmeier.de">
+         www.lisategtmeier.de
+        </a>
+
+      <h4 className="imprint-heading">{t("heading6")}</h4>
+        <a target="_blank" href="https://slowtec.de/">slowtec GmbH</a>
+        <br />
+        Friedrichsberg 55
+        <br />
+        70567 Stuttgart
+        <br />
+        <a href = "mailto:markus@kartevonmorgen.org">
+          markus@kartevonmorgen.org
+        </a>
 
     <h4>Haftungsausschluss</h4>
     <p>
@@ -172,17 +182,8 @@ const Imprint = () =>
     <p>
       Da wir der Ansicht sind, dass du nicht verpflichtet sein solltest,
       personenbezogene Daten bereitzustellen, um am freien Wissensaustausch
-      teilzunehmen, kannst du:
-      <ul>
-        <li>
-          alle Seiten der Karte von morgen ohne Einrichtung eines Benutzerkontos
-          lesen, bearbeiten oder nutzen;
-        </li>
-        <li>
-          ein Benutzerkonto ohne Angabe deiner E-Mail-Adresse oder deines echten
-          Namens erstellen.
-        </li>
-      </ul>
+      teilzunehmen, kannst du alle Einträge der Karte von morgen ohne Einrichtung
+      eines Benutzerkontos lesen, bearbeiten und nutzen;
     </p>
     <p>
       Da wir verstehen wollen, wie die Seite der Karte von morgen genutzt wird,

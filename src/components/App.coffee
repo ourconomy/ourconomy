@@ -3,7 +3,7 @@
 require "./App.styl"
 
 React             = require "react"
-T                 = React.PropTypes
+T                 = require "prop-types"
 V                 = require "../constants/PanelView"
 C                 = require "../constants/Categories"
 Actions           = require "../Actions"
@@ -25,11 +25,10 @@ SubscribeToBbox   = require "./SubscribeToBbox"
 Ratings           = require "./Ratings"
 { EDIT, RATING, PRODUCT }  = require "../constants/Form"
 URLs              = require "../constants/URLs"
-{ DIVERSITY, RENEWABLE, FAIRNESS, 
-HUMANITY, TRANSPARENCY, SOLIDARITY } = require "../constants/RatingContexts"
 { pure }          = require "recompose"
 { initialize }    = require "redux-form"
 mapConst          = require "../constants/Map"
+{ translate }     = require "react-i18next"
 
 { GrowlerContainer } = require "flash-notification-react-redux"
 
@@ -49,10 +48,11 @@ Main = React.createClass
     growler : T.object.isRequired
     url     : T.object.isRequired
     user    : T.object.isRequired
+    timedActions : T.object.isRequired
 
   render: ->
 
-    { dispatch, search, view, server, map, form, growler, url, user } = @props
+    { dispatch, search, view, server, map, form, growler, url, user, timedActions, t } = @props
 
     { highlight, addresses, cities } = search
     { entries, ratings, products } = server
@@ -63,20 +63,24 @@ Main = React.createClass
       window.history.pushState(null, null, window.location.pathname + url.hash);
 
     resultEntries    =
-      (x for id in search.result when (x=entries[id])?)
+      (x for entry in search.result when (x=entries[entry.id])?)
     invisibleEntries =
-      (x for id in search.invisible when(x=entries[id])?)
+      (x for entry in search.invisible when(x=entries[entry.id])?)
+#our please review:
+#   resultProducts   =
+#     (x for id in search.products when (x=products[id])?)
     resultProducts   =
       (x for id in search.products when (x=products[id])?)
+# end 
     rightPanelIsOpen = false  # right panel moved into landingpage
-    mapCenter = 
+    mapCenter =
       if e?.lat and e?.lng and c=search.current
         e = entries[c]
         lat: e?.lat
         lng: e?.lng
       else
         map.center
-    loggedIn = if user.id then true else false
+    loggedIn = if user.username then true else false
 
     div className:"app",
 
@@ -84,11 +88,11 @@ Main = React.createClass
 
         React.createElement GrowlerContainer,
           growler: growler
-          shownFor: 2000
+          shownFor: 1000
 
         if view.menu
           React.createElement LandingPage,
-            onMenuItemClick: (id) -> 
+            onMenuItemClick: (id) ->
               switch id
                 when 'map'
                   dispatch Actions.toggleLandingPage()
@@ -158,200 +162,205 @@ Main = React.createClass
               onChange        : (txt="") ->
                 dispatch Actions.setSearchText txt
                 dispatch Actions.search()
-              onLenseClick    : ->
-                switch view.left
-                  when V.ENTRY  #our: what about V.PRODUCT?
-                    dispatch Actions.setCurrentEntry null, null
-                  else
-                    dispatch Actions.setSearchText ''
-                    dispatch Actions.search()
+#<<<<<< HEAD
+#             onLenseClick    : ->
+#               switch view.left
+#                 when V.ENTRY  #our: what about V.PRODUCT?
+#                   dispatch Actions.setCurrentEntry null, null
+#                 else
+#                   dispatch Actions.setSearchText ''
+#                   dispatch Actions.search()
+#             onEscape        : -> dispatch Actions.setSearchText ''
+#             onEnter         : -> # currently not used
+#             onLocate        : -> dispatch Actions.showOwnPosition()
+#         if view.left?
+#           nav className: "menu pure-g",
+#             switch view.left
+#               when V.RESULT
+#                 [
+#                   li
+#                     onClick: -> dispatch Actions.showNewProduct()
+#                     key: "Produkt"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-plus"
+#                       "Produkt hinzufügen"
+#                   li
+#                     onClick: -> dispatch Actions.showNewEntry()
+#                     key: "Eintr"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-plus"
+#                       "Eintrag hinzufügen"
+#                 ] 
+#               when V.RESULT_PRODUCT
+#                 [
+#                   li
+#                     onClick: -> 
+#                       dispatch Actions.setCurrentEntry null, null
+#                       dispatch Actions.showSearchResults()
+#                     key: "back"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-chevron-left"
+#                       "zurück zur Karte"
+#                   li
+#                     onClick: -> dispatch Actions.showNewProduct()
+#                     key: "Produkt"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-plus"
+#                       "Produkt hinzufügen"
+#                 ] 
+#               when V.ENTRY
+#                 [
+#                   li
+#                     onClick: -> 
+#                       dispatch Actions.setCurrentEntry null, null
+#                       dispatch Actions.showSearchResults()
+#                       dispatch Actions.setCenterInUrl map.center
+#                     key: "back"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-chevron-left"
+#                       "zurück"
+#                   li
+#                     onClick: -> dispatch Actions.editCurrentEntry()
+#                     key: "edit"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-pencil"
+#                       "bearbeiten"
+#                 ]
+#               when V.PRODUCT 
+#                 [
+#                   li
+#                     onClick: ->   
+#                       dispatch Actions.setCurrentProduct null
+#                       dispatch Actions.showProductSearchResults()
+#                       #our dispatch Actions.setCenterInUrl map.center
+#                     key: "back"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-chevron-left"
+#                       "zurück"
+#                   li
+#                     onClick: -> dispatch Actions.editCurrentProduct()
+#                     key: "edit"
+#                     className:"pure-u-1-2",
+#                       i className: "fa fa-pencil"
+#                       "bearbeiten"
+#                 ]
+
+#               when V.EDIT, V.NEW
+#                 [
+#                   li
+#                     key: "cancel"
+#                     className:"pure-u-1-2",
+#                     onClick: (->
+#                       dispatch initialize EDIT.id, {}, EDIT.fields
+#                       dispatch switch view.left
+#                         when V.NEW  then Actions.cancelNew()
+#                         when V.EDIT then Actions.cancelEdit()
+#                     ),
+#                       i className: "fa fa-ban"
+#                       "abbrechen"
+#                   li
+#                     key: "save"
+#                     className:"pure-u-1-2",
+#                     onClick: (=>
+#                       @refs.form.submit()
+#                     ),
+#                       i className: "fa fa-floppy-o"
+#                       "speichern"
+#                 ]
+#               when V.NEW_PRODUCT, V.EDIT_PRODUCT
+#                 [
+#                   li
+#                     key: "cancel"
+#                     className:"pure-u-1-2",
+#                     onClick: (->
+#                       dispatch initialize PRODUCT.id, {}, PRODUCT.fields
+#                       dispatch switch view.left
+#                         when V.NEW_PRODUCT  then Actions.cancelNewProduct()
+#                         when V.EDIT_PRODUCT then Actions.cancelEditProduct()
+#                     ),
+#                       i className: "fa fa-ban"
+#                       "Produkt abbrechen"
+#                   li
+#                     key: "save"
+#                     className:"pure-u-1-2",
+#                     onClick: (=>
+#                       @refs.product.submit()
+#                     ),
+#                       i className: "fa fa-floppy-o"
+#                       "Produkt speichern"
+#                 ]
+#               when V.NEW_RATING
+#                 [
+#                   li
+#                     key: "cancel"
+#                     className:"pure-u-1-2",
+#                     onClick: (->
+#                       dispatch initialize RATING.id, {}, RATING.fields
+#                       dispatch Actions.cancelRating()
+#                     ),
+#                       i className: "fa fa-ban"
+#                       "abbrechen"
+#                   li
+#                     key: "save"
+#                     className:"pure-u-1-2",
+#                     onClick: (=>
+#                       @refs.rating.submit()
+#                     ),
+#                       i className: "fa fa-floppy-o"
+#                       "bewerten"
+#                 ]
+#               when V.SUBSCRIBE_TO_BBOX
+#                 if user.subscriptionExists
+#                   [
+#                     li
+#                       key: "back"
+#                       className:"pure-u-1-2",
+#                       onClick: (->
+#                         dispatch Actions.showMap()
+#                       ),
+#                         i className: "fa fa-chevron-left"
+#                         "abbrechen"
+#                     li
+#                       key: "save"
+#                       className:"pure-u-1-2",
+#                       onClick: (=>
+#                         dispatch Actions.subscribeToBbox(map.bbox, true)
+#                       ),
+#                         i className: "fa fa-envelope"
+#                         "ändern"
+#                     li
+#                       key: "delete"
+#                       className:"pure-u-1-1",
+#                       onClick: (->
+#                         dispatch Actions.unsubscribeFromBboxes(user.id)
+#                       ),
+#                         i className: "fa fa-trash"
+#                         "Abonnement abbestellen"
+#                   ]
+#                 else
+#                   [
+#                     li
+#                       key: "back"
+#                       className:"pure-u-1-2",
+#                       onClick: (->
+#                         dispatch Actions.showSearchResults()
+#                         dispatch Actions.setCenterInUrl map.center
+#                       ),
+#                         i className: "fa fa-chevron-left"
+#                         "zurück"
+#                     li
+#                       key: "save"
+#                       className:"pure-u-1-2",
+#                       onClick: (=>
+#                         dispatch Actions.subscribeToBbox(map.bbox, false)
+#                       ),
+#                         i className: "fa fa-envelope"
+#                         "abonnieren"
+#                   ]
+#======
               onEscape        : -> dispatch Actions.setSearchText ''
               onEnter         : -> # currently not used
-              onLocate        : -> dispatch Actions.showOwnPosition()
-          if view.left?
-            nav className: "menu pure-g",
-              switch view.left
-                when V.RESULT
-                  [
-                    li
-                      onClick: -> dispatch Actions.showNewProduct()
-                      key: "Produkt"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-plus"
-                        "Produkt hinzufügen"
-                    li
-                      onClick: -> dispatch Actions.showNewEntry()
-                      key: "Eintr"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-plus"
-                        "Eintrag hinzufügen"
-                  ] 
-                when V.RESULT_PRODUCT
-                  [
-                    li
-                      onClick: -> 
-                        dispatch Actions.setCurrentEntry null, null
-                        dispatch Actions.showSearchResults()
-                      key: "back"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-chevron-left"
-                        "zurück zur Karte"
-                    li
-                      onClick: -> dispatch Actions.showNewProduct()
-                      key: "Produkt"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-plus"
-                        "Produkt hinzufügen"
-                  ] 
-                when V.ENTRY
-                  [
-                    li
-                      onClick: -> 
-                        dispatch Actions.setCurrentEntry null, null
-                        dispatch Actions.showSearchResults()
-                        dispatch Actions.setCenterInUrl map.center
-                      key: "back"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-chevron-left"
-                        "zurück"
-                    li
-                      onClick: -> dispatch Actions.editCurrentEntry()
-                      key: "edit"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-pencil"
-                        "bearbeiten"
-                  ]
-                when V.PRODUCT 
-                  [
-                    li
-                      onClick: ->   
-                        dispatch Actions.setCurrentProduct null
-                        dispatch Actions.showProductSearchResults()
-                        #our dispatch Actions.setCenterInUrl map.center
-                      key: "back"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-chevron-left"
-                        "zurück"
-                    li
-                      onClick: -> dispatch Actions.editCurrentProduct()
-                      key: "edit"
-                      className:"pure-u-1-2",
-                        i className: "fa fa-pencil"
-                        "bearbeiten"
-                  ]
-
-                when V.EDIT, V.NEW
-                  [
-                    li
-                      key: "cancel"
-                      className:"pure-u-1-2",
-                      onClick: (->
-                        dispatch initialize EDIT.id, {}, EDIT.fields
-                        dispatch switch view.left
-                          when V.NEW  then Actions.cancelNew()
-                          when V.EDIT then Actions.cancelEdit()
-                      ),
-                        i className: "fa fa-ban"
-                        "abbrechen"
-                    li
-                      key: "save"
-                      className:"pure-u-1-2",
-                      onClick: (=>
-                        @refs.form.submit()
-                      ),
-                        i className: "fa fa-floppy-o"
-                        "speichern"
-                  ]
-                when V.NEW_PRODUCT, V.EDIT_PRODUCT
-                  [
-                    li
-                      key: "cancel"
-                      className:"pure-u-1-2",
-                      onClick: (->
-                        dispatch initialize PRODUCT.id, {}, PRODUCT.fields
-                        dispatch switch view.left
-                          when V.NEW_PRODUCT  then Actions.cancelNewProduct()
-                          when V.EDIT_PRODUCT then Actions.cancelEditProduct()
-                      ),
-                        i className: "fa fa-ban"
-                        "Produkt abbrechen"
-                    li
-                      key: "save"
-                      className:"pure-u-1-2",
-                      onClick: (=>
-                        @refs.product.submit()
-                      ),
-                        i className: "fa fa-floppy-o"
-                        "Produkt speichern"
-                  ]
-                when V.NEW_RATING
-                  [
-                    li
-                      key: "cancel"
-                      className:"pure-u-1-2",
-                      onClick: (->
-                        dispatch initialize RATING.id, {}, RATING.fields
-                        dispatch Actions.cancelRating()
-                      ),
-                        i className: "fa fa-ban"
-                        "abbrechen"
-                    li
-                      key: "save"
-                      className:"pure-u-1-2",
-                      onClick: (=>
-                        @refs.rating.submit()
-                      ),
-                        i className: "fa fa-floppy-o"
-                        "bewerten"
-                  ]
-                when V.SUBSCRIBE_TO_BBOX
-                  if user.subscriptionExists
-                    [
-                      li
-                        key: "back"
-                        className:"pure-u-1-2",
-                        onClick: (->
-                          dispatch Actions.showMap()
-                        ),
-                          i className: "fa fa-chevron-left"
-                          "abbrechen"
-                      li
-                        key: "save"
-                        className:"pure-u-1-2",
-                        onClick: (=>
-                          dispatch Actions.subscribeToBbox(map.bbox, true)
-                        ),
-                          i className: "fa fa-envelope"
-                          "ändern"
-                      li
-                        key: "delete"
-                        className:"pure-u-1-1",
-                        onClick: (->
-                          dispatch Actions.unsubscribeFromBboxes(user.id)
-                        ),
-                          i className: "fa fa-trash"
-                          "Abonnement abbestellen"
-                    ]
-                  else
-                    [
-                      li
-                        key: "back"
-                        className:"pure-u-1-2",
-                        onClick: (->
-                          dispatch Actions.showSearchResults()
-                          dispatch Actions.setCenterInUrl map.center
-                        ),
-                          i className: "fa fa-chevron-left"
-                          "zurück"
-                      li
-                        key: "save"
-                        className:"pure-u-1-2",
-                        onClick: (=>
-                          dispatch Actions.subscribeToBbox(map.bbox, false)
-                        ),
-                          i className: "fa fa-envelope"
-                          "abonnieren"
-                    ]
+#>>>>>> master
 
           div className: "content-wrapper",
 
@@ -359,7 +368,7 @@ Main = React.createClass
 
               when V.RESULT
                 div className: "result",
-                  if resultProducts #our  and resultProducts.length
+                  if resultProducts and resultProducts.length
                     div null,
                       div className: 'group-header',
                         """
@@ -380,17 +389,15 @@ Main = React.createClass
                     entries     : resultEntries
                     ratings     : ratings
                     highlight   : highlight
-                    onClick     : (id, center) -> dispatch Actions.setCurrentEntry id, center
-                    onMouseEnter: (id) -> dispatch Actions.highlight id
-                    onMouseLeave: (id) -> dispatch Actions.highlight()
                     moreEntriesAvailable: search.moreEntriesAvailable
                     onMoreEntriesClick: () -> dispatch Actions.showAllEntries()
+                    dispatch    : dispatch
 
                   if cities.length > 0
                     div null,
-                      div className: 'group-header', "Städte:"
+                      div className: 'group-header', t "search-results.cities"
                       React.createElement CityList,
-                        cities  : cities
+                        cities  : cities.slice(0,5)
                         onClick : (city) ->
                           dispatch Actions.setCenter
                             lat: city.lat
@@ -399,11 +406,7 @@ Main = React.createClass
 
                   if invisibleEntries and invisibleEntries.length
                     div null,
-                      div className: 'group-header',
-                        """
-                        Weitere Ergebnisse außerhalb
-                        des sichtbaren Bereichs der Karte:
-                        """
+                      div className: 'group-header', t "search-results.results-out-of-bbox"
                       React.createElement ResultList,
                         entries     : invisibleEntries
                         ratings     : ratings
@@ -411,6 +414,7 @@ Main = React.createClass
                         onClick     : (id, center) -> dispatch Actions.setCurrentEntry id, center
                         onMouseEnter: (id) -> dispatch Actions.highlight id
                         onMouseLeave: (id) -> dispatch Actions.highlight()
+                        dispatch    : dispatch
 
               when V.RESULT_PRODUCT
                 div className: "result",
@@ -422,11 +426,14 @@ Main = React.createClass
                     onClick     : (id) -> dispatch Actions.setCurrentProduct id
                     #our: moreEntriesAvailable: search.moreEntriesAvailable
                     #onMoreEntriesClick: () -> dispatch Actions.showAllEntries()
+                    #our needed?  dispatch    : dispatch
 
               when V.ENTRY
                 div className: "content",
                   React.createElement EntryDetails,
                     entry   : entries[search.current] || null
+                    dispatch : dispatch
+                    mapCenter : map.center
                   React.createElement Ratings,
                     entry   : entries[search.current] || null
                     ratings : (if entries[search.current] then (entries[search.current].ratings || []) else []).map((id) -> ratings[id])
@@ -442,7 +449,7 @@ Main = React.createClass
               #     onRate  : (id) => dispatch Actions.showNewRating id
 
               when V.EDIT, V.NEW
-                div className: "content",
+                div className: "content-above-buttons",
                   #our hack:
                   console.log 'kvm form obj.: ' + JSON.stringify form
                   console.log 'server.entries: ' + JSON.stringify server.entries
@@ -451,6 +458,7 @@ Main = React.createClass
                     ref: 'form'
                     isEdit: form[EDIT.id]?.kvm_flag_id?
                     license: entries[search.current]?.license
+                    dispatch: dispatch
                     onSubmit: (data) ->
                       dispatch Actions.saveEntry
                         id          : form[EDIT.id]?.kvm_flag_id
@@ -487,7 +495,7 @@ Main = React.createClass
                         version     : (form[PRODUCT.id]?.values?.version or 0) + 1
 
               when V.NEW_RATING
-                div className: "content",
+                div className: "content-above-buttons",
                   React.createElement RatingForm,
                     ref         : 'rating'
                     entryid     : form[RATING.id]?.kvm_flag_id
@@ -505,27 +513,29 @@ Main = React.createClass
                     changeContext: (ratingContext) ->
                       dispatch Actions.explainRatingContext(ratingContext)
               when V.WAIT
-                div className: "content",
+                div className: "content-above-buttons",
                   React.createElement Message,
                     iconClass: "fa fa-spinner fa-pulse"
                     message: " lade Daten vom Server ..."
-                    buttonLabel: "abbrechen"
+                    buttonLabel: t "loading-entries.cancel"
                     onCancel: ->
                       dispatch Actions.cancelWait()
               when V.IO_ERROR
-                div className: "content",
+                div className: "content-above-buttons",
                   React.createElement Message,
                     iconClass: "fa fa-exclamation-triangle"
-                    message: " Server nicht erreichbar. " +
-                      "Bitte prüfe Deine Internetverbindung " +
-                      "oder versuche es später nochmal. "
-                    buttonLabel: "schließen"
+                    message: t "io-error.message"
+                    buttonLabel: t "io-error.close"
                     onCancel: ->
                       dispatch Actions.closeIoErrorMessage()
               when V.SUBSCRIBE_TO_BBOX
-                div className: "content subscribe-to-bbox",
+                div className: "content-above-buttons",
                   React.createElement SubscribeToBbox,
                     subscriptionExists: user.subscriptionExists
+                    dispatch : dispatch
+                    bbox : map.bbox
+                    username: user.username
+                    mapCenter: map.center
         div className:"hide-sidebar",
           button
             onClick: (-> if view.showLeftPanel then dispatch Actions.hideLeftPanel() else dispatch Actions.showLeftPanel()),
@@ -551,22 +561,17 @@ Main = React.createClass
             zoom          : map.zoom
             category      : form[EDIT.id]?.category?.value
             highlight     : highlight
-            entries       : (resultEntries unless view.left in [V.EDIT, V.NEW])
+            entries       : resultEntries
+            ratings       : ratings
             onClick       : (latlng) -> dispatch Actions.setMarker latlng
-            onMarkerClick : (id) -> 
+            onMarkerClick : (id) ->
               dispatch Actions.setCurrentEntry id, null
               dispatch Actions.showLeftPanel()
             onMoveend     : (coordinates) ->
-              if map.center.lat.toFixed(4) != coordinates.center.lat and map.center.lng.toFixed(4) != coordinates.center.lng
-                dispatch Actions.setCenter
-                  lat: coordinates.center.lat
-                  lng: coordinates.center.lng
-              dispatch Actions.setBbox coordinates.bbox
-              dispatch Actions.search()
+              dispatch Actions.onMoveend(coordinates, map.center)
             onZoomend     : (coordinates) ->
-              if coordinates.zoom != map.zoom
-                dispatch Actions.setZoom coordinates.zoom
-              #   dispatch Actions.setBbox coordinates.bbox
-            loggedIn
-              
-module.exports = pure(Main)
+              dispatch Actions.onZoomend(coordinates, map.zoom)
+            onLocate      : -> dispatch Actions.showOwnPosition()
+            showLocateButton : true
+
+module.exports = translate('translation')(pure(Main))

@@ -1,7 +1,8 @@
 import T                          from "../constants/ActionTypes";
 import GeoLocation                from "../GeoLocation";
-import mapConst                   from "../constants/Map"
-import serverActions              from "./server"
+import mapConst                   from "../constants/Map";
+import appConst                   from "../constants/App";
+import serverActions              from "./server";
 
 const Actions = {
 
@@ -51,12 +52,12 @@ const Actions = {
       });
       const allIDs = [];
       if(Array.isArray(getState().search.result)){
-        allIDs.push(allIDs, getState().search.result);
+        allIDs.push(allIDs, getState().search.result.map(e => e.id));
       }
       if(Array.isArray(getState().search.invisible)){
-        allIDs.push(allIDs, getState().search.invisible);
+        allIDs.push(allIDs, getState().search.invisible.map(e => e.id));
       }
-      dispatch(serverActions.getEntries(allIDs));
+      dispatch(serverActions.Actions.getEntries(allIDs));
     },
 
   showNewRating: (id) => ({
@@ -196,12 +197,49 @@ const Actions = {
     }
   },
 
+  showResultList: () => {
+    return {
+      type: T.SHOW_SEARCH_RESULTS
+    }
+  },
+
   explainRatingContext: (context) => {
     return {
       type: T.EXPLAIN_RATING_CONTEXT,
       payload: context
     }
-  }
+  },
+
+  onMoveend: (coordinates, mapCenter) =>
+    (dispatch, getState) => {
+
+      dispatch({
+        type: T.SET_SEARCH_TIME,
+        payload: Date.now()
+      });
+
+      if(mapCenter.lat.toFixed(4) != coordinates.center.lat && mapCenter.lng.toFixed(4) != coordinates.center.lng){
+        dispatch(Actions.setCenter({
+          lat: coordinates.center.lat,
+          lng: coordinates.center.lng
+        }));
+      }
+      dispatch(Actions.setBbox(coordinates.bbox));
+      dispatch(serverActions.Actions.search());
+
+    },
+
+  onZoomend: (coordinates, zoom) =>
+    (dispatch, getState) => {
+      dispatch({
+        type: T.SET_SEARCH_TIME,
+        payload: Date.now()
+      });
+
+      if(coordinates.zoom != zoom){
+        dispatch(Actions.setZoom(coordinates.zoom));
+      }
+    }
 };
 
 module.exports = Actions;

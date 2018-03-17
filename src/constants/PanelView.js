@@ -9,7 +9,7 @@ module.exports = {
   ENTRY: 'ENTRY',
   PRODUCT: 'PRODUCT',
   INFO: 'INFO',
-  WORKSHOP: 'WORKSHOP',
+  CONTACT: 'CONTACT',
   MAP_INFO: 'MAP_INO',
   DONATE: 'DONATE',
   JOIN: 'JOIN',

@@ -3,30 +3,32 @@ import Actions  from "../Actions"
 import Address  from "./AddressLine"
 import { pure } from "recompose"
 import Flower   from "./Flower";
-import styled    from "styled-components";
-
-import { NAMES, CSS_CLASSES } from "../constants/Categories"
+import NavButton from "./NavButton";
+import styled   from "styled-components";
+import i18n     from "../i18n";
+import { NAMES } from "../constants/Categories"
+import { translate          } from "react-i18next";
 
 const AddressWrapper = styled.div`
   font-size: 0.8em;
   color: #888;
 `;
 
-const ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave}) => {
-  var clz = highlight ? 'highlight-entry ' : '';
-  clz = clz + CSS_CLASSES[entry.categories && entry.categories[0]];
+const ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, onMouseLeave, t}) => {
+  var css_class = highlight ? 'highlight-entry ' : '';
+  css_class = css_class + NAMES[entry.categories && entry.categories[0]];
   return (
     <li
       key           = { entry.id }
-      className     = { clz }
+      className     = { css_class }
       onClick       = { (ev) => { onClick(entry.id, {lat: entry.lat, lng: entry.lng}) }}
       onMouseEnter  = { (ev) => { ev.preventDefault(); onMouseEnter(entry.id) }}
       onMouseLeave  = { (ev) => { ev.preventDefault(); onMouseLeave(entry.id) }} >
       <div className = "pure-g">
         <div className = "pure-u-23-24">
-          <div>
+          <div className="category">
             <span className="category">
-              { NAMES[entry.categories && entry.categories[0]] }
+              { t("category." + NAMES[entry.categories && entry.categories[0]]) }
             </span>
           </div>
           <div>
@@ -57,44 +59,59 @@ const ResultListElement = ({highlight, entry, ratings, onClick, onMouseEnter, on
     </li>)
 }
 
-const ResultList = ({ waiting, entries, ratings, highlight, onClick, 
-  onMouseEnter, onMouseLeave, moreEntriesAvailable, onMoreEntriesClick}) => {
+const ResultList = ({ dispatch, waiting, entries, ratings, highlight, onClick,
+  moreEntriesAvailable, onMoreEntriesClick, t}) => {
+
   let results = entries.map( e =>
     <ResultListElement
       entry        = { e            }
       ratings      = { (e.ratings || []).map(id => ratings[id])}
       key          = { e.id         }
       highlight    = { highlight.indexOf(e.id) >= 0 }
-      onClick      = { onClick      }
-      onMouseEnter = { onMouseEnter }
-      onMouseLeave = { onMouseLeave } />);
+      onClick      = { (id, center) => { dispatch(Actions.setCurrentEntry(id, center)) }}
+      onMouseEnter = { (id) => { dispatch(Actions.highlight(e.id)) }}
+      onMouseLeave = { (id) => { dispatch(Actions.highlight()) }}
+      t            = { t } />);
   if(moreEntriesAvailable && !waiting){
     results.push(
       <li key="show-more-entries">
       <div>
         <a onClick = { onMoreEntriesClick } href="#">
-          mehr Einträge anzeigen...
+          {t("resultlist.showMoreEntries")}
         </a>
       </div>
       </li>
     );
   }
 
-  return ( 
-    <div className= "result-list">
-    {
-      (results.length > 0)
-        ? <ul>{results}</ul>
-        : (waiting ? 
-        <p className= "loading">
-          <span>Einträge werden geladen...</span>
-        </p>
-        : <p className= "no-results">
-            <i className= "fa fa-frown-o" />
-            <span>Es konnten keine Einträge gefunden werden</span>
-          </p>)
-    }
+  return (
+    <div>
+      <div className= "result-list">
+      {
+        (results.length > 0)
+          ? <ul>{results}</ul>
+          : (waiting ?
+          <p className= "loading">
+            <span>{t("resultlist.entriesLoading")}</span>
+          </p>
+          : <p className= "no-results">
+              <i className= "fa fa-frown-o" />
+              <span>{t("resultlist.noEntriesFound")}</span>
+            </p>)
+      }
+      </div>
+      <nav className="menu pure-g">
+        <NavButton
+          key = "back"
+          classname = "pure-u-1"
+          icon = "fa fa-plus"
+          text = {t("resultlist.addEntry")}
+          onClick = {() => {
+            dispatch(Actions.showNewEntry());
+          }}
+          />
+      </nav>
     </div>)
 }
 
-module.exports = pure(ResultList)
+module.exports = translate("translation")(pure(ResultList))

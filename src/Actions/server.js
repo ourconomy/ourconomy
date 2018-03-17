@@ -5,7 +5,10 @@ import { EDIT, RATING, PRODUCT, LOGIN, REGISTER } from "../constants/Form";
 import { NEW_ENTRY_LICENSE }      from "../constants/App";
 import { initialize, stopSubmit } from "redux-form";
 import mapConst                   from "../constants/Map";
+import appConst                   from "../constants/App";
 import LICENSES                   from "../constants/Licenses";
+import { MAIN_IDS, IDS }          from "../constants/Categories";
+import i18n                       from "../i18n";
 
 
 const flatten = nestedArray => nestedArray.reduce(
@@ -25,33 +28,70 @@ const Actions = {
   search: () =>
     (dispatch, getState) => {
 
-      const s = getState().search;
-      const m = getState().map;
-      const cats = s.categories;
-      const sw = m.bbox._southWest;
-      const ne = m.bbox._northEast;
-      const bbox = [sw.lat, sw.lng, ne.lat, ne.lng];
+      dispatch({
+        type: T.SET_SEARCH_TIME,
+        payload: Date.now()
+      });
 
-      if (!cats.length < 1 && (s.text == null || !s.text.trim().endsWith("#"))) {
-        WebAPI.search(s.text, cats, bbox, (err, res) => {
-
+      const searchFn = () => {
           dispatch({
-            type: T.SEARCH_RESULT,
-            payload: err || res,
-            error: err != null,
-            noList: s.text == null
+            type: T.SET_SEARCH_TIME,
+            payload: null
           });
+          console.log("SEARCH\n");
+          const { search, map } = getState();
+          var cats = search.categories;
+          const sw = map.bbox._southWest;
+          const ne = map.bbox._northEast;
+          const bbox = [sw.lat, sw.lng, ne.lat, ne.lng];
 
-          const ids =
-            Array.isArray(res != null ? res.visible : void 0) ? Array.isArray(res.invisible) ? res.visible.concat(res.invisible) : res.visible : res != null ? res.invisible : void 0;
-
-          if ((Array.isArray(ids)) && ids.length > 0) {
-            dispatch(Actions.getEntries(ids));
-          } else {
-            dispatch({
-              type: T.NO_SEARCH_RESULTS
-            });
+          // show no-category entries (e.g. from OSM) when standard categories are shown:
+          if(cats && cats.includes(MAIN_IDS[0]) && cats.includes(MAIN_IDS[2])) {
+            cats = [];
           }
+
+          if (search.text == null || !search.text.trim().endsWith("#")) {
+
+            WebAPI.search(search.text, cats, bbox, (err, res) => {
+              dispatch({
+                type: T.SEARCH_RESULT,
+                payload: err || res,
+                error: err != null,
+                noList: search.text == null
+              });
+
+              const entries =
+                Array.isArray(res != null ? res.visible : void 0)
+                ? Array.isArray(res.invisible)
+                  ? res.visible.concat(res.invisible)
+                  : res.visible
+                : res != null
+                  ? res.invisible
+                  : void 0;
+
+              const ids = entries ? entries.map(e => e.id) : null;
+
+              if (ids && (Array.isArray(ids)) && ids.length > 0) {
+                dispatch(Actions.getEntries(ids));
+              } else {
+                dispatch({
+                  type: T.NO_SEARCH_RESULTS
+                });
+              }
+            });
+
+            if (search.text != null) {
+              const address = search.text.replace(/#/g, "");
+              WebAPI.searchAddressTilehosting(address, (err, res) => {
+                dispatch({
+                  type: T.SEARCH_ADDRESS_RESULT,
+                  payload: err || res.results,
+                  error: err != null
+                });
+              });
+            }
+          }
+//<<<<< HEAD
 
           //our: delete logging when works
           console.log("Action:server: res.effects available to getProducts?: " + res.effects);
@@ -67,19 +107,28 @@ const Actions = {
               type: T.NO_PRODUCT_SEARCH_RESULTS
             });
           }
-        });
+        };
+//=====
+//our   schl.klammer;
+//>>>>> master
 
-        if (s.text != null) {
-          const address = s.text.replace(/#/g, "");
-          WebAPI.searchAddressTilehosting(address, (err, res) => {
-            dispatch({
-              type: T.SEARCH_ADDRESS_RESULT,
-              payload: err || res.results,
-              error: err != null
-            });
-          });
+      const triggerSearch = () => {
+
+        const { timedActions } = getState();
+        const lastTriggered = timedActions.searchLastTriggered;
+
+        if (lastTriggered != null) {
+          const duration = Date.now() - lastTriggered;
+          if (duration > appConst.SEARCH_DELAY) {
+            searchFn();
+          } else {
+            setTimeout(triggerSearch, appConst.SEARCH_DELAY);
+          }
         }
-      }
+      };
+
+      setTimeout(triggerSearch, appConst.SEARCH_DELAY+5);
+
     },
 
   searchCity: () =>
@@ -191,7 +240,7 @@ const Actions = {
           dispatch({
             type: 'GROWLER__SHOW',
             growler: {
-              text: 'Oups! Es ist ein Fehler aufgetreten...',
+              text: i18n.t("growler.genericError"),
               type: 'growler--error'
             }
           });
@@ -203,7 +252,7 @@ const Actions = {
           dispatch({
             type: 'GROWLER__SHOW',
             growler: {
-              text: changeExistingBbox ? 'Abonnement wurde geändert.' : 'Kartenausschnitt wurde abonniert.',
+              text: changeExistingBbox ? i18n.t("growler.subscriptionChanged") : i18n.t("growler.subscriptionAdded"),
               type: 'growler--success'
             }
           });
@@ -215,14 +264,14 @@ const Actions = {
       })
     },
 
-  unsubscribeFromBboxes: (u_id) =>
+  unsubscribeFromBboxes: (username) =>
     (dispatch, getState) => {
       WebAPI.unsubscribeFromBboxes((err, res) => {
         if (err) {
           dispatch({
             type: 'GROWLER__SHOW',
             growler: {
-              text: 'Oups! Es ist ein Fehler aufgetreten...',
+              text: i18n.t("growler.genericError"),
               type: 'growler--error'
             }
           });
@@ -230,7 +279,7 @@ const Actions = {
           dispatch({
             type: 'GROWLER__SHOW',
             growler: {
-              text: 'Abonnement wurde abbestellt',
+              text: i18n.t("growler.unsubscribingSuccessfull"),
               type: 'growler--success'
             }
           });
@@ -268,7 +317,7 @@ const Actions = {
               dispatch({
                 type: 'GROWLER__SHOW',
                 growler: {
-                  text: 'Eintrag wurde gespeichert.',
+                  text: i18n.t("growler.entrySaved"),
                   type: 'growler--success'
                 }
               });
@@ -289,11 +338,19 @@ const Actions = {
             type: T.ENTRIES_RESULT,
             payload: res
           });
-          const state = getState();
+          const currentEntry = getState().server.entries[getState().search.current]
           dispatch({
             type: T.EDIT_CURRENT_ENTRY,
-            payload: state.server.entries[state.search.current]
+            payload: currentEntry
           });
+          if(!currentEntry.street || !currentEntry.zip || !currentEntry.city){
+            const latlng = {
+              lat: currentEntry.lat,
+              lng: currentEntry.lng
+            }
+            console.log("\n\nSET ADDRESS FROM MARKER\n\n", latlng);
+            dispatch(Actions.setMarker(latlng));
+          }
         } else {
           dispatch({
             type: T.EDIT_CURRENT_ENTRY,
@@ -357,7 +414,7 @@ const Actions = {
               dispatch({
                 type: 'GROWLER__SHOW',
                 growler: {
-                  text: 'Bewertung wurde gespeichert.',
+                  text: i18n.t("growler.ratingSaved"),
                   type: 'growler--success'
                 }
               });
@@ -504,9 +561,9 @@ const Actions = {
       });
     },
 
-  confirmEmail: (u_id) =>
+  confirmEmail: (username) =>
     (dispatch, getState) => {
-      WebAPI.confirmEmail(u_id, (err, res) => {
+      WebAPI.confirmEmail(username, (err, res) => {
         if (err) {
           dispatch({
             type: T.EMAIL_CONFIRMATION_RESULT,
@@ -523,7 +580,7 @@ const Actions = {
 
   deleteAccount: () =>
     (dispatch, getState) => {
-      WebAPI.deleteAccount(getState().user.id, (err, res) => {
+      WebAPI.deleteAccount(getState().user.username, (err, res) => {
         if (!err) {
           dispatch({
             type: T.LOGOUT
@@ -550,4 +607,3 @@ module.exports = {
   Actions: Actions,
   getLicenseForEntry: getLicenseForEntry
 };
-
