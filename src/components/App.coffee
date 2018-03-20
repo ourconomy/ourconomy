@@ -485,6 +485,7 @@ Main = React.createClass
                     ref: 'product' 
                     isEdit: form[PRODUCT.id]?.kvm_product_id?
                     license: products[search.current]?.license 
+                    dispatch: dispatch
                     onSubmit: (data) ->
                       dispatch Actions.saveProduct
                         id          : form[PRODUCT.id]?.kvm_product_id 

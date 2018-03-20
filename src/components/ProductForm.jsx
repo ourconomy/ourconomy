@@ -2,10 +2,13 @@ import React, { Component } from "react"
 import Actions              from "../Actions"
 import validation           from "../util/validation"
 import normalize            from "../util/normalize";
-import { reduxForm, Field } from "redux-form"
+import { reduxForm, Field, initialize } from "redux-form"
+import NavButton            from "./NavButton";
 import { IDS              } from "../constants/Categories"
 import { CC_LICENSE       } from "../constants/URLs"
-import { PRODUCT	  } from "../constants/Form"
+import { PRODUCT	  }     from "../constants/Form"
+import { translate        } from "react-i18next";
+import T                    from "prop-types";
 
 
 const errorMessage = ({meta}) =>
@@ -17,9 +20,13 @@ class ProductForm extends Component {
 
   render() {
 
-    const { isEdit } = this.props;
+    const { isEdit, license, dispatch, handleSubmit } = this.props;
+    var t = (key) => {
+      return this.props.t("productForm." + key);
+    };
 
     return (
+    <div>
     <form
       className = "add-entry-form"
       action    = 'javascript:void();' >
@@ -100,16 +107,43 @@ class ProductForm extends Component {
             </div>
           </div>
         </fieldset>
+          <nav className="menu pure-g">
+            //our hack, clean up!
+            <NavButton
+            keyName = "cancel"
+            classname = "pure-u-1-2"
+            onClick = {() => {
+              this.props.dispatch(initialize(PRODUCT.id, {}, PRODUCT.fields)); 
+              this.props.dispatch(isEdit ? Actions.cancelEditProduct() : Actions.cancelNewProduct());
+            }}
+            icon = "fa fa-ban"
+            text = { t("cancel") }
+          />
+          <NavButton
+            keyName = "save"
+            classname = "pure-u-1-2"
+            onClick = { () => {
+              this.props.handleSubmit();
+            }}
+            icon = "fa fa-floppy-o"
+            text = { t("save") }
+          />
+             //end
+          </nav>
       </div>
-    </form>)
+    </form>
+    </div>)
   }
 }
 
-const T = React.PropTypes;
 
-ProductForm.propTypes = { isEdit : T.bool };
+ProductForm.propTypes = { 
+  isEdit : T.bool,
+  license: T.string,
+  dispatch: T.func
+};
 
 module.exports = reduxForm({
   form            : PRODUCT.id,
   validate        : validation.productForm
-})(ProductForm)
+})(translate('translation')(ProductForm))

@@ -104,7 +104,9 @@ module.exports = (state = initialState, action = {}) => {
           ...state,
           result: action.payload.visible,
           invisible: action.payload.invisible,
-          products: action.payload.effects
+          //our: does't work at current state of db server:
+          //products: action.payload.effects
+          products: [{"id":"1234"}] //our dummy data to make webapp work
         }
       }
       return state;

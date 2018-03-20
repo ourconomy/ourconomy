@@ -103,13 +103,24 @@ const ResultList = ({ dispatch, waiting, entries, ratings, highlight, onClick,
       <nav className="menu pure-g">
         <NavButton
           key = "back"
-          classname = "pure-u-1"
+          classname = "pure-u-1-2"
           icon = "fa fa-plus"
           text = {t("resultlist.addEntry")}
           onClick = {() => {
             dispatch(Actions.showNewEntry());
           }}
-          />
+         />
+        //our hack
+        <NavButton
+          key = "newprod"
+          classname = "pure-u-1-2"
+          icon = "fa fa-plus"
+          text = {"add product"}
+          onClick = {() => {
+            dispatch(Actions.showNewProduct());
+          }}
+         />
+         //end
       </nav>
     </div>)
 }
