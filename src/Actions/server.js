@@ -78,6 +78,23 @@ const Actions = {
                   type: T.NO_SEARCH_RESULTS
                 });
               }
+          
+              //oc section: 
+              //our: delete logging when works
+              console.log("Action:server: res.effects available to getProducts?: " + res.effects);
+              const prod_ids =
+                Array.isArray(res != null ? res.effects : void 0) ? res.effects : void 0; 
+              //our: delete logging when works
+              console.log("Action:server: res.effects is array: " + Array.isArray(res.effects));
+
+              if ((Array.isArray(prod_ids)) && prod_ids.length > 0) {
+              dispatch(Actions.getProducts(prod_ids));
+              } else {
+                dispatch({
+                  type: T.NO_PRODUCT_SEARCH_RESULTS
+                });
+              }
+              //end
             });
 
             if (search.text != null) {
@@ -91,26 +108,8 @@ const Actions = {
               });
             }
           }
-//<<<<< HEAD
-
-          //our: delete logging when works
-          console.log("Action:server: res.effects available to getProducts?: " + res.effects);
-          const prod_ids =
-            Array.isArray(res != null ? res.effects : void 0) ? res.effects : void 0; 
-          //our: delete logging when works
-          console.log("Action:server: res.effects is array: " + Array.isArray(res.effects));
-
-          if ((Array.isArray(prod_ids)) && prod_ids.length > 0) {
-            dispatch(Actions.getProducts(prod_ids));
-          } else {
-            dispatch({
-              type: T.NO_PRODUCT_SEARCH_RESULTS
-            });
-          }
         };
-//=====
 //our   schl.klammer;
-//>>>>> master
 
       const triggerSearch = () => {
 
