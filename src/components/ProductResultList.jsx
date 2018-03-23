@@ -61,14 +61,16 @@ const ProductResultList = ({ waiting, products, onClick }) => {
     {
       (results.length > 0)
         ? <ul>{results}</ul>
-        : (waiting ? 
-        <p className= "loading">
-          <span>Produkte werden geladen...</span>
-        </p>
+//oc: waiting is for entry results which might never stop?
+//      : (waiting ? 
+//      <p className= "loading">
+//        <span>Produkte werden geladen...</span>
+//      </p>
         : <p className= "no-results">
             <i className= "fa fa-frown-o" />
             <span>Es konnten keine Produkte gefunden werden</span>
-          </p>)
+          </p>
+//      )
     }
     </div>)
 }

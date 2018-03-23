@@ -66,12 +66,11 @@ Main = React.createClass
       (x for entry in search.result when (x=entries[entry.id])?)
     invisibleEntries =
       (x for entry in search.invisible when(x=entries[entry.id])?)
-#our please review:
-#   resultProducts   =
-#     (x for id in search.products when (x=products[id])?)
+#oc section
     resultProducts   =
       (x for id in search.products when (x=products[id])?)
-# end 
+    totalEntryNo     = resultEntries.length + invisibleEntries.length 
+#end 
     rightPanelIsOpen = false  # right panel moved into landingpage
     mapCenter =
       if e?.lat and e?.lng and c=search.current
@@ -368,16 +367,19 @@ Main = React.createClass
 
               when V.RESULT
                 div className: "result",
-                  if resultProducts and resultProducts.length
-                    div null,
-                      div className: 'group-header',
+                  #oc section
+                  div null,
+                    div 
+#oc  not brillia:     className: 'group-header',
+                      className:"pure-u-1",
+                      onClick: (->   
+                        dispatch Actions.setCurrentProduct null
+                        dispatch Actions.showProductSearchResults()
+                      ),
                         """
-                        Neu! Produktergebnisse:
+                        Klick hier für #{resultProducts.length} Produktergebnisse:
                         """
-                      React.createElement ProductResultList,
-                        waiting     : waiting_for_search_results
-                        products    : resultProducts
-                        onClick     : (id) -> dispatch Actions.setCurrentProduct id 
+                  #end
 
                   div null,
                     div className: 'group-header',
@@ -418,6 +420,24 @@ Main = React.createClass
 
               when V.RESULT_PRODUCT
                 div className: "result",
+                  #oc section
+                  div null,
+                    div 
+#oc  not brliant:     className: 'group-header',
+                      className:"pure-u-1",
+                      onClick: (->   
+                        dispatch Actions.setCurrentEntry null
+                        dispatch Actions.showSearchResults()
+                      ),
+                        """
+                        Klick hier für #{totalEntryNo} Initiativen/Unternehmen:
+                        """
+                  #end
+                  div null,
+                    div className: 'group-header',
+                      """
+                      Produkte/Services:
+                      """
                   React.createElement ProductResultList,
                     waiting     : waiting_for_search_results
                     products    : resultProducts
