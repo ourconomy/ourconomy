@@ -3,6 +3,7 @@ import Actions  from "../Actions"
 import Address  from "./AddressLine"
 import { pure } from "recompose"
 //import Flower   from "./Flower";
+import NavButton from "./NavButton";
 import styled    from "styled-components";
 
 //import { NAMES, CSS_CLASSES } from "../constants/Categories"
@@ -47,7 +48,7 @@ const ProductResultListElement = ({entry, onClick}) => {
     </li>)
 }
 
-const ProductResultList = ({ waiting, products, onClick }) => {
+const ProductResultList = ({ dispatch, waiting, products, onClick }) => {
   let results = products.map( e =>
     <ProductResultListElement
       entry        = { e            }
@@ -57,21 +58,35 @@ const ProductResultList = ({ waiting, products, onClick }) => {
     />);
 
   return ( 
-    <div className= "result-list">
-    {
-      (results.length > 0)
-        ? <ul>{results}</ul>
-//oc: waiting is for entry results which might never stop?
-//      : (waiting ? 
-//      <p className= "loading">
-//        <span>Produkte werden geladen...</span>
-//      </p>
-        : <p className= "no-results">
-            <i className= "fa fa-frown-o" />
-            <span>Es konnten keine Produkte gefunden werden</span>
-          </p>
-//      )
-    }
+    <div> 
+      <div className= "result-list">
+      {
+        (results.length > 0)
+          ? <ul>{results}</ul>
+  //oc: waiting is for entry results which might never stop?
+  //      : (waiting ? 
+  //      <p className= "loading">
+  //        <span>Produkte werden geladen...</span>
+  //      </p>
+          : <p className= "no-results">
+              <i className= "fa fa-frown-o" />
+              <span>Es konnten keine Produkte gefunden werden</span>
+            </p>
+  //      )
+      }
+      </div>
+      <nav className="menu pure-g">
+        <NavButton
+          key = "newprod"
+          classname = "pure-u-1-2"
+          icon = "fa fa-plus"
+          //text = {"add new product"}
+          text = "add new product"
+          onClick = {() => {
+            dispatch(Actions.showNewProduct());
+          }}
+         />
+      </nav>
     </div>)
 }
 

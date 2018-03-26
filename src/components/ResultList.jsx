@@ -110,17 +110,6 @@ const ResultList = ({ dispatch, waiting, entries, ratings, highlight, onClick,
             dispatch(Actions.showNewEntry());
           }}
          />
-        //our hack
-        <NavButton
-          key = "newprod"
-          classname = "pure-u-1-2"
-          icon = "fa fa-plus"
-          text = {"add product"}
-          onClick = {() => {
-            dispatch(Actions.showNewProduct());
-          }}
-         />
-         //end
       </nav>
     </div>)
 }

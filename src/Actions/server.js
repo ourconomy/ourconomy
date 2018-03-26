@@ -109,7 +109,6 @@ const Actions = {
             }
           }
         };
-//our   schl.klammer;
 
       const triggerSearch = () => {
 

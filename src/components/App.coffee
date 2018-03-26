@@ -370,14 +370,15 @@ Main = React.createClass
                   #oc section
                   div null,
                     div 
-#oc  not brillia:     className: 'group-header',
                       className:"pure-u-1",
+                      style: (color: "rgb(45,45,45,)", padding:"0.3em", 
+                      cursor:"pointer")
                       onClick: (->   
                         dispatch Actions.setCurrentProduct null
                         dispatch Actions.showProductSearchResults()
                       ),
                         """
-                        Klick hier für #{resultProducts.length} Produktergebnisse:
+                        Klick hier für #{resultProducts.length} Produktergebnisse
                         """
                   #end
 
@@ -425,12 +426,14 @@ Main = React.createClass
                     div 
 #oc  not brliant:     className: 'group-header',
                       className:"pure-u-1",
+                      style: (color: "rgb(45,45,45,)", padding:"0.3em", 
+                      cursor:"pointer")
                       onClick: (->   
                         dispatch Actions.setCurrentEntry null
                         dispatch Actions.showSearchResults()
                       ),
                         """
-                        Klick hier für #{totalEntryNo} Initiativen/Unternehmen:
+                        Klick hier für #{totalEntryNo} Initiativen/Unternehmen
                         """
                   #end
                   div null,
@@ -444,9 +447,9 @@ Main = React.createClass
                     #ratings     : ratings
                     #highlight   : highlight
                     onClick     : (id) -> dispatch Actions.setCurrentProduct id
+                    dispatch    : dispatch
                     #our: moreEntriesAvailable: search.moreEntriesAvailable
                     #onMoreEntriesClick: () -> dispatch Actions.showAllEntries()
-                    #our needed?  dispatch    : dispatch
 
               when V.ENTRY
                 div className: "content",
@@ -463,6 +466,7 @@ Main = React.createClass
                 div className: "content",
                   React.createElement ProductDetails,
                     entry   : products[search.current] || null #our: this element is still called entry because ProductDetails expects it, let's see what we do with search
+                    dispatch : dispatch
               #   React.createElement Ratings,
               #     entry   : entries[search.current] || null
               #     ratings : (if entries[search.current] then (entries[search.current].ratings || []) else []).map((id) -> ratings[id])

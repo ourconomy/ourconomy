@@ -1,10 +1,13 @@
-    import React, { Component }   from "react";
-    import Address                from "./AddressLine";
-    import { pure }               from "recompose";
-    import { NAMES, CSS_CLASSES } from "../constants/Categories";
-    import styled                 from "styled-components";
-    import Colors                 from "./styling/Colors"
-    import Ratings                from "./Ratings"
+import React, { Component }   from "react";
+import Address                from "./AddressLine";
+import { pure }               from "recompose";
+import styled                 from "styled-components";
+import Colors                 from "./styling/Colors"
+import Ratings                from "./Ratings"
+import NavButton              from "./NavButton";
+import NavButtonWhite         from "./NavButtonWhite";
+//import { translate }          from "react-i18next";
+import Actions                from "../Actions";
 
     const TagsWrapper = styled.div `
       margin-top: 0.5em;
@@ -84,55 +87,80 @@
         } 
     else {
       return (
-    <EntryDetailPage> 
-      <CategoryDescription category={CSS_CLASSES[entry.categories && entry.categories[0]]}>
-        <span style={{color:'rgb(255, 221,   0)'}}>Produkt/Service</span>
-      </CategoryDescription>
       <div>
-        <EntryTitle>{entry.title}</EntryTitle>
-        <EntryDescription>{entry.description}</EntryDescription>
-        {//our: <p>Liste der Bestandteile: (geplant)</p>
-        }
-        <EntryDescription>von: {entry.origin}</EntryDescription>
-        <EntryDetailsDetails>{[
-          (entry.homepage ?
-            <div key="hp" className="pure-g">
-              <i className = "pure-u-2-24 fa fa-globe" />
-              <EntryLink className="pure-u-22-24" href={entry.homepage} target="_blank">
-                { entry.homepage }
-              </EntryLink>
-            </div> : null),
-          (entry.email ?
-            <div key="mail" className="pure-g">
-              <i className= "pure-u-2-24 fa fa-envelope" />
-              <EntryLink className="pure-u-22-24" href={ "mailto:" + entry.email}>
-                {entry.email}
-              </EntryLink>
-            </div>
-            : null),
-          (entry.telephone
-            ?
-            <div key="tel" className="pure-g">
-              <i className="pure-u-2-24 fa fa-phone" />
-              <span className="pure-u-22-24">
-                { entry.telephone }
-              </span>
-            </div>
-            : null),
-          ((entry.street || entry.zip || entry.city) ?
-            <div key="addr" className = "address pure-g">
-              <i className = "pure-u-2-24 fa fa-map-marker" />
-              <div>
-                <Address { ...entry } />
-              </div>
-            </div>
-            : null),
-          (entry.tags && entry.tags.filter(t => t !="").length > 0
-            ? Tags(entry.tags)
-            : null)
-        ]}</EntryDetailsDetails>
-      </div>
-    </EntryDetailPage>)
+        <nav className="menu-top">
+          <NavButtonWhite
+            keyName = "back"
+            buttonRight = { false }
+            icon = "fa fa-chevron-left"
+            text = {"back"}
+            onClick = {() => {
+              this.props.dispatch(Actions.setCurrentProduct(null, null));
+              this.props.dispatch(Actions.showProductSearchResults());
+              this.props.dispatch(Actions.setCenterInUrl(mapCenter));
+            }}
+          />
+          <NavButtonWhite
+            keyName = "edit"
+            buttonRight = { true }
+            icon = "fa fa-pencil"
+            text = ""
+            onClick = {() => {
+              this.props.dispatch(Actions.editCurrentProduct());
+            }}
+          />
+        </nav>
+        <EntryDetailPage> 
+          <CategoryDescription>
+            <span style={{color:'rgb(255,221,0)'}}>Produkt/Service</span>
+          </CategoryDescription>
+          <div>
+            <EntryTitle>{entry.title}</EntryTitle>
+            <EntryDescription>{entry.description}</EntryDescription>
+            {//our: <p>Liste der Bestandteile: (geplant)</p>
+            }
+            <EntryDescription>von: {entry.origin}</EntryDescription>
+            <EntryDetailsDetails>{[
+              (entry.homepage ?
+                <div key="hp" className="pure-g">
+                  <i className = "pure-u-2-24 fa fa-globe" />
+                  <EntryLink className="pure-u-22-24" href={entry.homepage} target="_blank">
+                    { entry.homepage }
+                  </EntryLink>
+                </div> : null),
+              (entry.email ?
+                <div key="mail" className="pure-g">
+                  <i className= "pure-u-2-24 fa fa-envelope" />
+                  <EntryLink className="pure-u-22-24" href={ "mailto:" + entry.email}>
+                    {entry.email}
+                  </EntryLink>
+                </div>
+                : null),
+              (entry.telephone
+                ?
+                <div key="tel" className="pure-g">
+                  <i className="pure-u-2-24 fa fa-phone" />
+                  <span className="pure-u-22-24">
+                    { entry.telephone }
+                  </span>
+                </div>
+                : null),
+              ((entry.street || entry.zip || entry.city) ?
+                <div key="addr" className = "address pure-g">
+                  <i className = "pure-u-2-24 fa fa-map-marker" />
+                  <div>
+                    <Address { ...entry } />
+                  </div>
+                </div>
+                : null), 
+                //oc: make tags right!
+              (entry.tags && entry.tags.filter(t => t !="").length > 0
+                ? Tags(entry.tags)
+                : null)
+            ]}</EntryDetailsDetails>
+          </div>
+        </EntryDetailPage>
+      </div>)
     }
   }
 }
