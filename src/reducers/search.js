@@ -99,19 +99,35 @@ module.exports = (state = initialState, action = {}) => {
     case T.SEARCH_RESULT:
       if (!action.error) {
         //our: Delete this logging when it works
-        console.log("Reducer search:SEARCH_RESULT: action.payload.effects:" + action.payload.effects);
+        console.log("Reducer search:SEARCH_RESULT: action.payload:" + action.payload);
         return {
           ...state,
           result: action.payload.visible,
           invisible: action.payload.invisible,
           //our: does't work at current state of db server:
-          products: action.payload.effects
+          //products: action.payload.effects
           //oc mockup
           //products: [{"id":"1234"}] //our dummy data to make webapp work
         }
       }
       return state;
       break;
+
+//oc section
+    case T.PRODUCT_SEARCH_RESULT:
+      if (!action.error) {
+        //our: Delete this logging when it works
+        console.log("Reducer search:PRODUCT_SEARCH_RESULT: action.payload.effects:" + action.payload.effects);
+        return {
+          ...state,
+          //result: action.payload.visible,
+          //invisible: action.payload.invisible,
+          products: action.payload.effects
+        }
+      }
+      return state;
+      break;
+//end
 
     case T.SEARCH_ADDRESS_RESULT:
       if (!action.error) {

@@ -50,7 +50,35 @@ const Actions = {
             cats = [];
           }
 
-          if (search.text == null || !search.text.trim().endsWith("#")) {
+//oc section
+            //oc: always search effects
+            WebAPI.effectSearch(search.text, (err, res) => {
+              dispatch({
+                type: T.PRODUCT_SEARCH_RESULT,
+                payload: err || res,
+                error: err != null,
+                noList: search.text == null
+              });
+
+              //oc section: 
+              //our: delete logging when works
+              console.log("Action:server: res.effects available to getProducts?: " + res.effects);
+              const prod_ids =
+                Array.isArray(res != null ? res.effects : void 0) ? res.effects : void 0; 
+              //our: delete logging when works
+              console.log("Action:server: res.effects is array: " + Array.isArray(res.effects));
+
+              if ((Array.isArray(prod_ids)) && prod_ids.length > 0) {
+              dispatch(Actions.getProducts(prod_ids));
+              } else {
+                dispatch({
+                  type: T.NO_PRODUCT_SEARCH_RESULTS
+                });
+              }
+            });
+//end
+
+if (search.text == null || !search.text.trim().endsWith("#")) {
 
             WebAPI.search(search.text, cats, bbox, (err, res) => {
               dispatch({
@@ -78,23 +106,6 @@ const Actions = {
                   type: T.NO_SEARCH_RESULTS
                 });
               }
-          
-              //oc section: 
-              //our: delete logging when works
-              console.log("Action:server: res.effects available to getProducts?: " + res.effects);
-              const prod_ids =
-                Array.isArray(res != null ? res.effects : void 0) ? res.effects : void 0; 
-              //our: delete logging when works
-              console.log("Action:server: res.effects is array: " + Array.isArray(res.effects));
-
-              if ((Array.isArray(prod_ids)) && prod_ids.length > 0) {
-              dispatch(Actions.getProducts(prod_ids));
-              } else {
-                dispatch({
-                  type: T.NO_PRODUCT_SEARCH_RESULTS
-                });
-              }
-              //end
             });
 
             if (search.text != null) {

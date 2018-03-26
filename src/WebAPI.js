@@ -2,7 +2,9 @@
 if (!window.location.origin) {
   window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
 }
-const URL = location.origin + "/api";
+const URL = location.origin + "/eapi";
+const KVM_URL = location.origin + "/api";
+//const KVM_URL = "http://ourconomy.org/api"; //oc line
 
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org";
 const TILEHOSTING_URL = "https://geocoder.tilehosting.com/q/<query>.js?key=<key>";
@@ -11,7 +13,10 @@ import request from "superagent/lib/client";
 import saPrefix from "superagent-prefix";
 import { TILEHOSTING_API_KEY } from "./constants/App";
 
-const prefix = saPrefix(URL);
+//oc change:
+//const prefix = saPrefix(URL);
+const prefix = saPrefix(KVM_URL); //real conflict with original code
+const ocPrefix = saPrefix(URL); //oc 
 
 const jsonCallback = (cb) => (err, res) => {
   if (err) {
@@ -42,6 +47,32 @@ module.exports = {
         text: txt.trim()
       })
       .query((cats.length > 0) ? ('categories=' + cats.join(',')) : "")
+      .query('bbox=' + bbox.join(','))
+      .set('Accept', 'application/json')
+      .end(jsonCallback(cb));
+  },
+
+  effectSearch: (txt, cb) => {
+  //oc WebAPI
+
+    if (txt == null) {
+      txt = '';
+    }
+//  if (cats == null) {
+//    cats = [];
+//  }
+//  if (bbox == null) { 
+//    bbox = []; 
+//  }
+
+    let bbox = [1,2,3,4];  //oc: currently needed by db server
+    request
+      .get('/search')
+      .use(ocPrefix)
+      .query({
+        text: txt.trim()
+      })
+      //.query((cats.length > 0) ? ('categories=' + cats.join(',')) : "")
       .query('bbox=' + bbox.join(','))
       .set('Accept', 'application/json')
       .end(jsonCallback(cb));
@@ -140,6 +171,7 @@ module.exports = {
     }
   },
 
+  //oc section
   getProducts: (ids = [], cb) => {
 
     if (!Array.isArray(ids)) {
@@ -151,10 +183,11 @@ module.exports = {
     } else {
       request
         .get('/effects/' + ids.join(','))
-        .use(prefix).set('Accept', 'application/json')
+        .use(ocPrefix).set('Accept', 'application/json')
         .end(jsonCallback(cb));
     }
   },
+  //end
 
   saveNewEntry: (e, cb) => {
     request
@@ -201,12 +234,13 @@ module.exports = {
       });
   },
 
+  //oc section
   saveNewProduct: (p, cb) => {
     //our log, delete later:
     console.log('%c WebAPI.saveNewProduct, value of p: ' + JSON.stringify(p), 'color: green; font-weight: bold' )
     request
       .post('/effects/')
-      .use(prefix)
+      .use(ocPrefix)
       .set('Accept', 'application/json')
       .send(p)
       .end((err, res) => {
@@ -223,7 +257,7 @@ module.exports = {
     console.log('%c WebAPI.saveProduct, value of p: ' + JSON.stringify(p), 'color: blue; font-weight: bold' )
     request
       .put('/effects/' + p.id)
-      .use(prefix)
+      .use(ocPrefix)
       .set('Accept', 'application/json')
       .send(p)
       .end((err, res) => {
@@ -234,6 +268,7 @@ module.exports = {
         }
       });
   },
+  //end
 
   getAllCategories: (cb) => {
     request
