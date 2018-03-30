@@ -570,9 +570,9 @@ if (search.text == null || !search.text.trim().endsWith("#")) {
       });
     },
 
-  confirmEmail: (username) =>
+  confirmEmail: (user_id) =>
     (dispatch, getState) => {
-      WebAPI.confirmEmail(username, (err, res) => {
+      WebAPI.confirmEmail(user_id, (err, res) => {
         if (err) {
           dispatch({
             type: T.EMAIL_CONFIRMATION_RESULT,
