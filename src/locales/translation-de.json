@@ -178,6 +178,19 @@
 		"close" : "schließen"
 	},
 	"landingPage" : {
+        "effects" : {
+            "menu" : {
+                "effects" : "Produkte",
+                "new" : "Neu!",
+                "infos":"Über",
+                "donate":"Unterstützen"
+            },
+            "slogan" : "ourconomy. Läuft für dich.",
+            "footer" : {
+                "trademark" : "ourconomy ist eine eingetragene Marke von Oliver Sendelbach",
+                "heading" : "Mach mit"
+            }
+		},
 		"menu" : {
 			"map" : "Karte",
 			"infos" : "Über uns",
@@ -478,5 +491,86 @@
 		"invalidLicenseAgreement":"Ungültige Zustimmung",
 		"invalidURL":"Ungültige URL",
 		"httpMissing":"\"http://\" oder \"https://\" fehlt)"
-	}
+	},
+	"effectsInfo" : {
+		"heading1": "Hintergrund",
+		"text1" : {
+			"1":"Diese Projekt macht ambitioniert nachhaltigen Konsum und Produktion einfacher.",
+            "2":"Es macht dir den Alltag leichter, während du für eine bessere Welt kämpfst.",
+            "3": "Deine Vorteile, wenn du ... bist:",
+            "bene1":"Konsument*in: Du findest die guten Produkte leichter - wenn nicht: Trag deine besten Tipps bitte hier ein",
+            "bene2":"Anbieter*in: Du tust wirklich alles, um deinen Kund*innen Produkte zu bieten, die rundherum gut sind; diese Webseite unterstützt dich und würdigt dein Engagement",
+            "bene3":"Schüler*in/Lehrer*in: Lerne etwas über die globalen Verbindungen von Konsumprodukten und trage weitere Erkenntnisse hier ein",
+            "bene4":"Forscher*in: Die Datenbank hinter der Seite soll als Schatztruhe für Produktdaten dienen, die zur ökologischen und sozialen Lebenszyklus-Analyse genutzt werden können"
+        },
+		"text2" : {
+        "1":"Interesse an weiteren Gedanken?",
+        "2":"Hier findest du einen Blogpost von mir (Leider nur auf Englisch)",
+        "bl1":"Feb 11, 2016: Blog entry #2, thoughts of around April 2015 and later:",
+        "bl2":"Ahimsa economy!",
+        "bl3":"The problem is: Everyone is doing what appears smartest to him or her in any particular situation.",
+        "bl4b":"A consumer is trying to get a good bargain.",
+        "bl5b":"An HR manager is hiring the person who he/she believes is most likely to do the job right.",
+        "bl6b":"The sales person counts on emotional advertising to influence the buyer.",
+        "bl7b":"A company hires a PR specialist to lobby their goals with lawmakers.",
+        "bl8":"Depending on the situation, all this could be smart business or simply abuse of economic power which results in structural violence. When the acting persons above do not know or do not need to care about the people affected by their actions it often impacts the latter negatively.",
+        "bl9":"On this website, users will be able to evaluate and rate suppliers and products to reward them for doing business in a caring way. Also, they can find good businesses that other users have put in. ourconomy is only open to the best suppliers and service providers according to the three aspects that sustainability usually focusses on:",
+        "bl10b":"organic - Products shall not contain harmful or insufficiently tested substances but rather the good elements that you would expect, e. g. vitamins etc.",
+        "bl11b":"ecological - Products, services and businesses should not have a negative environmental foot print or lead the consumers to have one.",
+        "bl12b":"social/fair - Business, initiatives and consumers should not continue common power politics but rather share power and offer room for participation and creativity, try democracy at the workplace etc.",
+        "bl13":"Technically speaking, these aspects boil down to just one: No economic activity in ourconomy shall have a negative external effect. (Yes, that thing that the global economy regularly fails to allocate to the person who causes it.) In here, you are free to do whatever you like unless it hurts someone.",
+        "bl14":"And this is nothing else but nonviolence. ourconomy is about nonviolence. What is more, there is an important strategic side to it: Because humans have a long history of (ab)using power in a way very damaging for others, the accumulation of power needs to be averted in the first place. ourconomy puts a special emphasis on real sharing of power between all stakeholders so that nobody can wield his or her power in an ignorant way.",
+        "bl15":"If you think this could be useful, let's see how it works.",
+        "bl16":"The other posts of my blog are currently not available."
+        },
+    "clientVersion":"Version der Seite:",
+    "serverVersion":"Server version: "
+    },
+	"effectsContact" : {
+		"heading": "Kontakt",
+        "text0": "Alle Anmerkungen, Fragen und Vorschläge sind willkommen:",
+		"imprint":"Impressum",
+        "heading1" : "Information über den Verantwortlichen für den Online-Service nach § 5 des deutschen Telemediengesetz (TMG):",
+        "heading2" : "Verantwortlich für den Inhalt des Blogs nach § 55 Abs. 2 Deutscher Rundfunksstaatsvertrag (RStV):",
+        "heading3" : "Quelle der angezeigten Bilder und Logos:",
+        "text3" : ", Bilder und Logos sind urheberrechtlich geschützt, wenn sie nicht ausdrücklich als frei und offen lizensiert sind.",
+        "text31" : "Quelle: Webimpressum von http://www.e-recht24.de",
+        "heading4" : "Konzept",
+        "text4" : ", bzgl. Produkt- und Service-Funktionalität. Das Konzept der \"Karte von morgen\" stammt von dem \"Team von morgen\" vertreten durch",
+        "heading5" : "Design des ursprünglichen Projekts Karte von morgen",
+        "heading6" : "Implementation und Programmierung",
+        "text61" : "Produkt- und Servicemodul: ",
+        "text62" : "Urspüngliche Webanwendung: "
+    },
+	"effectsContrib" : {
+		"heading1": "Dieses Projekt voranbringen",
+        "text1": {
+            "1":"Du willst ourconomy weiter bringen? Großartig! Mach einfach mit:",
+            "first2":"Benutze die Plattform. Das machst du schon? Super danke. Und dann ...",
+            "second3":"Mach sie bekannter in deinem Umfeld",
+            "third4":"Wenn du willst, kannst du auch beim Programmieren helfen. (Link: siehe unten)",
+            "forth5":"Langfristig wird dieses Projekt nicht bestehen können ohne eine Finanzierung. Zurzeit ist spenden aber noch nicht möglich.",
+            "fifth6":"Nimm Kontakt auf, solange es kein Forum gibt, gerne per E-Mail:",
+            "7":"Hier ist das Github-Rrepository des Projekts:",
+            "8":"Der Code ist unter der Affero General Public License 3 veröffentlicht"
+            },
+        "clientVersion":"Version der Anwendung: "
+    },
+	"effectsLandingExplain" : {
+		"heading1": "Lasst uns neue Wege gehen",
+        "text1" : {
+            "1":"Diese Webseite macht es einfacher, gute Dinge von Läden, aber auch Initiativen, Umsonst-Läden, Bauernhöfen, Kooperativen und der Natur selbst zu finden. Gleichzeitig gibt sie Anbieter*innen, die negative Effekte vermeiden einen Vorsprung.",
+            "2":"Sie wird gefüllt von Leuten wie dir, die hier entweder etwas finden oder Informationen über unterstützenswerte Angebote eintragen.",
+            "3":"Das führt hoffentlich zu eine neuen Art der Zusammenarbeit im Geschäftsleben und darüber hinaus.",
+            "head4":"Ziel",
+            "goal5":"ourconomy schafft ein neues Wirtschafssegment, das, offen für jede*n, durch eine koordinierte Verhaltensänderung nur positive Effekte produziert.",
+            "6":"Wie erreichen wir das?",
+            "head7":"Aktivität",
+            "goal8":"ourconomy bietet Konsument*innen und Anbieter*innen eine Online-Plattform zum Austausch von Produktinformationen und Nachhaltigkeitsbewertungen, um einen lebhafteren und bewußteren Austausch von Wissen und Werten zu ermöglichen.",
+            "9":"Der Sinn liegt darin, negative (externe) Effekte transparent zu machen. Produzent*innen, die diese vermeiden, sollen dafür hervorgehoben werden. Leute wie erreichen das mit ihren Bewertungen auf dieser Seite."
+        }
+    },
+    "effectsImprint" : {
+        "heading1" : "no translation of legal texts cuurently"
+    }
 }

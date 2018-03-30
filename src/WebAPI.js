@@ -2,7 +2,7 @@
 if (!window.location.origin) {
   window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
 }
-const URL = location.origin + "/eapi";
+const URL = location.origin + "/fxapi";
 const KVM_URL = location.origin + "/api";
 //const KVM_URL = "http://ourconomy.org/api"; //oc line
 

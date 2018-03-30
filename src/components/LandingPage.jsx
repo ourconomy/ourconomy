@@ -3,12 +3,17 @@ import logo                 from "../img/logo.png";
 import oclogo               from "../img/ourconomy-logo.png";
 import CityList             from "./CityList";
 import Info                 from "./Info";
+import EffectsInfo          from "./EffectsInfo";
 import Contact              from "./Contact";
+import EffectsContact       from "./EffectsContact";
 import Imprint              from "./Imprint";
 import Explain              from "./LandingExplain";
+import EffectsExplain       from "./EffectsLandingExplain";
+import EffectsContrib       from "./EffectsContrib";
 import Register             from "./Register";
 import Login                from "./Login";
 import URLs                 from "../constants/URLs";
+import EffectsURLs          from "../constants/EffectsURLs";
 import V                    from "../constants/PanelView";
 import { pure }             from "recompose";
 import { translate }        from "react-i18next";
@@ -70,8 +75,14 @@ class LandingPage extends Component {
       case V.INFO:
         contentComp = <Info />;
         break;
+      case V.EFFECTS_INFO:
+        contentComp = <EffectsInfo />;
+        break;
       case V.CONTACT:
         contentComp = <Contact />;
+        break;
+      case V.EFFECTS_CONTACT:
+        contentComp = <EffectsContact />;
         break;
       case V.DONATE:
         contentComp = <div>
@@ -113,6 +124,9 @@ class LandingPage extends Component {
           </p>
           <p>{t("donate.paragraph3.text6")}</p>
         </div>;
+        break;
+      case V.EFFECTS_CONTRIB:
+        contentComp = <EffectsContrib />;
         break;
       case V.REGISTER:
         contentComp = <div>
@@ -205,14 +219,19 @@ class LandingPage extends Component {
           <div className = "content pure-g">
             <div className = "logo-wrapper pure-u-11-24 pure-u-md-1-3">
               <div className = "pure-u-1 pure-menu-horizontal">
-                <div className = "logo pure-u-1-2 pure-u-md-1-2">
+                <div className = "logo pure-u-1 pure-u-md-1">
+                  <span style={{align: 'left',fontSize:'0.8em',color:'rgb(102, 102, 102)'}}>{/*oc conflict*/}
                   <a onClick={() => onClick('landing')} href="#">
-                    <img className="logo pure-img" src={logo} />
+                    {/*oc real conflict*/}
+                    {/*<img className="logo pure-img" src={logo} />
                   </a>
                 </div> 
-                <div className= "pure-u-1-2 pure-u-md-1-2" >
-                  <span style={{align: 'left',fontSize:'0.7em',color:'rgb(102, 102, 102)'}}>featuring{' '}<img className="pure-img" width={170} src={oclogo} />
+                <div className= "pure-u-1-2 pure-u-md-1-2" >*/}
+                  <img className="pure-img" width={300} src={oclogo} />
+                  </a>
+                  Standing on the shoulders of the giants at Karte von morgen
                   </span>
+                   {/*oc end real conflict*/}
                 </div>
               </div>
             </div>
@@ -233,22 +252,28 @@ class LandingPage extends Component {
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
                     <a onClick={() => onClick('products')} href="#" className="pure-menu-link">
-                      Produkte{' '}<span style={{fontWeight:'bold',color:'rgb(255, 221 ,  0)'}}>Neu!</span>
+                      {t("effects.menu.effects")}{' '}
+                      <span style=
+                      {{fontWeight:'bold',color:'rgb(255, 221 ,  0)'}}>
+                      {t("effects.menu.new")}
+                      </span>
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
-                    <a onClick= {() => onClick(V.INFO)} href="#" className="pure-menu-link">
-                      {t("menu.infos")}
+{/*                  <a onClick= {() => onClick(V.INFO)} href="#" className="pure-menu-link"> */}
+                    <a onClick= {() => onClick(V.EFFECTS_INFO)} href="#" className="pure-menu-link">
+                      {t("effects.menu.infos")}
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
-                    <a onClick = {() => onClick(V.CONTACT)} href="#" className="pure-menu-link">
+                    <a onClick = {() => onClick(V.EFFECTS_CONTACT)} href="#" className="pure-menu-link"> {/* oc conflict line */}
                       {t("menu.contact")}
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
-                    <a onClick={() => onClick(V.DONATE)} href="#" className="pure-menu-link">
-                      {t("menu.donate")}
+                 {/*<a onClick={() => onClick(V.DONATE)} href="#" className="pure-menu-link"> oc conflict line */}
+                    <a onClick={() => onClick(V.EFFECTS_CONTRIB)} href="#" className="pure-menu-link">
+                      {t("effects.menu.donate")}
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
@@ -268,7 +293,7 @@ class LandingPage extends Component {
         </div>
       <div className ={ "search" + (content ? '' : ' start')}>
         <div className = "landing-content">
-          <h1>{t("slogan")}</h1>
+          <h1>{t("effects.slogan")}</h1> {/*oc real conflict*/}
           <div className="place-search">
             <div className= "pure-g pure-form">
               <input
@@ -316,22 +341,23 @@ class LandingPage extends Component {
         <div className = "content">{
           content == null
             ? <div>
-              {loggedIn ? loginInfo : null} <Explain onClick = { onClick } />
+              {loggedIn ? loginInfo : null} <EffectsExplain onClick = { onClick } /> {/* oc conflict */}
               </div>
             : contentComp
         }</div>
       </div>
       <div className= "footer">
-        <h3>{t("footer.heading")}</h3>
+        <h3>{t("effects.footer.heading")}</h3>
         <p>
-          {t("footer.contact")}<a target="_blank" href={URLs.MAIL.link}>{URLs.MAIL.name}</a>
+          {t("footer.contact")}<a target="_blank" href={EffectsURLs.MAIL.link}>{EffectsURLs.MAIL.name}</a>
           <br />
-          {t("footer.social-media")}<a target="_blank" href={URLs.FACEBOOK.link}>{URLs.FACEBOOK.name}</a>
+          {t("footer.open-source")}<a target="_blank" href={EffectsURLs.REPOSITORY.link}>{EffectsURLs.REPOSITORY.name}</a>
           <br />
-          {t("footer.open-source")}<a target="_blank" href={URLs.REPOSITORY.link}>{URLs.REPOSITORY.name}</a>
+          {t("effects.footer.trademark")} {/* oc line */}
         </p>
         <p>
-          <a href="#" onClick={() => onClick(V.IMPRINT)}>{t("footer.imprint")}</a>
+          {/*<a href="#" onClick={() => onClick(V.IMPRINT)}>{t("footer.imprint")}</a> oc conflict */}
+          <a href="#" onClick={() => onClick(V.EFFECTS_CONTACT)}>{t("footer.imprint")}</a>{/* oc conflict */}
         </p>
         <p>
           {user.username != null ? <a onClick={onDeleteAccount} href="#">

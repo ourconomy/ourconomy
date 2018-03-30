@@ -378,14 +378,14 @@ Main = React.createClass
                         dispatch Actions.showProductSearchResults()
                       ),
                         """
-                        Klick hier für #{resultProducts.length} Produktergebnisse
+                        Klick hier für #{resultProducts.length} Produkte
                         """
                   #end
 
                   div null,
                     div className: 'group-header',
                       """
-                      Initiativen\\Unternehmen:
+                      Initiativen\\Business:
                       """
                   React.createElement ResultList,
                     waiting     : waiting_for_search_results
@@ -433,7 +433,7 @@ Main = React.createClass
                         dispatch Actions.showSearchResults()
                       ),
                         """
-                        Klick hier für #{totalEntryNo} Initiativen/Unternehmen
+                        Klick hier für #{totalEntryNo} Initiativen/Businessprojekte
                         """
                   #end
                   div null,

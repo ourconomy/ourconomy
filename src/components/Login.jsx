@@ -37,6 +37,10 @@ const Login = (props) => {
     onSubmit  = { handleSubmit } >
 
     <h3>Login</h3>
+    <p>Login is currently disabled from ourconomy. Please go to Karte von morgen to sign in.</p>
+    {/*
+    Login disabled because https is not yet available.
+
     { error &&
       <div className= "err">
         {t("loginFailed") + ": " + error_message} 
@@ -54,6 +58,7 @@ const Login = (props) => {
         {t("registerText")} <a onClick={onRegister} href="#">{t("registerLink")}</a>
       </p>
     </div>
+    */}
   </form>)
 }
 

@@ -30,15 +30,13 @@ const config = {
 //  }
 //end orig    
     proxy: {
-      "/eapi": {
+      "/fxapi": {
         target: "http://localhost:6767",
-        pathRewrite: {"^/eapi" : ""}
+        pathRewrite: {"^/fxapi" : ""}
       },
       "/api": {
-        target: "https://ourconomy.org",
-        //target: "https://kartevonmorgen.org",
+        target: "http://ourconomy.org",
         changeOrigin: true, //oc needed for ofdb host to know req URL?
-        //pathRewrite: {"^/api" : ""}
       }
     }
 //end
