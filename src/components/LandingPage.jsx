@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import logo                 from "../img/logo.png";
 import oclogo               from "../img/ourconomy-logo.png";
 import CityList             from "./CityList";
-import Info                 from "./Info";
+//oc import Info                 from "./Info";
 import EffectsInfo          from "./EffectsInfo";
 import Contact              from "./Contact";
 import EffectsContact       from "./EffectsContact";
 import Imprint              from "./Imprint";
-import Explain              from "./LandingExplain";
+//oc   import Explain              from "./LandingExplain";
 import EffectsExplain       from "./EffectsLandingExplain";
 import EffectsContrib       from "./EffectsContrib";
 import Register             from "./Register";
@@ -229,7 +229,10 @@ class LandingPage extends Component {
                 <div className= "pure-u-1-2 pure-u-md-1-2" >*/}
                   <img className="pure-img" width={300} src={oclogo} />
                   </a>
-                  Standing on the shoulders of the giants at Karte von morgen
+                  A product enhancement for 
+                  <a target="_blank" style={{textDecoration: "none",color: "rgb(45,45,45)",fontWeight: "bold"}} href="https://kartevonmorgen.org">{' '}
+                  Karte von morgen
+                  </a>
                   </span>
                    {/*oc end real conflict*/}
                 </div>
