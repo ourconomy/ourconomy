@@ -140,7 +140,7 @@ const config = {
 
 let htmlPluginOptions = {
   template : "./src/index.html",
-  title    : "Karte von morgen",
+  title    : "ourconomy",
   favicon  : "./src/img/favicon.ico",
   inject   : 'body',
   prototype: is_prototype
