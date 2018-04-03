@@ -1,3 +1,8 @@
+# Hey, this is ourconomy!
+
+This is the ourconomy version of Karte von morgen. From this codebase, it will develop the products/services functionalities.
+
+
 # The products and services version of Karte von morgen
 
 This custom version of [Karte von morgen](https://github.com/flosse/kartevonmorgen) brings products and services to your sustainable world.  
