@@ -543,14 +543,15 @@
         "text62" : "Original web application: "
     },
 	"effectsContrib" : {
-		"heading1": "Supporting this project",
+		"heading1": "Participating this project",
         "text1": {
             "1":"You want to push this project further? Great! Please get involved:",
-            "first2":"Use the platform. You are doing that already: Thank you. Then ...",
-            "second3":"Spread the word",
-            "third4":"If you like, help coding. (See link below)",
-            "forth5":"In the long run this project will not be able to survive without money. But for now donating is not yet possible.",
-            "fifth6":"Get in touch. As long as there is no forum on this site please send an email:",
+            "2-bullet1":"Use the platform. You are doing that already: Thank you. Then ...",
+            "2-1-bullet2":"Contribute your insights about a better life to the ourconomy charter. It is an evolving document defining the principles of this project. You find it under this external link:",
+            "3-bullet3":"Spread the word",
+            "4-bullet4":"If you like, help coding. (See link below)",
+            "5-bullet5":"In the long run this project will not be able to survive without money. But for now donating is not yet possible.",
+            "6-bullet6":"Get in touch. As long as there is no forum on this site please send an email:",
             "7":"This is the Github repository of the project code:",
             "8":"The code is published under the Affero General Public License 3"
             },

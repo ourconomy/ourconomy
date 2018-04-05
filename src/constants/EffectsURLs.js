@@ -19,4 +19,8 @@ module.exports = {
     name: "info@ourconomy.org",
     link: "mailto:info@kartevonmorgen.org"
   },
+  CHARTER: {
+    name: "https://pad.disroot.org/p/ourconomy",
+    link: "https://pad.disroot.org/p/ourconomy"
+  },
 };

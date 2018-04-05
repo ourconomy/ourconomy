@@ -546,11 +546,12 @@
 		"heading1": "Dieses Projekt voranbringen",
         "text1": {
             "1":"Du willst ourconomy weiter bringen? Großartig! Mach einfach mit:",
-            "first2":"Benutze die Plattform. Das machst du schon? Super danke. Und dann ...",
-            "second3":"Mach sie bekannter in deinem Umfeld",
-            "third4":"Wenn du willst, kannst du auch beim Programmieren helfen. (Link: siehe unten)",
-            "forth5":"Langfristig wird dieses Projekt nicht bestehen können ohne eine Finanzierung. Zurzeit ist spenden aber noch nicht möglich.",
-            "fifth6":"Nimm Kontakt auf, solange es kein Forum gibt, gerne per E-Mail:",
+            "2-bullet1":"Benutze die Plattform. Das machst du schon? Super danke. Und dann ...",
+            "2-1-bullet2":"Bring deine Erkenntnisse über ein gutes Leben in die ourconomy Charta ein. Dieses offene Dokument definiert die Prinzipien hinter dem Projekt. Du findest es unter diesem externen Link:",
+            "3-bullet3":"Mach sie bekannter in deinem Umfeld",
+            "4-bullet4":"Wenn du willst, kannst du auch beim Programmieren helfen. (Link: siehe unten)",
+            "5-bullet5":"Langfristig wird dieses Projekt nicht bestehen können ohne eine Finanzierung. Zurzeit ist spenden aber noch nicht möglich.",
+            "6-bullet6":"Nimm Kontakt auf, solange es kein Forum gibt, gerne per E-Mail:",
             "7":"Hier ist das Github-Rrepository des Projekts:",
             "8":"Der Code ist unter der Affero General Public License 3 veröffentlicht"
             },

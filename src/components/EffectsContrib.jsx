@@ -16,15 +16,20 @@ module.exports = ({serverVersion}) =>
         </p>
         <ol>
           <li>
-          {t("text1.first2")}
+          {t("text1.2-bullet1")}
           </li><li>
-          {t("text1.second3")}
+          {t("text1.2-1-bullet2")}{' '}
+            <a target="_blank" href = 
+              {EffectsURLs.CHARTER.link}>{ EffectsURLs.CHARTER.name }
+            </a>
           </li><li>
-          {t("text1.third4")}
+          {t("text1.3-bullet3")}
           </li><li>
-          {t("text1.forth5")}
+          {t("text1.4-bullet4")}
           </li><li>
-          {t("text1.fifth6")}{" "}
+          {t("text1.5-bullet5")}
+          </li><li>
+          {t("text1.6-bullet6")}{" "}
           <i className = "fa fa-envelope-o" />
           {" "}<a target="_blank" href = {EffectsURLs.MAIL.link}>{ EffectsURLs.MAIL.name }</a>
           </li>
