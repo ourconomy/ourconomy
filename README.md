@@ -1,55 +1,26 @@
 # Hey, this is ourconomy!
 
-This is the ourconomy version of Karte von morgen. From this codebase, it will develop the products/services functionalities.
+[ourconomy.org](https://ourconomy.org) brings you the stuff you need and lets you shape your world for the better. You can see how sustainable products and services are and evaluate them yourself. You can also enter products/serives to show their positive achievements. 
 
+This web application that supports consumers and producers by connecting them to relevant information and to each other. It allows us to build the economy in a way that is good for us.
 
-# The products and services version of Karte von morgen
+The frontend is based on the seminal project [Karte von morgen](https://github.com/flosse/kartevonmorgen). Departing from but staying close to this codebase, it is dedicated to the development of the products/services functionalities.  
 
-This custom version of [Karte von morgen](https://github.com/flosse/kartevonmorgen) brings products and services to your sustainable world.  
-
-![The new menu entry for products](produkte_neu.png)  ![products and companies in the result list](produkte_ergebnis.png)
-
-Technically, virtually everything that exists for 'entries' in the codebase has been replicated for 'products' -- except the ResultList component and its items. 
-Products and services are called _products_ in this fork of Karte von morgen. 
-Currently, they cannot yet be rated nor do they have categories. 
-The special backend for this version of the map is the [ourconomy version of Open Fair DB](https://github.com/ourconomy/openfairdb). 
-
-Below, the original announcement of Karte von morgen:  
-
-# Karte von morgen
-
-![Screenshot](https://raw.githubusercontent.com/flosse/kartevonmorgen/master/screenshot.jpg)
-
-## Mapping for Good
-
-von morgen supports kindness, sustainability and joint action.
-Everything that brings a little happiness to our world.
-We believe that living in a de‐stressed, environmental‐friendly and
-trust‐worthy society, is already in progress.
-We want to support people in finding ways to embrace those values.
-
-The Map von morgen is a website and app, that allows users to share their
-favorite places in the world. Places that are forward‐thinking and inspiring.
-The goal is to collect projects, companies and events that make a world of
-tomorrow, already experienceable today.
-
-Demo: [https://kartevonmorgen.org/](https://kartevonmorgen.org/)
+![products and companies in the result list](produkte_ergebnis.png)
 
 ## Development
 
-[![Build Status](https://secure.travis-ci.org/flosse/kartevonmorgen.svg?branch=master)](http://travis-ci.org/flosse/kartevonmorgen)
-[![Dependency Status](https://gemnasium.com/flosse/kartevonmorgen.svg)](https://gemnasium.com/flosse/kartevonmorgen)
-[![Dependency Status](https://dependencyci.com/github/flosse/kartevonmorgen/badge)](https://dependencyci.com/github/flosse/kartevonmorgen)
-[![License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat)](https://github.com/flosse/kartevonmorgen/blob/master/LICENSE)
+Technically, the start of this fork was to replicate virtually everything that exists in the codebase for 'entries' also to 'products'. The ResultList component and its items could be reused. 
 
-Are you're interested in contributing to KVM?
-The following is a description of a quickstart.
-If you're looking for a more comprehensive introduction,
-have a look at [CONTRIBUTING.md](CONTRIBUTING.md).
+Products and services are currently called _products_.
+
+### Backend
+
+The special backend for this version of the map is [openFXDB](https://github.com/ourconomy/openfairdb). 
 
 ### Dependencies
 
-To be able to start development you'll need the following tools:
+To be able to start developing you'll need the following tools:
 
 - [git](https://www.git-scm.com/)
 - [Node.js](https://nodejs.org/) version 6.x
@@ -58,11 +29,11 @@ To be able to start development you'll need the following tools:
 
 Now clone this repository:
 
-    git clone https://github.com/flosse/kartevonmorgen
+    git clone https://github.com/ourconomy/ourconomy
 
 Go to the root of it and install all the dependencies:
 
-    cd kartevonmorgen/
+    cd ourconomy/
     npm install
 
 ### Build
@@ -72,29 +43,15 @@ To build the web application run:
     npm run pack
 
 The result can be found in `dist/`.
-To build a Nix derivation, run
 
-    nix-build -E '(import <nixpkgs>{}).callPackage ./kartevonmorgen.nix {}'
-
-*Note*: Sometimes the build fails because of a bad binary cache, so just disable it:
-
-    nix-build -E '(import <nixpkgs>{}).callPackage ./kartevonmorgen.nix {}' --option use-binary-caches false
+If you like Nix OS, please go to [Karte von morgen](https://github.com/flosse/kartevonmorgen) where Markus has some useful information for you.
 
 ### Local development setup
 
-Download the OpenFairDB Server
+Go to [openFXDB](https://github.com/ourconomy/openfxdb) and follow the instructions for getting the sources and compilation.
 
-    wget https://download.ofdb.io/openfairdb-x86_64-linux-v0.3.1.tar.gz
+When the database is listening on port 6767 of your host you were successful. Now,
 
-unpack it
-
-    tar xzf openfairdb-x86_64-linux-v0.3.1.tar.gz
-
-and run it
-
-    ./openfairdb
-
-Now `openfairdb` is listening on port 6767.
 
     cd /path/to/kartevonmorgen/
     npm start
@@ -107,33 +64,13 @@ for you and the browser reloads automatically.
 
 ### Tests
 
-All the tests can be found in the `spec/` folder.
+Tests can be found in the `spec/` folder.
 To run the tests type
 
     npm t
 
-### Nix
-
-If you're using [Nix](http://nixos.org/nix/) or [NixOS](http://nixos.org/) you
-can get your complete development environment by just typing
-
-    nix-shell dev-env.nix
-
-Updating the `node-packages.nix` works as follows:
-
-    cd path/to/your/kartevonmorgen/
-    git clone https://github.com/NixOS/npm2nix
-    nix-shell -p nodejs
-    node npm2nix/lib/npm2nix.js package.json node-packages.nix
-
-...and don't forget to update 'kartevonmorgen.nix' ;-)
-
-### Backend
-
-KVM uses the [OpenFairDB](https://github.com/flosse/openfairdb) as its backend.
-
 ## License
 
-Copyright (c) 2015 - 2018 Markus Kohlhase <mail@markus-kohlhase.de>
+Copyright (c) 2015 - 2018 [Markus Kohlhase](mailto:mail@markus-kohlhase.de), David Ziegler, Oliver Sendelbach
 
 This project is licensed under the [AGPLv3 license](http://www.gnu.org/licenses/agpl-3.0.txt).
