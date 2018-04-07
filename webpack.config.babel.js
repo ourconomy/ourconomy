@@ -21,25 +21,17 @@ const config = {
   devServer: {
     hot: true,
     inline: true,
-//oc section, original:    
-//  proxy: {
-//    "/api": {
-//      target: "http://localhost:6767",
-//      pathRewrite: {"^/api" : ""}
-//    }
-//  }
-//end orig    
     proxy: {
       "/fxapi": {
         target: "http://localhost:6767",
         pathRewrite: {"^/fxapi" : ""}
       },
       "/api": {
-        target: "http://ourconomy.org",
-        changeOrigin: true, //oc needed for ofdb host to know req URL?
+        target: "http://localhost:6767",
+        pathRewrite: {"^/api" : ""}
+        //changeOrigin: true, 
       }
     }
-//end
   },
   target: "web",
   cache: true,
