@@ -1,6 +1,6 @@
 # Hey, this is ourconomy!
 
-[ourconomy.org](https://ourconomy.org) brings you the stuff you need and lets you shape your world for the better. You can see how sustainable products and services are and evaluate them yourself. You can also enter products/serives to show their positive achievements. 
+[ourconomy.org](https://ourconomy.org) brings you the stuff you need and lets you shape your world for the better. You can see how sustainable products and services are and evaluate them yourself. You can also enter products/services to show their positive achievements. 
 
 This web application that supports consumers and producers by connecting them to relevant information and to each other. It allows us to build the economy in a way that is good for us.
 
