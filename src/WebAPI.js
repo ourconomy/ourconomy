@@ -2,9 +2,9 @@
 if (!window.location.origin) {
   window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
 }
-const URL = location.origin + "/fxapi";
-const KVM_URL = location.origin + "/api";
-//const KVM_URL = "http://ourconomy.org/api"; //oc line
+//effect real conflict:
+const FX_URL = location.origin + "/fxapi";
+const URL = location.origin + "/api";
 
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org";
 const TILEHOSTING_URL = "https://geocoder.tilehosting.com/q/<query>.js?key=<key>";
@@ -13,10 +13,8 @@ import request from "superagent/lib/client";
 import saPrefix from "superagent-prefix";
 import { TILEHOSTING_API_KEY } from "./constants/App";
 
-//oc change:
-//const prefix = saPrefix(URL);
-const prefix = saPrefix(KVM_URL); //real conflict with original code
-const ocPrefix = saPrefix(URL); //oc 
+const prefix = saPrefix(URL);
+const ocPrefix = saPrefix(FX_URL); //oc
 
 const jsonCallback = (cb) => (err, res) => {
   if (err) {
