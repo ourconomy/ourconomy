@@ -9,12 +9,21 @@ import { CC_LICENSE       } from "../constants/URLs"
 import { PRODUCT	  }     from "../constants/Form"
 import { translate        } from "react-i18next";
 import T                    from "prop-types";
+import Select               from 'react-select';
+import { AsyncCreatable }   from 'react-select';
+import 'react-select/dist/react-select.css';
+//oc temp
+import request              from "superagent/lib/client";
+import saPrefix             from "superagent-prefix";
 
+const prefix = saPrefix("http://localhost:8080/api")
 
 const errorMessage = ({meta}) =>
   meta.error && meta.touched
     ? <div className="err">{meta.error}</div>
     : null
+
+
 
 class ProductForm extends Component {
 
@@ -24,6 +33,69 @@ class ProductForm extends Component {
     var t = (key) => {
       return this.props.t("productForm." + key);
     };
+
+    const getOptions = (input, callback) => {
+
+      //oc debugly:
+      console.log("input in getOptions: " + input );
+
+      if ( input.length > 2 ) {
+        setTimeout(() => {
+
+            //oc request section
+            request
+              .get('/search')
+              .use(prefix)
+              .query({
+                text: input.trim()
+               })
+               .query('bbox=-90,-180,90,180' )
+               .set('Accept', 'application/json')
+               .end( (err,res) => {
+                 var ids = [];
+                 var searchObjects = {};
+                 searchObjects = res.body.visible;
+                 //oc add res.body.invisible
+                 ids = searchObjects.map(e => e.id);
+
+                 if ( ids !== null ) {
+                 request
+                   .get('/entries/' + ids.join(','))
+                   .use(prefix)
+                   .set('Accept', 'application/json')
+                   .end( (err, res) => {
+                     var options = [];
+                     var searchObjects = {};
+                     searchObjects = res.body;
+                     Object.keys(searchObjects).forEach( key => {
+                       var optionLine = {
+                       label: searchObjects[key].title,
+                       value: searchObjects[key].id
+                       };
+                     options.push(optionLine);
+                     });
+                     var newres = {options: options};
+
+                     //oc debugly
+                     console.log("ProductForm callback result : " +
+                       err + ", " + JSON.stringify(newres));
+
+                     callback(err, newres)
+                   });
+                   //oc: is redundant when options var is moved to main comp
+                   } else {
+                      callback(null, {options: [] })
+                   }
+
+                 });
+         }, 500);
+       } else {
+         callback(null, {options: [] })
+       }
+     };
+
+    //oc debugly:
+    console.log("ProductForm updated.");
 
     return (
     <div>
@@ -75,12 +147,27 @@ class ProductForm extends Component {
             component={errorMessage} />
         </fieldset>
 
-        <fieldset>
+        <fieldset style={{border:"none",boxShadow:"none"}}>
           <legend>
             <span className="text">Quelle</span>
           </legend>
-          <div className= "pure-g">
-            <Field name="origin" className="pure-input-1" component="input" placeholder="Produziert von  - Auswahlmenü geplant" />
+          <div>
+            <Field
+              name="origin"
+              component={props =>
+                <AsyncCreatable
+                  type="text"
+                  loadOptions={getOptions}
+                  value={props.input.value}
+                  onChange={props.input.onChange}
+                  onBlur={() => props.input.onBlur(props.input.value)}
+                  placeholder="Produziert von ..."
+                  searchPromptText="Type to search ..."
+                  loadingPlaceholder="Loading entries ..."
+                  promptTextCreator={ label => 'Create new option "' + label + '"'}
+                />
+              }
+              />
             <Field name="origin" component={errorMessage} />
           </div>
         </fieldset>

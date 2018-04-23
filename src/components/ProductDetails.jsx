@@ -119,7 +119,12 @@ import Actions                from "../Actions";
             <EntryDescription>{entry.description}</EntryDescription>
             {//our: <p>Liste der Bestandteile: (geplant)</p>
             }
-            <EntryDescription>von: {entry.origin}</EntryDescription>
+            {/* oc until value and label correctly integrated
+            */}
+            <EntryDescription>von: { entry.origin.label !== undefined ? entry.origin.label : entry.origin}
+            {/* end, hopefully not needed in the future
+            */}
+            </EntryDescription>
             <EntryDetailsDetails>{[
               (entry.homepage ?
                 <div key="hp" className="pure-g">

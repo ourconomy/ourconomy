@@ -29,7 +29,11 @@ const ProductResultListElement = ({entry, onClick}) => {
             <span className= "subtitle">{entry.description}</span>
           </div>
           <div>
-            <span className= "origin">{entry.origin}</span>
+          {/* oc until value and label correctly integrated
+          */}
+          <span className= "origin">{(entry.origin.label !== undefined ) ? entry.origin.label : entry.origin}</span>
+          {/* end, hopefully not needed in the future
+          */}
           </div>
           {
             (entry.tags.length > 0)

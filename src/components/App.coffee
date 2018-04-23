@@ -516,7 +516,7 @@ Main = React.createClass
                         title       : data.title
                         description : data.description
                         tags        : data.tags?.split(',')
-                        origin      : data.origin
+                        origin      : data.origin.label
                         version     : (form[PRODUCT.id]?.values?.version or 0) + 1
 
               when V.NEW_RATING

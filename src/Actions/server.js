@@ -378,10 +378,22 @@ if (search.text == null || !search.text.trim().endsWith("#")) {
             payload: res
           });
           const state = getState();
+        //oc special lines until ofxdb delivers object for origin
+          const formInitValues = state.server.products[state.search.current]
+          formInitValues["origin"] = {
+            "value": "123tobesettoentryid",
+            "label": formInitValues["origin"]
+          };
+          console.log("Data handed over to edit product form: " +
+            formInitValues);
           dispatch({
             type: T.EDIT_CURRENT_PRODUCT,
-            payload: state.server.products[state.search.current]
+            payload: formInitValues
           });
+        //dispatch({
+        //  type: T.EDIT_CURRENT_PRODUCT,
+        //  payload: state.server.products[state.search.current]
+        //});
         } else {
           dispatch({
             type: T.EDIT_CURRENT_PRODUCT,
