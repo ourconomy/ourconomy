@@ -1,5 +1,10 @@
 # How to contribute to KVM (Karte Von Morgen) 
 
+or ourconomy?
+
+redux-form [https://redux-form.com/](https://redux-form.com/)  
+react-select for dropdown menus [https://github.com/JedWatson/react-select](https://github.com/JedWatson/react-select)  
+
 ## Found a bug?
 
 Please let us know about any bugs you find via the github issue editor. Click
