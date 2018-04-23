@@ -475,7 +475,7 @@ Main = React.createClass
               when V.EDIT, V.NEW
                 div className: "content-above-buttons",
                   #our hack:
-                  console.log 'kvm form obj.: ' + JSON.stringify form
+                  console.log 'kvm form obj., App.coffee, edit or new entry: ' + JSON.stringify form
                   console.log 'server.entries: ' + JSON.stringify server.entries
                   console.log 'kvm entry id: ' + form[EDIT.id].kvm_flag_id
                   React.createElement EntryForm,
@@ -502,7 +502,7 @@ Main = React.createClass
               when V.EDIT_PRODUCT, V.NEW_PRODUCT
                 div className: "content",
                   #our hack:
-                  console.log 'kvm form obj.: ' + JSON.stringify form
+                  console.log 'kvm form obj., App.coffee, edit or new effect: ' + JSON.stringify form
                   console.log 'server.products: ' + JSON.stringify server.products
                   console.log 'kvm prod id: ' + form[PRODUCT.id].kvm_product_id
                   React.createElement ProductForm,

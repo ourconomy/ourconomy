@@ -61,12 +61,8 @@ const Actions = {
               });
 
               //oc section: 
-              //our: delete logging when works
-              console.log("Action:server: res.effects available to getProducts?: " + res.effects);
               const prod_ids =
                 Array.isArray(res != null ? res.effects : void 0) ? res.effects : void 0; 
-              //our: delete logging when works
-              console.log("Action:server: res.effects is array: " + Array.isArray(res.effects));
 
               if ((Array.isArray(prod_ids)) && prod_ids.length > 0) {
               dispatch(Actions.getProducts(prod_ids));
@@ -205,7 +201,7 @@ if (search.text == null || !search.text.trim().endsWith("#")) {
       });
     },
 
-  getProducts: (ids = []) => // does this var have to be prod_ids?
+  getProducts: (ids = []) =>
     (dispatch) => {
       WebAPI.getProducts(ids, (err, res) => {
         dispatch({
