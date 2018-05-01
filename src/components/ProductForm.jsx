@@ -200,7 +200,7 @@ class ProductForm extends Component {
             keyName = "cancel"
             classname = "pure-u-1-2"
             onClick = {() => {
-              this.props.dispatch(initialize(PRODUCT.id, {}, PRODUCT.fields)); 
+              this.props.dispatch(initialize(PRODUCT.id, {}, PRODUCT.fields));
               this.props.dispatch(isEdit ? Actions.cancelEditProduct() : Actions.cancelNewProduct());
             }}
             icon = "fa fa-ban"
@@ -224,7 +224,7 @@ class ProductForm extends Component {
 }
 
 
-ProductForm.propTypes = { 
+ProductForm.propTypes = {
   isEdit : T.bool,
   license: T.string,
   dispatch: T.func
