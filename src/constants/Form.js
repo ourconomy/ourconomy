@@ -23,6 +23,7 @@ module.exports = {
     fields: [
       "title",
       "description",
+      "homepage",
       "origin",
       "tags",
       "license"

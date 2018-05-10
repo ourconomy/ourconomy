@@ -9,7 +9,6 @@ import { CC_LICENSE       } from "../constants/URLs"
 import { PRODUCT	  }     from "../constants/Form"
 import { translate        } from "react-i18next";
 import T                    from "prop-types";
-import Select               from 'react-select';
 import { AsyncCreatable }   from 'react-select';
 import 'react-select/dist/react-select.css';
 import appConst                   from "../constants/App";
@@ -106,6 +105,22 @@ class ProductForm extends Component {
             <Field
               name="tags"
               component={errorMessage} />
+          </fieldset>
+
+          <fieldset>
+            <div className= "pure-g">
+              <label className= "pure-u-2-24">
+                <i className= "fa fa-globe" />
+              </label>
+              <div className= "pure-u-22-24">
+                <Field
+                  name="homepage"
+                  className="pure-input-1"
+                  component="input"
+                  placeholder={"homepage"} />
+                <Field name="homepage" component={errorMessage} />
+              </div>
+            </div>
           </fieldset>
 
           <fieldset>

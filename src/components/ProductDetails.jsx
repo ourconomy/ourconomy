@@ -84,7 +84,7 @@ import Actions                from "../Actions";
               <span>Eintrag wird geladen...</span>
             </EntryDetailPage>
           );
-        } 
+        }
     else {
       return (
       <div>
@@ -110,7 +110,7 @@ import Actions                from "../Actions";
             }}
           />
         </nav>
-        <EntryDetailPage> 
+        <EntryDetailPage>
           <CategoryDescription>
             <span style={{color:'rgb(255,221,0)'}}>Produkt/Service</span>
           </CategoryDescription>
@@ -119,11 +119,7 @@ import Actions                from "../Actions";
             <EntryDescription>{entry.description}</EntryDescription>
             {//our: <p>Liste der Bestandteile: (geplant)</p>
             }
-            {/* oc until value and label correctly integrated
-            */}
-            <EntryDescription>von: { entry.origin.label !== undefined ? entry.origin.label : entry.origin}
-            {/* end, hopefully not needed in the future
-            */}
+            <EntryDescription>von: {entry.origin.label}
             </EntryDescription>
             <EntryDetailsDetails>{[
               (entry.homepage ?
@@ -157,7 +153,7 @@ import Actions                from "../Actions";
                     <Address { ...entry } />
                   </div>
                 </div>
-                : null), 
+                : null),
                 //oc: make tags right!
               (entry.tags && entry.tags.filter(t => t !="").length > 0
                 ? Tags(entry.tags)

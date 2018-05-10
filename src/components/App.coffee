@@ -69,8 +69,8 @@ Main = React.createClass
 #oc section
     resultProducts   =
       (x for id in search.products when (x=products[id])?)
-    totalEntryNo     = resultEntries.length + invisibleEntries.length 
-#end 
+    totalEntryNo     = resultEntries.length + invisibleEntries.length
+#end
     rightPanelIsOpen = false  # right panel moved into landingpage
     mapCenter =
       if e?.lat and e?.lng and c=search.current
@@ -506,17 +506,18 @@ Main = React.createClass
                   console.log 'server.products: ' + JSON.stringify server.products
                   console.log 'kvm prod id: ' + form[PRODUCT.id].kvm_product_id
                   React.createElement ProductForm,
-                    ref: 'product' 
+                    ref: 'product'
                     isEdit: form[PRODUCT.id]?.kvm_product_id?
-                    license: products[search.current]?.license 
+                    license: products[search.current]?.license
                     dispatch: dispatch
                     onSubmit: (data) ->
                       dispatch Actions.saveProduct
-                        id          : form[PRODUCT.id]?.kvm_product_id 
+                        id          : form[PRODUCT.id]?.kvm_product_id
                         title       : data.title
                         description : data.description
                         tags        : data.tags?.split(',')
-                        origin      : data.origin.label
+                        homepage    : data.homepage
+                        origin      : data.origin
                         version     : (form[PRODUCT.id]?.values?.version or 0) + 1
 
               when V.NEW_RATING
