@@ -518,6 +518,7 @@ Main = React.createClass
                         tags        : data.tags?.split(',')
                         homepage    : data.homepage
                         origin      : data.origin
+                        upstreams   : data.upstreams
                         version     : (form[PRODUCT.id]?.values?.version or 0) + 1
 
               when V.NEW_RATING

@@ -26,6 +26,11 @@ module.exports = {
       "homepage",
       "origin",
       "tags",
+      "upstreams[].upstreamNo",
+      "upstreams[].upstreamEffect",
+      "upstreams[].upstreamTransferUnit",
+      "upstreams[].upstreamAmount",
+      "upstreams[].upstreamComment",
       "license"
      ]
   },

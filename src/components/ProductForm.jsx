@@ -2,16 +2,16 @@ import React, { Component } from "react"
 import Actions              from "../Actions"
 import validation           from "../util/validation"
 import normalize            from "../util/normalize";
-import { reduxForm, Field, initialize } from "redux-form"
+import { reduxForm, Field, initialize, FieldArray } from "redux-form"
 import NavButton            from "./NavButton";
 import { IDS              } from "../constants/Categories"
 import { CC_LICENSE       } from "../constants/URLs"
-import { PRODUCT	  }     from "../constants/Form"
+import { PRODUCT	        } from "../constants/Form"
 import { translate        } from "react-i18next";
 import T                    from "prop-types";
-import { AsyncCreatable }   from 'react-select';
+import { AsyncCreatable   } from 'react-select';
 import 'react-select/dist/react-select.css';
-import appConst                   from "../constants/App";
+import appConst             from "../constants/App";
 import { quickEntrySearch } from "../WebAPI4FX";
 
 
@@ -19,6 +19,59 @@ const errorMessage = ({meta}) =>
   meta.error && meta.touched
     ? <div className="err">{meta.error}</div>
     : null
+
+const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push({})}>
+        Add component
+      </button>
+      {touched && error && <span>{error}</span>}
+    </li>
+    {fields.map((member, index) => (
+      <li key={index}>
+        <p>Upstream component #{index + 1}</p>
+        <button
+          type="button"
+          title="Remove Member"
+          onClick={() => fields.remove(index)}
+        >
+          Remove
+        </button>
+        <Field
+          name={`${member}.upstreamNo`}
+          type="text"
+          component="input"
+          placeholder="Number (required)"
+        />
+        <Field
+          name={`${member}.upstreamEffect`}
+          type="text"
+          component="input"
+          placeholder="Precursor product"
+        />
+        <Field
+          name={`${member}.upstreamTransferUnit`}
+          type="text"
+          component="input"
+          placeholder="Unit"
+        />
+        <Field
+          name={`${member}.upstreamAmount`}
+          type="text"
+          component="input"
+          placeholder="Amount used (required)"
+        />
+        <Field
+          name={`${member}.upstreamComment`}
+          type="text"
+          component="input"
+          placeholder="Comment"
+        />
+      </li>
+    ))}
+  </ul>
+);
 
 
 class ProductForm extends Component {
@@ -149,6 +202,13 @@ class ProductForm extends Component {
 
           <fieldset>
             <legend>
+              <span className="text">Precursor products and effects</span>
+            </legend>
+            <FieldArray name="upstreams" component={renderUpstreamEffects} />
+          </fieldset>
+
+          <fieldset>
+            <legend>
               <span className="text">Lizenz</span>
               <span className="desc">(CC-0)</span>
             </legend>
@@ -169,27 +229,28 @@ class ProductForm extends Component {
               </div>
             </div>
           </fieldset>
-            <nav className="menu pure-g">
-              <NavButton
-                keyName = "cancel"
-                classname = "pure-u-1-2"
-                onClick = {() => {
-                  this.props.dispatch(initialize(PRODUCT.id, {}, PRODUCT.fields));
-                  this.props.dispatch(isEdit ? Actions.cancelEditProduct() : Actions.cancelNewProduct());
-                }}
-                icon = "fa fa-ban"
-                text = { t("cancel") }
-              />
-              <NavButton
-                keyName = "save"
-                classname = "pure-u-1-2"
-                onClick = { () => {
-                  this.props.handleSubmit();
-                }}
-                icon = "fa fa-floppy-o"
-                text = { t("save") }
-              />
-            </nav>
+          <div style={{height:50}}>{' '}</div>
+          <nav className="menu pure-g">
+            <NavButton
+              keyName = "cancel"
+              classname = "pure-u-1-2"
+              onClick = {() => {
+                this.props.dispatch(initialize(PRODUCT.id, {}, PRODUCT.fields));
+                this.props.dispatch(isEdit ? Actions.cancelEditProduct() : Actions.cancelNewProduct());
+              }}
+              icon = "fa fa-ban"
+              text = { t("cancel") }
+            />
+            <NavButton
+              keyName = "save"
+              classname = "pure-u-1-2"
+              onClick = { () => {
+                this.props.handleSubmit();
+              }}
+              icon = "fa fa-floppy-o"
+              text = { t("save") }
+            />
+          </nav>
         </div>
       </form>
     </div>)
