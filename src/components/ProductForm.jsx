@@ -12,13 +12,16 @@ import T                    from "prop-types";
 import { AsyncCreatable   } from 'react-select';
 import 'react-select/dist/react-select.css';
 import appConst             from "../constants/App";
-import { quickEntrySearch } from "../WebAPI4FX";
+import { quickSearch } from "../WebAPI4FX";
 
 
 const errorMessage = ({meta}) =>
   meta.error && meta.touched
     ? <div className="err">{meta.error}</div>
     : null
+
+var lastFormSearchTrigger = 0;
+var latestSearchTerm = "";
 
 const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
   <ul>
@@ -47,8 +50,18 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
         <Field
           name={`${member}.upstreamEffect`}
           type="text"
-          component="input"
-          placeholder="Precursor product"
+          component={props =>
+            <AsyncCreatable
+              loadOptions={getEffectOptions}
+              value={props.input.value}
+              onChange={props.input.onChange}
+              onBlur={() => props.input.onBlur(props.input.value)}
+              placeholder="Precursor product"
+              searchPromptText="Type to search ..."
+              loadingPlaceholder="Loading entries ..."
+              promptTextCreator={ label => 'Create new option "' + label + '"'}
+            />
+          }
         />
         <Field
           name={`${member}.upstreamTransferUnit`}
@@ -73,6 +86,42 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
   </ul>
 );
 
+const triggerQuickSearch = (input, callback, goal) => {
+  if ( Date.now() - lastFormSearchTrigger > appConst.SEARCH_DELAY ) {
+    if (input == latestSearchTerm ) {
+      lastFormSearchTrigger = Date.now();
+      quickSearch(input, callback, goal);
+      console.log("ProductForm, triggerQuickSearch with: " + input + ", goal: " + goal);
+    } else {
+      return;
+    }
+  } else {
+    setTimeout(triggerQuickSearch, 200, input, callback, goal);
+  }
+};
+
+const getEntryOptions = (input, callback) => {
+  const thisSearchStart = Date.now();
+  latestSearchTerm = input;
+  if ( input.length < 3 ) {
+    callback(null, { options: [] });
+  } else {
+    const goal = "entry";
+    triggerQuickSearch(input, callback, goal);
+  }
+};
+
+const getEffectOptions = (input, callback) => {
+  const thisSearchStart = Date.now();
+  latestSearchTerm = input;
+  if ( input.length < 3 ) {
+    callback(null, { options: [] });
+  } else {
+    const goal = "effect";
+    triggerQuickSearch(input, callback, goal);
+  }
+};
+
 
 class ProductForm extends Component {
 
@@ -81,33 +130,6 @@ class ProductForm extends Component {
     const { isEdit, license, dispatch, handleSubmit } = this.props;
     var t = (key) => {
       return this.props.t("productForm." + key);
-    };
-
-    var lastFormSearchTrigger = 0;
-    var latestSearchTerm = "";
-
-    const triggerQuickSearch = (input, callback) => {
-      if ( Date.now() - lastFormSearchTrigger > appConst.SEARCH_DELAY ) {
-        if (input == latestSearchTerm ) {
-          lastFormSearchTrigger = Date.now();
-          quickEntrySearch(input, callback);
-          console.log("triggerQuickSearch: " + input);
-        } else {
-          return;
-        }
-      } else {
-        setTimeout(triggerQuickSearch, 200, input, callback);
-      }
-    };
-
-    const getOptions = (input, callback) => {
-      const thisSearchStart = Date.now();
-      latestSearchTerm = input;
-      if ( input.length < 3 ) {
-        callback(null, { options: [] });
-      } else {
-        triggerQuickSearch(input, callback);
-      }
     };
 
     return (
@@ -185,7 +207,7 @@ class ProductForm extends Component {
                 name="origin"
                 component={props =>
                   <AsyncCreatable
-                    loadOptions={getOptions}
+                    loadOptions={getEntryOptions}
                     value={props.input.value}
                     onChange={props.input.onChange}
                     onBlur={() => props.input.onBlur(props.input.value)}

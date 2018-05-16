@@ -10,43 +10,62 @@ import request from "superagent/lib/client";
 import saPrefix from "superagent-prefix";
 
 
-const prefix = saPrefix(URL);
+var prefix = "";
 
 module.exports = {
-  quickEntrySearch: (input, cb) => {
+  quickSearch: (input, cb, goal) => {
+    var bbox = "";
+    if ( goal == "entry" ) {
+      bbox = "-90,-180,90,180";
+      prefix = saPrefix(URL);
+    } else {
+      bbox = "-1,-1,1,1";
+      prefix = saPrefix(FX_URL);
+    }
+
     request
       .get('/search')
       .use(prefix)
       .query({
         text: input.trim()
       })
-      .query('bbox=-90,-180,90,180' )
+      .query('bbox=' + bbox)
       .set('Accept', 'application/json')
       .end( (err,res) => {
         var ids = [];
+        var getPath = "";
         var searchObjects = {};
-        if ( res.body.visible.length > 0 ) {
-        searchObjects = res.body.visible;
-        ids = searchObjects.map(e => e.id);
+        if ( goal == "entry" && res.body.visible.length > 0 ) {
+          getPath = '/entries/';
+          searchObjects = res.body.visible;
+          ids = searchObjects.map(e => e.id);
+        } else if (goal == "effect" && res.body.effects.length > 0 ) {
+          getPath = '/effects/';
+          searchObjects = res.body.effects;
+          ids = searchObjects
+        } else {
+          cb(err, {options: []});
+        }
 
-        request
-          .get('/entries/' + ids.join(','))
-          .use(prefix)
-          .set('Accept', 'application/json')
-          .end( (err, res) => {
-            var options = [];
-            var searchObjects = {};
-            searchObjects = res.body;
-            Object.keys(searchObjects).forEach( key => {
-            var optionLine = {
-              label: searchObjects[key].title,
-              value: searchObjects[key].id
-            };
-            options.push(optionLine);
+        if ( ids.length > 0 ) {
+          request
+            .get(getPath + ids.join(','))
+            .use(prefix)
+            .set('Accept', 'application/json')
+            .end( (err, res) => {
+              var options = [];
+              var searchObjects = {}; //re-initialize searchObjects
+              searchObjects = res.body;
+              Object.keys(searchObjects).forEach( key => {
+                var optionLine = {
+                  label: searchObjects[key].title,
+                  value: searchObjects[key].id
+                };
+                options.push(optionLine);
+                });
+              var newres = {options: options};
+              cb(err, newres);
             });
-            var newres = {options: options};
-            cb(err, newres);
-          });
         }
       });
   }
