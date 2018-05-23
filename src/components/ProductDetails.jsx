@@ -73,6 +73,10 @@ import Actions                from "../Actions";
       font-family: Museo;
     `;
 
+    const EffectPrecursors = styled.span`
+      font-size: 75%;
+    `;
+
     class ProductDetails extends Component {
 
       render() {
@@ -117,8 +121,6 @@ import Actions                from "../Actions";
           <div>
             <EntryTitle>{entry.title}</EntryTitle>
             <EntryDescription>{entry.description}</EntryDescription>
-            {//our: <p>Liste der Bestandteile: (geplant)</p>
-            }
             <EntryDescription>von: {entry.origin.label}
             </EntryDescription>
             <EntryDetailsDetails>{[
@@ -159,6 +161,22 @@ import Actions                from "../Actions";
                 ? Tags(entry.tags)
                 : null)
             ]}</EntryDetailsDetails>
+            <EntryDescription>
+              gemacht aus:
+              <EffectPrecursors>
+                <ul>{[
+                  ((entry.upstreams && entry.upstreams.length) > 0
+                  ? entry.upstreams.map(u =>
+                      <li>
+                      {u.upstreamAmount}{' '}
+                      {u.upstreamTransferUnit}{' '}
+                      {u.upstreamEffect.label}
+                      {' \('}{u.upstreamComment}{'\)'}
+                      </li>)
+                  : <li>Noch keine Angaben</li>)
+                ]}</ul>
+              </EffectPrecursors>
+            </EntryDescription>
           </div>
         </EntryDetailPage>
       </div>)
