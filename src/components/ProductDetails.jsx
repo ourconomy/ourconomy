@@ -171,7 +171,9 @@ import Actions                from "../Actions";
                       {u.upstreamAmount}{' '}
                       {u.upstreamTransferUnit}{' '}
                       {u.upstreamEffect.label}
-                      {' \('}{u.upstreamComment}{'\)'}
+                      {u.upstreamComment && ' \('}
+                        {u.upstreamComment}
+                      { u.upstreamComment && '\)'}
                       </li>)
                   : <li>Noch keine Angaben</li>)
                 ]}</ul>
