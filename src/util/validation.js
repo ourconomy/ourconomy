@@ -2,9 +2,6 @@ import i18n from "../i18n";
 
 const entryForm = (data) => {
 
-//our junk:
-console.log('data from validate.productForm: ' + JSON.stringify(data));
-
   let errors, h, l, ref;
   errors = {};
 
@@ -235,8 +232,9 @@ const registerForm = (data) => {
   return errors;
 }
 
+//oc section
 const productForm = (data) => {
-  let errors, l;
+  let errors, h, l, ref;
   errors = {};
   if (data == null) {
     errors._error = "Ungültige Daten";
@@ -277,6 +275,35 @@ const productForm = (data) => {
       errors.tags = 'Ungültige Stichworte';
     } else if (data.tags.length < 3) {
       errors.tags = 'Mindestlänge von Stichworten: 3 Zeichen';
+    }
+  }
+  if ((h = data.homepage) != null) {
+    if (!((h.indexOf("http://") === 0) || (h.indexOf("https://") === 0))) {
+      //errors.homepage = t("invalidURL") + ": " + t("httpMissing");
+      errors.homepage = "invalidURL" + ": " + "httpMissing";
+    }
+    if (((ref = (h = data.homepage)) != null ? ref.length : void 0) < 9) {
+      //errors.homepage = t("invalidURL");
+      errors.homepage = "invalidURL";
+    }
+  }
+  if (data.upstreams) {
+    if (data.upstreams.length > 0) {
+      const upstreamsArrayErrors = []
+      data.upstreams.forEach((upstream, upstreamIndex) => {
+        const upstreamErrors = {}
+        if ( !upstream || !upstream.upstreamNo ) {
+          upstreamErrors.upstreamNo = 'No. is required, Pflichtangabe'
+          upstreamsArrayErrors[upstreamIndex] = upstreamErrors
+        }
+        if ( !upstream || !upstream.upstreamAmount ) {
+          upstreamErrors.upstreamAmount = 'Amount is required, Pflichtangabe'
+          upstreamsArrayErrors[upstreamIndex] = upstreamErrors
+        }
+       })
+      if (upstreamsArrayErrors.length) {
+        errors.upstreams = upstreamsArrayErrors
+      }
     }
   }
   if (data.license == null) {

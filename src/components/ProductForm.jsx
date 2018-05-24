@@ -25,28 +25,22 @@ var latestSearchTerm = "";
 
 const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
   <ul>
-    <li>
-      <button type="button" onClick={() => fields.push({})}>
-        Add component
-      </button>
-      {touched && error && <span>{error}</span>}
-    </li>
     {fields.map((member, index) => (
-      <li key={index}>
-        <p>Upstream component #{index + 1}</p>
-        <button
-          type="button"
-          title="Remove Member"
-          onClick={() => fields.remove(index)}
-        >
-          Remove
-        </button>
+      <li key={index} style={{margin:"10px"}}>
         <Field
           name={`${member}.upstreamNo`}
           type="text"
+          className="pure-u-4-24"
           component="input"
-          placeholder="Number (required)"
+          placeholder="No."
         />
+          <label className="pure-u-20-24">
+            <div style={{marginLeft:"5px"}}>{' '}Item number (required)
+            </div>
+          </label>
+        <Field
+          name={`${member}.upstreamNo`}
+          component={errorMessage} />
         <Field
           name={`${member}.upstreamEffect`}
           type="text"
@@ -65,24 +59,46 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
         />
         <Field
           name={`${member}.upstreamTransferUnit`}
+          className="pure-u-12-24"
           type="text"
           component="input"
           placeholder="Unit"
         />
         <Field
           name={`${member}.upstreamAmount`}
+          className="pure-u-12-24"
           type="text"
           component="input"
-          placeholder="Amount used (required)"
+          placeholder="Amount (required)"
         />
         <Field
+          name={`${member}.upstreamAmount`}
+          component={errorMessage} />
+        <Field
           name={`${member}.upstreamComment`}
+          className="pure-u-20-24"
           type="text"
           component="input"
           placeholder="Comment"
         />
+        <div className="pure-u-1-24">
+        </div>
+        <button
+          type="button"
+          className="pure-u-3-24"
+          style={{marginTop:"7px"}}
+          title="Remove Member"
+          onClick={() => fields.remove(index)}
+        >
+          <i className= "fa fa-trash" />
+        </button>
       </li>
-    ))}
+   ))}
+    <li>
+      <button type="button" onClick={() => fields.push({})}>
+        <i className= "fa fa-plus" />{' '}Add new component
+      </button>
+    </li>
   </ul>
 );
 
@@ -170,16 +186,23 @@ class ProductForm extends Component {
           </fieldset>
 
           <fieldset>
-            <Field
-              name="tags"
-              required={true}
-              className="pure-input-1"
-              component="input"
-              placeholder="Stichworte (Komma getrennt)"
-              normalize={normalize.tags} />
-            <Field
-              name="tags"
-              component={errorMessage} />
+            <div className= "pure-g">
+              <label className= "pure-u-2-24">
+                <i className= "fa fa-tags" />
+              </label>
+              <div className= "pure-u-22-24">
+                <Field
+                  name="tags"
+                  required={true}
+                  className="pure-input-1"
+                  component="input"
+                  placeholder="Stichworte (Komma getrennt)"
+                  normalize={normalize.tags} />
+                <Field
+                  name="tags"
+                  component={errorMessage} />
+              </div>
+            </div>
           </fieldset>
 
           <fieldset>
@@ -192,7 +215,7 @@ class ProductForm extends Component {
                   name="homepage"
                   className="pure-input-1"
                   component="input"
-                  placeholder={"homepage"} />
+                  placeholder={"Homepage"} />
                 <Field name="homepage" component={errorMessage} />
               </div>
             </div>
