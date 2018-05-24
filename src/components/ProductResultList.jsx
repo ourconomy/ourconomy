@@ -19,7 +19,7 @@ const ProductResultListElement = ({entry, onClick}) => {
         <div className = "pure-u-23-24">
           <div>
             <span className="category" style={{color:'rgb(255, 221,   0)'}}>
-             Produkt/Service 
+             Produkt/Service
             </span>
           </div>
           <div>
@@ -31,6 +31,18 @@ const ProductResultListElement = ({entry, onClick}) => {
           <div>
           <span className= "origin">{entry.origin.label}</span>
           </div>
+          <div><span className="subtitle">{[
+            ((entry.upstreams.length > 0)
+              ? <span>{'\(gemacht aus: '}{entry.upstreams[0].upstreamEffect.label}</span> : null),
+            ((entry.upstreams.length > 1)
+              ? <span>{', '}{entry.upstreams[1].upstreamEffect.label}</span> : null),
+            ((entry.upstreams.length > 2)
+              ? <span>{', '}{entry.upstreams[2].upstreamEffect.label}</span> : null),
+            ((entry.upstreams.length > 3)
+                ? <span>{", ... \)"}</span> : null),
+            ((entry.upstreams.length > 0 && entry.upstreams.length <= 3)
+              ? <span>{"\)"}</span> : null)
+          ]}</span></div>
           {
             (entry.tags.length > 0)
               ? <div className="tags" >
