@@ -24,8 +24,10 @@ class LandingPage extends Component {
 
   render() {
 
-    const { content, searchText, searchError, cities, onSelection, onEscape,
-      onChange, onRegister, onLogin, loggedIn, user, onDeleteAccount } = this.props;
+    const { content, searchText, searchWord, searchError, cities,
+      onSelection, onEscape, onChange, onSearchWordChange, onRegister,
+      onLogin, loggedIn, user, onDeleteAccount } = this.props;
+      {/* contains oc items */}
     const onClick = this.props.onMenuItemClick;
     var t = (key) => {
       return this.props.t("landingPage." + key);
@@ -49,6 +51,19 @@ class LandingPage extends Component {
         return;
       }
       onChange(v);
+    }
+
+    const onSearchClick = () => {    //oc function
+      onSelection(cities[0])
+    }
+
+    const onTextSearch = ev => {     //oc function
+      const target = ev.target;
+      const v = target != null ? target.value : void 0;
+      if (v == null) {
+        return;
+      }
+      onSearchWordChange(v);
     }
 
     let subscriptionLink = user.subscriptionExists ? t("subscribeToBbox.edit-link")
@@ -300,14 +315,34 @@ class LandingPage extends Component {
           <div className="place-search">
             <div className= "pure-g pure-form">
               <input
-                className   = "pure-u-1"
+                className   = "pure-u-10-24"
+                onChange    = {onTextSearch}
+                onKeyUp     = {onKeyUp}
+                value       = {searchWord || ''}
+                type        = 'text'
+                style       = {{fontSize:"85%"}}
+                placeholder = {"What are you looking for?"}
+                //placeholder = {t("city-search.placeholder")}
+              />
+              <div className = "pure-u-1-24" />
+              <input
+                className   = "pure-u-10-24"
                 onChange    = {onPlaceSearch}
                 onKeyUp     = {onKeyUp}
                 value       = {searchText || ''}
                 type        = 'text'
+                style       = {{fontSize:"85%"}}
                 placeholder = {t("city-search.placeholder")}
                 />
-                <div className = "pure-u-1">
+              <div className = "pure-u-1-24" />
+              <button
+                className = "pure-u-2-24"
+                onClick     = {onSearchClick}
+                >
+                Go!
+              </button>
+                <div className = "pure-u-8-24" />
+                <div className = "pure-u-16-24">
                 { searchText && searchText.length > 3
                   ? (searchError
                     ? <div className="error">
@@ -334,7 +369,7 @@ class LandingPage extends Component {
         content == null
           ? <a href= "#tutorial" className= "circleTutorial">
               <strong>
-                Tutorial
+                Info
                 <div style ={{ paddingTop: "10px", fontSize: "12px"}}>
                   <i className = "fa fa-chevron-down" />
                 </div>
@@ -373,13 +408,16 @@ class LandingPage extends Component {
 }
 
 LandingPage.propTypes = {
-  content     : T.string,
-  searchText  : T.string,
-  searchError : T.bool,
-  cities      : T.array,
-  onChange    : T.func,
-  onEscape    : T.func,
-  onSelection : T.func
+  content             : T.string,
+  searchText          : T.string,
+  searchWord          : T.string,
+  searchError         : T.bool,
+  cities              : T.array,
+  onChange            : T.func,
+  onSearchWordChange  : T.func,
+  onEscape            : T.func,
+  onSelection         : T.func
 };
+{/* propTypes contain oc items */}
 
 module.exports = translate('translation')(pure(LandingPage))

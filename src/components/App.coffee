@@ -115,9 +115,12 @@ Main = React.createClass
               dispatch Actions.setCitySearchText city
               if city and city.length > 3
                 dispatch Actions.searchCity()
+            onSearchWordChange: (searchWord) ->  #oc line
+              dispatch Actions.setSearchText searchWord #oc line
             content: view.right
             searchText: search.city
             searchError: search.error
+            searchWord: search.text #oc line
             cities: search.cities
             onEscape: -> dispatch Actions.setCitySearchText ''
 
@@ -126,10 +129,12 @@ Main = React.createClass
                 dispatch Actions.setCenter
                   lat: city.lat
                   lng: city.lon
-                dispatch Actions.setZoom mapConst.CITY_DEFAULT_ZOOM
                 dispatch Actions.toggleLandingPage()
-                dispatch Actions.setSearchText ''
-                dispatch Actions.finishCitySearch()
+              #oc needs these action not only if city is present
+              dispatch Actions.setZoom mapConst.CITY_DEFAULT_ZOOM
+              #oc needs search.text (=searchWord):
+              # dispatch Actions.setSearchText ''
+              dispatch Actions.finishCitySearch()
             onLogin: (data) ->
                 {username, password} = data
                 dispatch Actions.login(username, password)
