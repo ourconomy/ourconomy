@@ -12,6 +12,8 @@ import EffectsExplain       from "./EffectsLandingExplain";
 import EffectsContrib       from "./EffectsContrib";
 import Register             from "./Register";
 import Login                from "./Login";
+import ProductResultList    from "./ProductResultList";
+import ResultList           from "./ResultList";
 import URLs                 from "../constants/URLs";
 import EffectsURLs          from "../constants/EffectsURLs";
 import V                    from "../constants/PanelView";
@@ -24,9 +26,12 @@ class LandingPage extends Component {
 
   render() {
 
-    const { content, searchText, searchWord, searchError, cities,
-      onSelection, onEscape, onChange, onSearchWordChange, onRegister,
-      onLogin, loggedIn, user, onDeleteAccount } = this.props;
+    const { content, searchText, searchError, cities,
+      onSelection, onEscape, onChange, onRegister, onLogin, loggedIn,
+      user, onDeleteAccount,
+      searchWord, onSearchWordChange, effects, onProductClick, entries,
+      invisibleEntries, entryRatings, onEntryClick, latestCity, dispatch
+      } = this.props;
       {/* contains oc items */}
     const onClick = this.props.onMenuItemClick;
     var t = (key) => {
@@ -223,6 +228,87 @@ class LandingPage extends Component {
               netzwerk@kartevonmorgen.org
             </a>
           </p>
+        </div>;
+        break;
+      case V.RESULT_PAGE:
+        contentComp = <div>
+          <p>Search results</p>
+          <div className="group-header">
+            Found {effects.length > 10 ? 10 : effects.length} of{' '}
+            {effects.length} "{searchWord}" products or services:
+          </div>
+          <ProductResultList
+            products={effects.slice(0,10)}
+            onClick={onProductClick}
+            dispatch={dispatch}
+            />
+          <div className="group-header">
+            Found {entries.length} "{searchWord}" places in "{latestCity}":
+          </div>
+          <ResultList
+            entries={entries.slice(0,10)}
+            onClick={onEntryClick}
+            ratings={entryRatings}
+            highlight={[0, 0]}
+            dispatch={dispatch}
+            />
+          {((invisibleEntries && invisibleEntries.length > 0 ) ?
+            <div>
+              <div className="group-header">
+                Found {invisibleEntries.length} places elsewhere:
+              </div>
+              <ResultList
+                entries={invisibleEntries}
+                onClick={onEntryClick}
+                ratings={entryRatings}
+                highlight={[0, 0]}
+                dispatch={dispatch}
+                />
+            </div>
+            : <div><div className="group-header">
+                To find places related to "{searchWord}" elsewhere, please go to <a href="#" onClick={() => onClick('map')}>Map</a>
+              </div><br /></div> )}
+          <div className="group-header">External ressouces</div>
+          <p style={{fontSize:"80%"}} >(ourconomy does not have an affiliation with these{' '}
+            organisations:)</p>
+          <p>Fairmondo: <a target="_blank"
+            href={"https://fairmondo.de/articles?article_search_form[q]=" +
+              searchWord }>
+            Look for "{searchWord}" on Fairmondo
+          </a></p>
+          <p>Utopia.de: <br />
+            <a target="_blank" href={"https://utopia.de/?s=" +
+              searchWord }>
+              Look for "{searchWord}" on Utopia.de (Watch out! Google search!)
+            </a></p>
+          <p>City-Search of Utopia.de: <br />
+            <a
+              target="_blank"
+              href={"https://city.utopia.de/0/suche?fc=1&q=" + searchWord +
+              "&o=" + latestCity }>{' '}
+                Find sustainable sources for "{searchWord}" in{' '}
+                "{latestCity}", Germany
+            </a>
+          </p>
+          <p>WikiRate (finds best company names): <br />
+            <a
+              target="_blank"
+              href=
+              {"https://wikirate.org/*search?utf8=%E2%9C%93&" +
+              "query[keyword]=" + searchWord }>{' '}
+                Find out more about "{searchWord}" on WikiRate
+            </a>
+          </p>
+          <p>Wiki-Products (works best for German search terms): <br />
+            <a
+              target="_blank"
+              href={"http://de.wiki-products.org/index.php?" +
+              "title=Spezial%3ASuche&search=" + searchWord + "&go=Seite"
+              }>{' '}
+                Find sustainable sources for "{searchWord}"
+            </a>
+          </p>
+          {/* wiki-rate */}
         </div>;
         break;
         default:

@@ -30,14 +30,20 @@ const Actions = {
   toggleMenu          : () => ({ type: T.TOGGLE_MENU            }),
   showMenu            : () => ({ type: T.SHOW_MENU              }),
   showNewEntry        : () => ({ type: T.SHOW_NEW_ENTRY         }),
+  //oc:
   showNewProduct      : () => ({ type: T.SHOW_NEW_PRODUCT       }),
   showSearchResults   : () => ({ type: T.SHOW_SEARCH_RESULTS    }),
+  //oc:
   showProductSearchResults : () => ({ type: T.SHOW_PRODUCT_SEARCH_RESULTS }), 
+  //oc:
+  showResultPage      : () => ({ type: T.SHOW_RESULT_PAGE       }),
   toggleLandingPage   : () => ({ type: T.TOGGLE_MENU            }),
   showImprint         : () => ({ type: T.SHOW_IMPRINT           }),
   cancelNew           : () => ({ type: T.CANCEL_NEW             }),
+  //oc:
   cancelNewProduct    : () => ({ type: T.CANCEL_NEW_PRODUCT     }),
   cancelEdit          : () => ({ type: T.CANCEL_EDIT            }),
+  //oc:
   cancelEditProduct   : () => ({ type: T.CANCEL_EDIT_PRODUCT    }),
   cancelRating        : () => ({ type: T.CANCEL_RATING          }),
   cancelWait          : () => ({ type: T.CANCEL_WAIT_IO         }),

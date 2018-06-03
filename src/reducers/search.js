@@ -93,7 +93,8 @@ module.exports = (state = initialState, action = {}) => {
     case T.SET_CITY_SEARCH_TEXT:
       return {
         ...state,
-        city: action.payload
+        city: action.payload,
+        latestCitySearch: action.payload //oc need
       }
 
     case T.SEARCH_RESULT:

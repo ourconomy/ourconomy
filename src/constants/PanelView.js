@@ -5,7 +5,8 @@ module.exports = {
   NEW_PRODUCT: 'NEW_PRODUCT', //oc line
   NEW_RATING: 'NEW_RATING',
   RESULT: 'RESULT',
-  RESULT_PRODUCT: 'RESULT_PRODUCT',
+  RESULT_PRODUCT: 'RESULT_PRODUCT', //oc line
+  RESULT_PAGE: 'RESULT_PAGE', //oc line
   ENTRY: 'ENTRY',
   PRODUCT: 'PRODUCT', //oc line
   INFO: 'INFO',

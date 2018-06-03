@@ -115,25 +115,23 @@ Main = React.createClass
               dispatch Actions.setCitySearchText city
               if city and city.length > 3
                 dispatch Actions.searchCity()
-            onSearchWordChange: (searchWord) ->  #oc line
-              dispatch Actions.setSearchText searchWord #oc line
             content: view.right
             searchText: search.city
             searchError: search.error
-            searchWord: search.text #oc line
             cities: search.cities
             onEscape: -> dispatch Actions.setCitySearchText ''
-
             onSelection: (city) ->
               if city
                 dispatch Actions.setCenter
                   lat: city.lat
                   lng: city.lon
-                dispatch Actions.toggleLandingPage()
               #oc needs these action not only if city is present
               dispatch Actions.setZoom mapConst.CITY_DEFAULT_ZOOM
+              #oc needs LandingPage active to display result page:
+              # dispatch Actions.toggleLandingPage()
               #oc needs search.text (=searchWord):
               # dispatch Actions.setSearchText ''
+              dispatch Actions.showResultPage()
               dispatch Actions.finishCitySearch()
             onLogin: (data) ->
                 {username, password} = data
@@ -144,6 +142,19 @@ Main = React.createClass
             loggedIn: loggedIn
             user: user
             onDeleteAccount: -> dispatch Actions.deleteAccount()
+            # oc props:
+            searchWord: search.text #oc line
+            onSearchWordChange: (searchWord) ->  #oc line
+              dispatch Actions.setSearchText searchWord #oc line
+            effects: resultProducts
+            onProductClick: (id) -> dispatch Actions.setCurrentProduct id
+            entries: resultEntries
+            cities: cities.slice(0,5)
+            invisiblEntries: invisibleEntries
+            entryRatings: ratings
+            onEntryClick: (id, center) -> dispatch Actions.setCurrentEntry id, center
+            latestCity: search.latestCitySearch
+            dispatch: dispatch
 
         if view.modal?
           React.createElement Modal, { view, dispatch }

@@ -334,6 +334,13 @@ module.exports = (state=initialState, action={}) => {
         }
       }
       return state;
+    case T.SHOW_RESULT_PAGE:
+      return {
+        ...state,
+        menu: true,
+        right: V.RESULT_PAGE
+      }
+
 
     default:
       return state;
