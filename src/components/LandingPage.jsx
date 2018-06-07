@@ -22,6 +22,8 @@ import { translate }        from "react-i18next";
 import i18n                 from "../i18n";
 import T                    from "prop-types";
 
+var cityInput = false;
+
 class LandingPage extends Component {
 
   render() {
@@ -30,7 +32,7 @@ class LandingPage extends Component {
       onSelection, onEscape, onChange, onRegister, onLogin, loggedIn,
       user, onDeleteAccount,
       searchWord, onSearchWordChange, effects, onProductClick, entries,
-      invisibleEntries, entryRatings, onEntryClick, latestCity, dispatch
+      invisibleEntries, entryRatings, onEntryClick, dispatch
       } = this.props;
       {/* contains oc items */}
     const onClick = this.props.onMenuItemClick;
@@ -243,7 +245,7 @@ class LandingPage extends Component {
             dispatch={dispatch}
             />
           <div className="group-header">
-            Found {entries.length} "{searchWord}" places in "{latestCity}":
+            Found {entries.length} "{searchWord}" places in "{searchText}":
           </div>
           <ResultList
             entries={entries.slice(0,10)}
@@ -266,7 +268,7 @@ class LandingPage extends Component {
                 />
             </div>
             : <div><div className="group-header">
-                To find places related to "{searchWord}" elsewhere, please go to <a href="#" onClick={() => onClick('map')}>Map</a>
+                To find places related to "{searchWord}" elsewhere, please go to <a href={ "#/?search=" + searchWord } onClick={() => onClick('map')}>Map</a>
               </div><br /></div> )}
           <div className="group-header">External ressouces</div>
           <p style={{fontSize:"80%"}} >(ourconomy does not have an affiliation with these{' '}
@@ -285,9 +287,9 @@ class LandingPage extends Component {
             <a
               target="_blank"
               href={"https://city.utopia.de/0/suche?fc=1&q=" + searchWord +
-              "&o=" + latestCity }>{' '}
+              "&o=" + searchText }>{' '}
                 Find sustainable sources for "{searchWord}" in{' '}
-                "{latestCity}", Germany
+                "{searchText}", Germany
             </a>
           </p>
           <p>WikiRate (finds best company names): <br />
@@ -350,12 +352,18 @@ class LandingPage extends Component {
               <div className="menu pure-menu pure-menu-horizontal">
                 <ul className="pure-g">
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
-                    <a onClick={() => onClick('map')} href="#" className="pure-menu-link">
+                    <a
+                      onClick={() => onClick('map')}
+                      href={ "#/?search=" + searchWord }
+                      className="pure-menu-link"> {/* oc special link */}
                       {t("menu.map")}
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
-                    <a onClick={() => onClick('products')} href="#" className="pure-menu-link">
+                    <a
+                      onClick={() => onClick('products')}
+                      href={ "#/?search=" + searchWord }
+                      className="pure-menu-link"> {/* oc special link */}
                       {t("effects.menu.effects")}{' '}
                       <span style=
                       {{fontWeight:'bold',color:'rgb(255, 221 ,  0)'}}>
@@ -408,10 +416,11 @@ class LandingPage extends Component {
                 type        = 'text'
                 style       = {{fontSize:"85%"}}
                 placeholder = {"What are you looking for?"}
-                //placeholder = {t("city-search.placeholder")}
               />
               <div className = "pure-u-1-24" />
               <input
+                onFocus     = {() => {cityInput = true}}
+                onBlur      = {() => {cityInput = false}}
                 className   = "pure-u-10-24"
                 onChange    = {onPlaceSearch}
                 onKeyUp     = {onKeyUp}
@@ -429,18 +438,24 @@ class LandingPage extends Component {
               </button>
                 <div className = "pure-u-8-24" />
                 <div className = "pure-u-16-24">
-                { searchText && searchText.length > 3
+                { searchText && searchText.length > 3 && cityInput == true
                   ? (searchError
                     ? <div className="error">
                       <span className="errorText">{t("city-search.error")}</span>&nbsp;&nbsp;
-                      <a onClick={() => onClick('map')} href="#" className="link">
+                      <a
+                        onClick={() => onClick('map')}
+                        href={ "#/?search=" + searchWord }
+                        className="link"> {/* oc special link */}
                         {t("city-search.show-map")}
-
-                     </a></div>
+                      </a></div>
                     : cities && cities.length > 0
                         ? <CityList cities={cities} onClick={onSelection} />
                         : <div className="error">{t("city-search.no-results")}&nbsp;&nbsp;
-                        <a onClick={() => onClick('map')} href="#" className="link">
+                        <a
+                          onClick={() => onClick('map')}
+                          className="link">
+                          href={ "#/?search=" + searchWord }
+                          > {/* oc special link */}
                         {t("city-search.show-map")}
                         </a></div>
                     )

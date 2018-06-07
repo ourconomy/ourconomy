@@ -104,6 +104,8 @@ Main = React.createClass
                 when 'landing'
                   dispatch Actions.showInfo null
                   dispatch Actions.toggleLandingPage()
+                  # oc needs to clean city on reload of home page:
+                  dispatch Actions.finishCitySearch()
                 when V.LOGOUT
                   dispatch Actions.logout()
                   dispatch Actions.showInfo V.LOGOUT
@@ -131,8 +133,10 @@ Main = React.createClass
               # dispatch Actions.toggleLandingPage()
               #oc needs search.text (=searchWord):
               # dispatch Actions.setSearchText ''
+              dispatch Actions.search()
               dispatch Actions.showResultPage()
-              dispatch Actions.finishCitySearch()
+              # oc needs city to be available:
+              # dispatch Actions.finishCitySearch()
             onLogin: (data) ->
                 {username, password} = data
                 dispatch Actions.login(username, password)
@@ -153,7 +157,6 @@ Main = React.createClass
             invisiblEntries: invisibleEntries
             entryRatings: ratings
             onEntryClick: (id, center) -> dispatch Actions.setCurrentEntry id, center
-            latestCity: search.latestCitySearch
             dispatch: dispatch
 
         if view.modal?

@@ -27,8 +27,8 @@ module.exports = (state=initialState, action={}) => {
       return {
         ...state,
         menu: m,
-        right: m ? state.right : null,
-        left: m ? null : state.left
+        //oc need: right: m ? state.right : null,
+        //oc need: left: m ? null : state.left
       }
 
     case T.SHOW_MENU:

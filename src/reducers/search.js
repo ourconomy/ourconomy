@@ -94,7 +94,6 @@ module.exports = (state = initialState, action = {}) => {
       return {
         ...state,
         city: action.payload,
-        latestCitySearch: action.payload //oc need
       }
 
     case T.SEARCH_RESULT:
