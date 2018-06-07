@@ -409,6 +409,8 @@ class LandingPage extends Component {
           <div className="place-search">
             <div className= "pure-g pure-form">
               <input
+                onFocus     = {() => {
+                  searchText ? onChange(searchText) : null }}
                 className   = "pure-u-10-24"
                 onChange    = {onTextSearch}
                 onKeyUp     = {onKeyUp}
@@ -419,7 +421,10 @@ class LandingPage extends Component {
               />
               <div className = "pure-u-1-24" />
               <input
-                onFocus     = {() => {cityInput = true}}
+                onFocus     = {() => {
+                                cityInput = true;
+                                searchText ? onChange(searchText) : null
+                              }}
                 onBlur      = {() => {cityInput = false}}
                 className   = "pure-u-10-24"
                 onChange    = {onPlaceSearch}
@@ -429,9 +434,11 @@ class LandingPage extends Component {
                 style       = {{fontSize:"85%"}}
                 placeholder = {t("city-search.placeholder")}
                 />
+                {/* oc city search on focus if city, is overly safe */}
+
               <div className = "pure-u-1-24" />
               <button
-                className = "pure-u-2-24"
+                className   = "pure-u-2-24"
                 onClick     = {onSearchClick}
                 >
                 Go!

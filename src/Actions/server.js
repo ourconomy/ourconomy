@@ -104,16 +104,18 @@ if (search.text == null || !search.text.trim().endsWith("#")) {
               }
             });
 
-            if (search.text != null) {
-              const address = search.text.replace(/#/g, "");
-              WebAPI.searchAddressTilehosting(address, (err, res) => {
-                dispatch({
-                  type: T.SEARCH_ADDRESS_RESULT,
-                  payload: err || res.results,
-                  error: err != null
-                });
-              });
-            }
+            //oc: This original code searches for cities with general
+            //    search text and confuses landing page inputs
+            //if (search.text != null) {
+            //  const address = search.text.replace(/#/g, "");
+            //  WebAPI.searchAddressTilehosting(address, (err, res) => {
+            //    dispatch({
+            //      type: T.SEARCH_ADDRESS_RESULT,
+            //      payload: err || res.results,
+            //      error: err != null
+            //    });
+            //  });
+            //}
           }
         };
 
