@@ -453,7 +453,7 @@ class LandingPage extends Component {
                         : <div className="error">{t("city-search.no-results")}&nbsp;&nbsp;
                         <a
                           onClick={() => onClick('map')}
-                          className="link">
+                          className="link"
                           href={ "#/?search=" + searchWord }
                           > {/* oc special link */}
                         {t("city-search.show-map")}
