@@ -48,6 +48,7 @@ class LandingPage extends Component {
           break;
         case "Enter":
           onSelection(cities[0]);
+          cityInput = false;
       }
     }
 
