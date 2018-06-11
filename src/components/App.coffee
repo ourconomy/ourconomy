@@ -154,7 +154,7 @@ Main = React.createClass
             onProductClick: (id) -> dispatch Actions.setCurrentProduct id
             entries: resultEntries
             cities: cities.slice(0,5)
-            invisiblEntries: invisibleEntries
+            invisibleEntries: invisibleEntries
             entryRatings: ratings
             onEntryClick: (id, center) -> dispatch Actions.setCurrentEntry id, center
             dispatch: dispatch
