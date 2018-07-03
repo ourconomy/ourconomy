@@ -179,6 +179,12 @@ import Actions                from "../Actions";
                 ]}</ul>
               </EffectPrecursors>
             </EntryDescription>
+            <EntryDescription style={{fontSize:"75%"}}>
+              The information on this product has been 
+              provided by volunteers and comes without any warranty 
+              for correctness. All trademarks belong to their respective 
+              owners.
+            </EntryDescription>
           </div>
         </EntryDetailPage>
       </div>)

@@ -155,6 +155,12 @@ class ProductForm extends Component {
         action    = 'javascript:void();' >
 
         <h3>{isEdit ? "Produkt bearbeiten" : "Neues Produkt"}</h3>
+        <legend>
+          <span className="text" style={{fontSize:"75%"}}>
+            Please do not enter copyrighted material and only public 
+            information.
+          </span>
+        </legend>
         { this.props.error &&
           <div className= "err">
             Der Eintrag konnte nicht gespeichert werden: {this.props.error.message}
