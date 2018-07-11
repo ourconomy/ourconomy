@@ -1,3 +1,4 @@
+#oc: This file seems to be unused as of beginning of July 2018
 i18n             = require 'i18next'
 XHR from         = require 'i18next-xhr-backend';
 LanguageDetector = require 'i18next-browser-languagedetector';

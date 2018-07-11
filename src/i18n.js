@@ -1,6 +1,8 @@
-import i18n from 'i18next';
-import de   from './locales/translation-de.json';
-import en   from './locales/translation-en.json';
+import i18n     from 'i18next';
+import de       from './locales/translation-de.json';
+import en       from './locales/translation-en.json';
+import effEng   from './locales/effectsTranslation-en.json';
+import effDeu   from './locales/effectsTranslation-de.json';
 
 import LanguageDetector from 'i18next-browser-languagedetector';
 
@@ -29,13 +31,18 @@ i18n
   .use(LanguageDetector)
   .init({
     resources: {
-      de: { translation: de },
-      en: { translation: en }
+      //oc: needed for effects
+      de: { translation: de, effectsTranslation: effDeu },
+      en: { translation: en, effectsTranslation: effEng },
+      //en: { effectsTranslation: en},
+      //de: { effectsTranslation: de}
     },
     interpolation: {
       escapeValue: false
     },
-    ns: ['translation'],
+    //oc: need new namespace for effects
+    ns: ['translation', 'effectsTranslation'],
+    //ns: ['translation'],
     defaultNs: 'translation',
     detection: lngDetectorOptions,
     fallbackLng: 'de'

@@ -159,6 +159,8 @@ class ProductForm extends Component {
           <span className="text" style={{fontSize:"75%"}}>
             Please do not enter copyrighted material and only public 
             information.
+            {this.props.t("effectsTranslation:productForm.test")};
+            {this.props.t("translation:productForm.tags")};
           </span>
         </legend>
         { this.props.error &&
