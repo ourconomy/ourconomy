@@ -234,85 +234,91 @@ const registerForm = (data) => {
 
 //oc section
 const productForm = (data) => {
+
   let errors, h, l, ref;
   errors = {};
+
+  const t = (key) => {
+    return i18n.t("effectsTranslation:productForm." + key);
+  }
+
   if (data == null) {
-    errors._error = "Ungültige Daten";
+    errors._error = t("invalidValues");
     return errors;
   }
   if (data.title == null) {
-    errors.title = 'Pflichtangabe';
+    errors.title = t("requiredField");
   } else {
     if (!((l = data.title.length) <= 50)) {
       if (errors.title == null) {
-        errors.title = "Zu langer Name: " + l + " statt max. 50 Zeichen";
+        errors.title = t("titleTooLong") + ": " + l + " " + t("maxNumCharactersTitle");
       }
     }
     if (!((l = data.title.length) >= 3)) {
       if (errors.title == null) {
-        errors.title = "Zu kurzer Name: " + l + " von mind. 3 Zeichen";
+        errors.title = t("titleTooShort") + ": " + l + " " + t("minNumCharactersTitle");
       }
     }
   }
   if (data.description == null) {
-    errors.description = 'Pflichtangabe';
+    errors.description = t("requiredField");
   } else {
     if (!((l = data.description.length) <= 250)) {
       if (errors.description == null) {
-        errors.description = "Zu lange Beschreibung: " + l + " statt max. 250 Zeichen";
+        errors.description = t("descriptionTooLong") + ": " + l + " " + t("maxNumCharactersDescription");
       }
     }
     if (!((l = data.description.length) >= 10)) {
       if (errors.description == null) {
-        errors.description = "Zu wenig Text: " + l + " von mind. 10 Zeichen";
+        errors.description =  t("descriptionTooShort") + ": " + l + " " + t("maxNumCharactersDescription");
       }
     }
   }
+
   if (data.tags == null) {
-    errors.tags = 'Pflichtangabe';
+    errors.tags = t("requiredField");
   } else {
     if ((typeof data.tags) !== "string") {
-      errors.tags = 'Ungültige Stichworte';
+      errors.tags = t("invalidTags");
     } else if (data.tags.length < 3) {
-      errors.tags = 'Mindestlänge von Stichworten: 3 Zeichen';
+      errors.tags = t("minNumCharactersTags");
+    }
+  }
+  if (data.license == null) {
+    errors.license = t("acceptLicense");
+  } else {
+    if ((typeof data.license) !== "boolean") {
+      errors.license = t("invalidLicenseAgreement");
+    } else if (data.license === false) {
+      errors.license = t("acceptLicense");
     }
   }
   if ((h = data.homepage) != null) {
     if (!((h.indexOf("http://") === 0) || (h.indexOf("https://") === 0))) {
-      //errors.homepage = t("invalidURL") + ": " + t("httpMissing");
-      errors.homepage = "invalidURL" + ": " + "httpMissing";
+      errors.homepage = t("invalidURL") + ": " + t("httpMissing");
     }
     if (((ref = (h = data.homepage)) != null ? ref.length : void 0) < 9) {
-      //errors.homepage = t("invalidURL");
-      errors.homepage = "invalidURL";
+      errors.homepage = t("invalidURL");
     }
   }
+
   if (data.upstreams) {
     if (data.upstreams.length > 0) {
       const upstreamsArrayErrors = []
       data.upstreams.forEach((upstream, upstreamIndex) => {
         const upstreamErrors = {}
         if ( !upstream || !upstream.upstreamNo ) {
-          upstreamErrors.upstreamNo = 'No. is required, Pflichtangabe'
+          upstreamErrors.upstreamNo = t("upstreamNoMissing")
           upstreamsArrayErrors[upstreamIndex] = upstreamErrors
         }
         if ( !upstream || !upstream.upstreamAmount ) {
-          upstreamErrors.upstreamAmount = 'Amount is required, Pflichtangabe'
+          upstreamErrors.upstreamAmount = t("upstreamAmountMissing")
           upstreamsArrayErrors[upstreamIndex] = upstreamErrors
         }
        })
       if (upstreamsArrayErrors.length) {
         errors.upstreams = upstreamsArrayErrors
       }
-    }
-  }
-  if (data.license == null) {
-    errors.license = 'Lizenzzustimmung ist nötig';
-  } else {
-    if ((typeof data.license) !== "boolean") {
-      errors.license = 'Ungültige Zustimmung';
-    } else if (data.license === false) {
-      errors.license = 'Lizenzzustimmung ist nötig';
     }
   }
   return errors;

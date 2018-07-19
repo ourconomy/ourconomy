@@ -12,8 +12,8 @@ import T                    from "prop-types";
 import { AsyncCreatable   } from 'react-select';
 import 'react-select/dist/react-select.css';
 import appConst             from "../constants/App";
-import { quickSearch } from "../WebAPI4FX";
-
+import { quickSearch }      from "../WebAPI4FX";
+import i18n                 from '../i18n';
 
 const errorMessage = ({meta}) =>
   meta.error && meta.touched
@@ -22,6 +22,11 @@ const errorMessage = ({meta}) =>
 
 var lastFormSearchTrigger = 0;
 var latestSearchTerm = "";
+
+//oc: Passing t on to Upstream component created infinite loop, therefore:
+var effT = (key) => {
+  return i18n.t("effectsTranslation:productForm." + key);
+};
 
 const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
   <ul>
@@ -32,10 +37,10 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
           type="text"
           className="pure-u-4-24"
           component="input"
-          placeholder="No."
+          placeholder={effT("upstreamNo")}
         />
           <label className="pure-u-20-24">
-            <div style={{marginLeft:"5px"}}>{' '}Item number (required)
+            <div style={{marginLeft:"5px"}}>{' '}{effT("upstreamItemReq")}
             </div>
           </label>
         <Field
@@ -50,10 +55,10 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
               value={props.input.value}
               onChange={props.input.onChange}
               onBlur={() => props.input.onBlur(props.input.value)}
-              placeholder="Precursor product"
-              searchPromptText="Type to search ..."
-              loadingPlaceholder="Loading entries ..."
-              promptTextCreator={ label => 'Create new option "' + label + '"'}
+              placeholder={effT("upstreamPrecursor")}
+              searchPromptText={effT("searchPrompt")}
+              loadingPlaceholder={effT("loadingPlaceholder")}
+              promptTextCreator={ label => effT("creatingOptions") + label + effT("creatingOptionsEnd")}
             />
           }
         />
@@ -62,14 +67,14 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
           className="pure-u-12-24"
           type="text"
           component="input"
-          placeholder="Unit"
+          placeholder={effT("upstreamUnit")}
         />
         <Field
           name={`${member}.upstreamAmount`}
           className="pure-u-12-24"
           type="text"
           component="input"
-          placeholder="Amount (required)"
+          placeholder={effT("upstreamAmount")}
         />
         <Field
           name={`${member}.upstreamAmount`}
@@ -79,7 +84,7 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
           className="pure-u-20-24"
           type="text"
           component="input"
-          placeholder="Comment"
+          placeholder={effT("upstreamComment")}
         />
         <div className="pure-u-1-24">
         </div>
@@ -87,7 +92,7 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
           type="button"
           className="pure-u-3-24"
           style={{marginTop:"7px"}}
-          title="Remove Member"
+          title={effT("upstreamRemove")}
           onClick={() => fields.remove(index)}
         >
           <i className= "fa fa-trash" />
@@ -96,7 +101,7 @@ const renderUpstreamEffects = ({ fields, meta: { touched, error } }) => (
    ))}
     <li>
       <button type="button" onClick={() => fields.push({})}>
-        <i className= "fa fa-plus" />{' '}Add new component
+        <i className= "fa fa-plus" />{' '}{effT("upstreamAdd")}
       </button>
     </li>
   </ul>
@@ -144,8 +149,9 @@ class ProductForm extends Component {
   render() {
 
     const { isEdit, license, dispatch, handleSubmit } = this.props;
+
     var t = (key) => {
-      return this.props.t("productForm." + key);
+      return this.props.t("effectsTranslation:productForm." + key);
     };
 
     return (
@@ -154,22 +160,24 @@ class ProductForm extends Component {
         className = "add-entry-form"
         action    = 'javascript:void();' >
 
-        <h3>{isEdit ? "Produkt bearbeiten" : "Neues Produkt"}</h3>
+        <h3>{isEdit ?
+          t("editProductHeading")
+          : t("createProductHeading")}
+        </h3>
         <legend>
           <span className="text" style={{fontSize:"75%"}}>
-            Please do not enter copyrighted material and only public 
-            information.
-            {this.props.t("effectsTranslation:productForm.test")};
-            {this.props.t("translation:productForm.tags")};
+            {t("respectCopyright")}
           </span>
         </legend>
         { this.props.error &&
           <div className= "err">
-            Der Eintrag konnte nicht gespeichert werden: {this.props.error.message}
+            {t("savingError")} {' '}
+            {this.props.error.message}
           </div>
         }
         { (!this.props.error) && this.props.submitFailed &&
-          <div className="err">Bitte überprüfen Sie ihre Eingaben!
+          <div className="err">
+            {t("valueError")}
             <Field name="license" component={errorMessage} />
           </div>
         }
@@ -182,15 +190,13 @@ class ProductForm extends Component {
               className="pure-input-1"
               type="text"
               component="input"
-              placeholder="Produktname" />
-
+              placeholder={t("title")} />
             <Field
               name="title"
               component={errorMessage} />
 
-            <Field name="description" className="pure-input-1" component="textarea" placeholder="Produkt-Beschreibung"  />
+            <Field name="description" className="pure-input-1" component="textarea" placeholder={t("description")} />
             <Field name="description" component={errorMessage} />
-
           </fieldset>
 
           <fieldset>
@@ -204,7 +210,7 @@ class ProductForm extends Component {
                   required={true}
                   className="pure-input-1"
                   component="input"
-                  placeholder="Stichworte (Komma getrennt)"
+                  placeholder={t("tags")}
                   normalize={normalize.tags} />
                 <Field
                   name="tags"
@@ -223,16 +229,13 @@ class ProductForm extends Component {
                   name="homepage"
                   className="pure-input-1"
                   component="input"
-                  placeholder={"Homepage"} />
+                  placeholder={t("homepage")} />
                 <Field name="homepage" component={errorMessage} />
               </div>
             </div>
           </fieldset>
 
           <fieldset>
-            <legend>
-              <span className="text">Quelle</span>
-            </legend>
             <div>
               <Field
                 name="origin"
@@ -242,10 +245,10 @@ class ProductForm extends Component {
                     value={props.input.value}
                     onChange={props.input.onChange}
                     onBlur={() => props.input.onBlur(props.input.value)}
-                    placeholder="Produced by ..."
-                    searchPromptText="Type to search ..."
-                    loadingPlaceholder="Loading entries ..."
-                    promptTextCreator={ label => 'Create new option "' + label + '"'}
+                    placeholder={t("producer")}
+                    searchPromptText={t("searchPrompt")}
+                    loadingPlaceholder={t("loadingPlaceholder")}
+                    promptTextCreator={ label => t("creatingOptions") + label + t("effectsTranslation:productForm.creatingOptionsEnd")}
                   />
                 }
                 />
@@ -255,15 +258,19 @@ class ProductForm extends Component {
 
           <fieldset>
             <legend>
-              <span className="text">Precursor products and effects</span>
+              <span className="text">{t("upstreamLegend")}</span>
             </legend>
-            <FieldArray name="upstreams" component={renderUpstreamEffects} />
+            <FieldArray
+              name="upstreams"
+              component={renderUpstreamEffects}
+            />
           </fieldset>
 
           <fieldset>
             <legend>
-              <span className="text">Lizenz</span>
-              <span className="desc">(CC-0)</span>
+              <span className="text">
+                {t("license")}
+              </span>
             </legend>
             <div className= "pure-g license">
               <label className= "pure-u-2-24">
@@ -274,11 +281,11 @@ class ProductForm extends Component {
               </div>
               <div className= "pure-u-20-24">
                 <Field name="license" component={errorMessage} />
-                Ich habe die {" "}
+                {t("iHaveRead")} {" "}
                 <a target="_blank" href={CC_LICENSE.link}>
-                  Bestimmungen der Creative-Commons Lizenz CC0
+                  {t("creativeCommonsLicense")}
                 </a> {" "}
-                gelesen und akzeptiere sie
+                {t("licenseAccepted")}
               </div>
             </div>
           </fieldset>
@@ -292,7 +299,7 @@ class ProductForm extends Component {
                 this.props.dispatch(isEdit ? Actions.cancelEditProduct() : Actions.cancelNewProduct());
               }}
               icon = "fa fa-ban"
-              text = { t("cancel") }
+              text = { this.props.t("translation:entryForm.cancel") }
             />
             <NavButton
               keyName = "save"
@@ -301,7 +308,7 @@ class ProductForm extends Component {
                 this.props.handleSubmit();
               }}
               icon = "fa fa-floppy-o"
-              text = { t("save") }
+              text = { this.props.t("translation:entryForm.save") }
             />
           </nav>
         </div>
