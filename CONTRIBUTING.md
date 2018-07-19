@@ -105,4 +105,5 @@ Nevertheless here are some more libs used and you should/could know about:
 - [font-awesome](http://fontawesome.io/)
 - redux-form [https://redux-form.com/](https://redux-form.com/)  
 - react-select for dropdown menus [https://github.com/JedWatson/react-select](https://github.com/JedWatson/react-select)  
-- [CoffeeScript](http://coffeesipt.org/) - the central piece of code, App.coffee, still uses coffeescript, but it will be converted into JavaScript in the near future
+- [CoffeeScript](http://coffeesipt.org/) - the central piece of code, App.coffee, still uses coffeescript, but it will be converted into JavaScript in the near future  
+- [i18next](https://www.i18next.com/) Internationalization modules  
