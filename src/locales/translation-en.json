@@ -178,19 +178,6 @@
 		"close" : "close"
 	},
 	"landingPage" : {
-        "effects" : {
-            "menu" : {
-                "effects" : "Products",
-                "new" : "New!",
-                "infos":"About",
-                "donate":"Support"
-            },
-            "slogan" : "Hey, this is ourconomy!",
-            "footer" : {
-                "trademark" : "ourconomy is a trade mark of Oliver Sendelbach",
-                "heading" : "Let's go."
-            }
-		},
 		"menu" : {
 			"map" : "Map",
 			"infos" : "About us",

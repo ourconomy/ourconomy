@@ -178,19 +178,6 @@
 		"close" : "schließen"
 	},
 	"landingPage" : {
-        "effects" : {
-            "menu" : {
-                "effects" : "Produkte",
-                "new" : "Neu!",
-                "infos":"Über",
-                "donate":"Unterstützen"
-            },
-            "slogan" : "ourconomy. Läuft für dich.",
-            "footer" : {
-                "trademark" : "ourconomy ist eine eingetragene Marke von Oliver Sendelbach",
-                "heading" : "Mach mit"
-            }
-		},
 		"menu" : {
 			"map" : "Karte",
 			"infos" : "Über uns",

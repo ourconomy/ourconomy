@@ -46,5 +46,52 @@
 		"httpMissing":"\"http://\" or \"https://\" missing",
     "upstreamNoMissing":"No. is required",
     "upstreamAmountMissing":"Amount is required"
-	}
+	},
+  "landingPage":{
+    "claim":"A product enhancement of",
+    "menu" : {
+        "effects" : "Products",
+        "new" : "New!",
+        "infos":"About",
+        "donate":"Support"
+    },
+    "slogan" : "Hey, this is ourconomy!",
+    "city-search": {
+      "targetHolder":"What are you looking for?",
+      "placeHolder":"And where?",
+      "go":"Go!"
+    },
+    "searchResults":"Search results",
+    "productResults1":"Found ",
+    "productResults2":"of",
+    "productResults3":" products or services",
+    "entryResult1":"Found ",
+    "entryResult2":" places",
+    "entryResult3":" in ",
+    "entryResult4":"",
+    "invisibleResult1":"Found ",
+    "invisibleResult2":"place(s) elsewhere ",
+    "invisibleResultAlt1":"To find places related to ",
+    "invisibleResultAlt2":" elsewhere, please go to ",
+    "invisibleResultAlt3":"map",
+    "external":{
+      "ressources":"External ressources",
+      "noAffiliation":"(ourconomy does not have an affiliation with these organisations)",
+      "fairmondo1":"Fairmondo: Look for ",
+      "fairmondo2":" on Fairmondo",
+      "utopiaDe1":"Utopia: Look for ",
+      "utopiaDe2":" on Utopia.de (Google search!)",
+      "cityUtopia1":"City search on Utopia.de: Find ",
+      "cityUtopia2":"in ",
+      "cityUtopia3":", Germany",
+      "wikiRate1":"WikiRate: Find interesting metrics on ",
+      "wikiRate2":" (works best for bigger companies)",
+      "wikiproducts1":"Wiki-Products: Find information on ",
+      "wikiproducts2":" (works best for German search terms)"
+    },
+    "footer" : {
+        "trademark" : "ourconomy is currently  a trade mark of Oliver Sendelbach",
+        "heading" : "Let's go."
+    }
+  }
 }

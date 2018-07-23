@@ -39,6 +39,9 @@ class LandingPage extends Component {
     var t = (key) => {
       return this.props.t("landingPage." + key);
     };
+    var f = (key) => {
+      return this.props.t("effectsTranslation:landingPage." + key);
+    };
 
     const onKeyUp = ev => {
       ev.preventDefault();
@@ -235,10 +238,13 @@ class LandingPage extends Component {
         break;
       case V.RESULT_PAGE:
         contentComp = <div>
-          <p>Search results</p>
+          <p>{f("searchResults")}</p>
           <div className="group-header">
-            Found {effects.length > 10 ? 10 : effects.length} of{' '}
-            {effects.length} "{searchWord}" products or services:
+            {f("productResults1")}
+            {effects.length > 10 ?  10 : effects.length}
+            {' '}{f("productResults2")}{' '}
+              {effects.length}{' '}{searchWord ? <span>'{searchWord}'</span> : null}
+            {f("productResults3")}:
           </div>
           <ProductResultList
             products={effects.slice(0,10)}
@@ -246,7 +252,12 @@ class LandingPage extends Component {
             dispatch={dispatch}
             />
           <div className="group-header">
-            Found {entries.length} "{searchWord}" places in "{searchText}":
+            {f("entryResult1")}{entries.length}{' '}
+            {searchWord ? <span>'{searchWord}'</span> : null}
+            {f("entryResult2")}
+            { searchText ?
+              <span>{' '}{f("entryResult3")}'{searchText}'</span> : null}
+            {f("entryResult4")}:
           </div>
           <ResultList
             entries={entries.slice(0,10)}
@@ -258,7 +269,8 @@ class LandingPage extends Component {
           {((invisibleEntries && invisibleEntries.length > 0 ) ?
             <div>
               <div className="group-header">
-                Found {invisibleEntries.length} places elsewhere:
+                {f("invisibleResult1")}{invisibleEntries.length}
+                {' '}{f("invisibleResult2")}:
               </div>
               <ResultList
                 entries={invisibleEntries}
@@ -269,49 +281,69 @@ class LandingPage extends Component {
                 />
             </div>
             : <div><div className="group-header">
-                To find places related to "{searchWord}" elsewhere, please go to <a href={ "#/?search=" + searchWord } onClick={() => onClick('map')}>Map</a>
+                {f("invisibleResultAlt1")}'{searchWord}'
+                {f("invisibleResultAlt2")}
+                <a href={ "#/?search=" + searchWord }
+                  onClick={() => onClick('map')}>
+                  {f("invisibleResultAlt3")}
+                </a>
               </div><br /></div> )}
-          <div className="group-header">External ressouces</div>
-          <p style={{fontSize:"80%"}} >(ourconomy does not have an affiliation with these{' '}
-            organisations:)</p>
-          <p>Fairmondo: <a target="_blank"
-            href={"https://fairmondo.de/articles?article_search_form[q]=" +
-              searchWord }>
-            Look for "{searchWord}" on Fairmondo
-          </a></p>
-          <p>Utopia.de: <br />
+          <div className="group-header">{f("external.ressources")}</div>
+          <p style={{fontSize:"80%"}} >{f("external.noAffiliation")}</p>
+
+          {searchWord ?
+            <p>{f("external.fairmondo1")}<a target="_blank"
+              href={"https://fairmondo.de/articles?article_search_form[q]=" +
+                searchWord }>
+              {searchWord}</a>{f("external.fairmondo2")}
+            </p>
+            : null
+          }
+          {searchWord ?
+            <p>{f("external.utopiaDe1")}
             <a target="_blank" href={"https://utopia.de/?s=" +
               searchWord }>
-              Look for "{searchWord}" on Utopia.de (Watch out! Google search!)
-            </a></p>
-          <p>City-Search of Utopia.de: <br />
-            <a
-              target="_blank"
-              href={"https://city.utopia.de/0/suche?fc=1&q=" + searchWord +
-              "&o=" + searchText }>{' '}
-                Find sustainable sources for "{searchWord}" in{' '}
-                "{searchText}", Germany
-            </a>
-          </p>
-          <p>WikiRate (finds best company names): <br />
-            <a
-              target="_blank"
-              href=
-              {"https://wikirate.org/*search?utf8=%E2%9C%93&" +
-              "query[keyword]=" + searchWord }>{' '}
-                Find out more about "{searchWord}" on WikiRate
-            </a>
-          </p>
-          <p>Wiki-Products (works best for German search terms): <br />
-            <a
-              target="_blank"
-              href={"http://de.wiki-products.org/index.php?" +
-              "title=Spezial%3ASuche&search=" + searchWord + "&go=Seite"
-              }>{' '}
-                Find sustainable sources for "{searchWord}"
-            </a>
-          </p>
-          {/* wiki-rate */}
+              {searchWord}</a>{f("external.utopiaDe2")}
+            </p>
+            : null
+          }
+          {searchText ?
+            <p>{f("external.cityUtopia1")}
+              <a
+                target="_blank"
+                href={"https://city.utopia.de/0/suche?fc=1&q=" +
+                searchWord + "&o=" + searchText }>
+                  {searchWord ? <span>{searchWord}{' '}</span> : null}
+                  {f("external.cityUtopia2")}{searchText}
+              </a>
+              {f("external.cityUtopia3")}
+            </p>
+            : null
+          }
+          {searchWord ?
+            <p>{f("external.wikiRate1")}
+              <a
+                target="_blank"
+                href=
+                {"https://wikirate.org/*search?utf8=%E2%9C%93&" +
+                "query[keyword]=" + searchWord }>{searchWord}
+              </a>
+              {f("external.wikiRate2")}
+            </p>
+              : null
+          }
+          {searchWord ?
+            <p>{f("external.wikiproducts1")}
+              <a
+                target="_blank"
+                href={"http://de.wiki-products.org/index.php?" +
+                "title=Spezial%3ASuche&search=" + searchWord + "&go=Seite"
+                }>{searchWord}
+              </a>
+              {f("external.wikiproducts2")}
+            </p>
+            : null
+          }
         </div>;
         break;
         default:
@@ -333,7 +365,7 @@ class LandingPage extends Component {
                 <div className= "pure-u-1-2 pure-u-md-1-2" >*/}
                   <img className="pure-img" width={300} src={oclogo} />
                   </a>
-                  A product enhancement for 
+                  {f("claim")}{' '}
                   <a target="_blank" style={{textDecoration: "none",color: "rgb(45,45,45)",fontWeight: "bold"}} href="https://kartevonmorgen.org">{' '}
                   Karte von morgen
                   </a>
@@ -365,17 +397,17 @@ class LandingPage extends Component {
                       onClick={() => onClick('products')}
                       href={ "#/?search=" + searchWord }
                       className="pure-menu-link"> {/* oc special link */}
-                      {t("effects.menu.effects")}{' '}
+                      {f("menu.effects")}{' '}
                       <span style=
                       {{fontWeight:'bold',color:'rgb(255, 221 ,  0)'}}>
-                      {t("effects.menu.new")}
+                      {f("menu.new")}
                       </span>
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
 {/*                  <a onClick= {() => onClick(V.INFO)} href="#" className="pure-menu-link"> */}
                     <a onClick= {() => onClick(V.EFFECTS_INFO)} href="#" className="pure-menu-link">
-                      {t("effects.menu.infos")}
+                      {f("menu.infos")}
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
@@ -386,7 +418,7 @@ class LandingPage extends Component {
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
                  {/*<a onClick={() => onClick(V.DONATE)} href="#" className="pure-menu-link"> oc conflict line */}
                     <a onClick={() => onClick(V.EFFECTS_CONTRIB)} href="#" className="pure-menu-link">
-                      {t("effects.menu.donate")}
+                      {f("menu.donate")}
                     </a>
                   </li>
                   <li className="pure-u-1-3 pure-u-md-1-6 menu-item">
@@ -406,7 +438,7 @@ class LandingPage extends Component {
         </div>
       <div className ={ "search" + (content ? '' : ' start')}>
         <div className = "landing-content">
-          <h1>{t("effects.slogan")}</h1> {/*oc real conflict*/}
+          <h1>{f("slogan")}</h1> {/*oc real conflict*/}
           <div className="place-search">
             <div className= "pure-g pure-form">
               <input
@@ -418,7 +450,7 @@ class LandingPage extends Component {
                 value       = {searchWord || ''}
                 type        = 'text'
                 style       = {{fontSize:"85%"}}
-                placeholder = {"What are you looking for?"}
+                placeholder = {f("city-search.targetHolder")}
               />
               <div className = "pure-u-1-24" />
               <input
@@ -433,7 +465,7 @@ class LandingPage extends Component {
                 value       = {searchText || ''}
                 type        = 'text'
                 style       = {{fontSize:"85%"}}
-                placeholder = {t("city-search.placeholder")}
+                placeholder = {f("city-search.placeHolder")}
                 />
                 {/* oc city search on focus if city, is overly safe */}
 
@@ -442,7 +474,7 @@ class LandingPage extends Component {
                 className   = "pure-u-2-24"
                 onClick     = {onSearchClick}
                 >
-                Go!
+                {f("city-search.go")}
               </button>
                 <div className = "pure-u-8-24" />
                 <div className = "pure-u-16-24">
@@ -494,13 +526,13 @@ class LandingPage extends Component {
         }</div>
       </div>
       <div className= "footer">
-        <h3>{t("effects.footer.heading")}</h3>
+        <h3>{f("footer.heading")}</h3>
         <p>
           {t("footer.contact")}<a target="_blank" href={EffectsURLs.MAIL.link}>{EffectsURLs.MAIL.name}</a>
           <br />
           {t("footer.open-source")}<a target="_blank" href={EffectsURLs.REPOSITORY.link}>{EffectsURLs.REPOSITORY.name}</a>
           <br />
-          {t("effects.footer.trademark")} {/* oc line */}
+          {f("footer.trademark")} {/* oc line */}
         </p>
         <p>
           {/*<a href="#" onClick={() => onClick(V.IMPRINT)}>{t("footer.imprint")}</a> oc conflict */}

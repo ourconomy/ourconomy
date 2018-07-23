@@ -48,5 +48,52 @@
 		"openDatabaseLicense":"OpenDatabase License",
     "upstreamNoMissing":"Nr. ist Pflichtangabe",
     "upstreamAmountMissing":"Betrag ist erforderlich"
+  },
+	"landingPage" : {
+    "claim":"Eine Produkterweiterung für",
+    "menu" : {
+        "effects" : "Produkte",
+        "new" : "Neu!",
+        "infos":"Über",
+        "donate":"Unterstützen"
+    },
+    "slogan" : "ourconomy. Läuft für dich.",
+    "city-search": {
+      "targetHolder":"Wonach suchst du?",
+      "placeHolder":"An welchem Ort?",
+      "go":"Los!"
+    },
+    "searchResults":"Suchergebnisse",
+    "productResults1":"",
+    "productResults2":"von",
+    "productResults3":" Produkt(en) oder Dienstleistung(en)",
+    "entryResult1":"",
+    "entryResult2":" Ort(e)",
+    "entryResult3":" in ",
+    "entryResult4":" gefunden",
+    "invisibleResult1":"",
+    "invisibleResult2":"Ort(e) anderswo gefunden",
+    "invisibleResultAlt1":"Zur Suche nach ",
+    "invisibleResultAlt2":"-Orten woanders, gehe zur ",
+    "invisibleResultAlt3":"Karte",
+    "external":{
+      "ressources":"Externe Ressourcen",
+      "noAffiliation":"(ourconomy hat keine geschäftlichen Beziehungen zu diesen Organisationen)",
+      "fairmondo1":"Fairmondo: Suche nach ",
+      "fairmondo2":" auf Fairmondo",
+      "utopiaDe1":"Utopia: Suche nach ",
+      "utopiaDe2":" auf Utopia.de (Google-Suche!)",
+      "cityUtopia1":"City-Suche auf Utopia.de: Suche ",
+      "cityUtopia2":"in ",
+      "cityUtopia3":"",
+      "wikiRate1":"WikiRate: Interessante Metriken zu ",
+      "wikiRate2":" (eher für große Unternehmen)",
+      "wikiproducts1":"Wiki-Products: Finde Informationen zu ",
+      "wikiproducts2":" (für dt. Suchbegriffe)"
+    },
+    "footer" : {
+        "trademark" : "ourconomy ist zurzeit noch eine eingetragene Marke von Oliver Sendelbach",
+        "heading" : "Mach mit"
+    }
   }
 }
