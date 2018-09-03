@@ -239,7 +239,8 @@ const productForm = (data) => {
   errors = {};
 
   const t = (key) => {
-    return i18n.t("effectsTranslation:productForm." + key);
+    //return i18n.t("effectsTranslation:productForm." + key);
+    return i18n.t("translation:entryForm." + key);
   }
 
   if (data == null) {
@@ -308,11 +309,11 @@ const productForm = (data) => {
       data.upstreams.forEach((upstream, upstreamIndex) => {
         const upstreamErrors = {}
         if ( !upstream || !upstream.upstreamNo ) {
-          upstreamErrors.upstreamNo = t("upstreamNoMissing")
+          upstreamErrors.upstreamNo = i18n.t("effectsTranslation:productForm.upstreamNoMissing")
           upstreamsArrayErrors[upstreamIndex] = upstreamErrors
         }
         if ( !upstream || !upstream.upstreamAmount ) {
-          upstreamErrors.upstreamAmount = t("upstreamAmountMissing")
+          upstreamErrors.upstreamAmount = i18n.t("effectsTranslation:productForm.upstreamAmountMissing")
           upstreamsArrayErrors[upstreamIndex] = upstreamErrors
         }
        })

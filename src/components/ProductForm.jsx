@@ -171,13 +171,13 @@ class ProductForm extends Component {
         </legend>
         { this.props.error &&
           <div className= "err">
-            {t("savingError")} {' '}
+            {this.props.t("translation:entryForm.savingError")} {' '}
             {this.props.error.message}
           </div>
         }
         { (!this.props.error) && this.props.submitFailed &&
           <div className="err">
-            {t("valueError")}
+            {this.props.t("translation:entryForm.valueError")}
             <Field name="license" component={errorMessage} />
           </div>
         }
