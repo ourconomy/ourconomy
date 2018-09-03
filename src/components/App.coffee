@@ -484,12 +484,9 @@ Main = React.createClass
               when V.PRODUCT
                 div className: "content",
                   React.createElement ProductDetails,
-                    entry   : products[search.current] || null #our: this element is still called entry because ProductDetails expects it, let's see what we do with search
+                    effect   : products[search.current] || null
+                      #our: We need to start calling products 'effects'
                     dispatch : dispatch
-              #   React.createElement Ratings,
-              #     entry   : entries[search.current] || null
-              #     ratings : (if entries[search.current] then (entries[search.current].ratings || []) else []).map((id) -> ratings[id])
-              #     onRate  : (id) => dispatch Actions.showNewRating id
 
               when V.EDIT, V.NEW
                 div className: "content-above-buttons",

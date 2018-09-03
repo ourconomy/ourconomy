@@ -80,9 +80,9 @@ import Actions                from "../Actions";
     class ProductDetails extends Component {
 
       render() {
-        const { entry } = this.props;
+        const { effect } = this.props;
 
-        if (!entry) {
+        if (!effect) {
           return(
             <EntryDetailPage>
               <span>Eintrag wird geladen...</span>
@@ -119,54 +119,29 @@ import Actions                from "../Actions";
             <span style={{color:'rgb(255,221,0)'}}>Produkt/Service</span>
           </CategoryDescription>
           <div>
-            <EntryTitle>{entry.title}</EntryTitle>
-            <EntryDescription>{entry.description}</EntryDescription>
-            <EntryDescription>von: {entry.origin.label}
+            <EntryTitle>{effect.title}</EntryTitle>
+            <EntryDescription>{effect.description}</EntryDescription>
+            <EntryDescription>von: {effect.origin.label}
             </EntryDescription>
-            <EntryDetailsDetails>{[
-              (entry.homepage ?
+            <EntryDetailsOtherData>{[
+              (effect.homepage ?
                 <div key="hp" className="pure-g">
                   <i className = "pure-u-2-24 fa fa-globe" />
-                  <EntryLink className="pure-u-22-24" href={entry.homepage} target="_blank">
-                    { entry.homepage }
+                  <EntryLink className="pure-u-22-24" href={effect.homepage} target="_blank">
+                    { effect.homepage }
                   </EntryLink>
                 </div> : null),
-              (entry.email ?
-                <div key="mail" className="pure-g">
-                  <i className= "pure-u-2-24 fa fa-envelope" />
-                  <EntryLink className="pure-u-22-24" href={ "mailto:" + entry.email}>
-                    {entry.email}
-                  </EntryLink>
-                </div>
-                : null),
-              (entry.telephone
-                ?
-                <div key="tel" className="pure-g">
-                  <i className="pure-u-2-24 fa fa-phone" />
-                  <span className="pure-u-22-24">
-                    { entry.telephone }
-                  </span>
-                </div>
-                : null),
-              ((entry.street || entry.zip || entry.city) ?
-                <div key="addr" className = "address pure-g">
-                  <i className = "pure-u-2-24 fa fa-map-marker" />
-                  <div>
-                    <Address { ...entry } />
-                  </div>
-                </div>
-                : null),
                 //oc: make tags right!
-              (entry.tags && entry.tags.filter(t => t !="").length > 0
-                ? Tags(entry.tags)
+              (effect.tags && effect.tags.filter(t => t !="").length > 0
+                ? Tags(effect.tags)
                 : null)
-            ]}</EntryDetailsDetails>
+            ]}</EntryDetailsOtherData>
             <EntryDescription>
               gemacht aus:
               <EffectPrecursors>
                 <ul>{[
-                  ((entry.upstreams && entry.upstreams.length) > 0
-                  ? entry.upstreams.map(u =>
+                  ((effect.upstreams && effect.upstreams.length) > 0
+                  ? effect.upstreams.map(u =>
                       <li>
                       {u.upstreamAmount}{' '}
                       {u.upstreamTransferUnit}{' '}
