@@ -6,7 +6,7 @@ import Colors                 from "./styling/Colors"
 import Ratings                from "./Ratings"
 import NavButton              from "./NavButton";
 import NavButtonWhite         from "./NavButtonWhite";
-//import { translate }          from "react-i18next";
+import { translate }          from "react-i18next";
 import Actions                from "../Actions";
 
     const TagsWrapper = styled.div `
@@ -69,7 +69,7 @@ import Actions                from "../Actions";
       color:    ${props => Colors[props.category]};
     `;
 
-    const EntryDetailsDetails = styled.div`
+    const EntryDetailsOtherData = styled.div`
       font-family: Museo;
     `;
 
@@ -80,12 +80,12 @@ import Actions                from "../Actions";
     class ProductDetails extends Component {
 
       render() {
-        const { effect } = this.props;
+        const { effect, t, dispatch } = this.props;
 
         if (!effect) {
           return(
             <EntryDetailPage>
-              <span>Eintrag wird geladen...</span>
+              <span>{t("effectDetails.loadingEffect")}</span>
             </EntryDetailPage>
           );
         }
@@ -97,7 +97,7 @@ import Actions                from "../Actions";
             keyName = "back"
             buttonRight = { false }
             icon = "fa fa-chevron-left"
-            text = {"back"}
+            text = {t ("effectDetails.back")}
             onClick = {() => {
               this.props.dispatch(Actions.setCurrentProduct(null, null));
               this.props.dispatch(Actions.showProductSearchResults());
@@ -116,12 +116,14 @@ import Actions                from "../Actions";
         </nav>
         <EntryDetailPage>
           <CategoryDescription>
-            <span style={{color:'rgb(255,221,0)'}}>Produkt/Service</span>
+            <span style={{color:'rgb(255,221,0)'}}>
+              {t ("effectDetails.category")}
+            </span>
           </CategoryDescription>
           <div>
             <EntryTitle>{effect.title}</EntryTitle>
             <EntryDescription>{effect.description}</EntryDescription>
-            <EntryDescription>von: {effect.origin.label}
+            <EntryDescription>{t ("effectDetails.by")}: {effect.origin.label}
             </EntryDescription>
             <EntryDetailsOtherData>{[
               (effect.homepage ?
@@ -131,13 +133,12 @@ import Actions                from "../Actions";
                     { effect.homepage }
                   </EntryLink>
                 </div> : null),
-                //oc: make tags right!
               (effect.tags && effect.tags.filter(t => t !="").length > 0
                 ? Tags(effect.tags)
                 : null)
             ]}</EntryDetailsOtherData>
             <EntryDescription>
-              gemacht aus:
+              {t ("effectDetails.madeFrom")}:
               <EffectPrecursors>
                 <ul>{[
                   ((effect.upstreams && effect.upstreams.length) > 0
@@ -150,15 +151,12 @@ import Actions                from "../Actions";
                         {u.upstreamComment}
                       { u.upstreamComment && '\)'}
                       </li>)
-                  : <li>Noch keine Angaben</li>)
+                  : <li>{t ("effectDetails.noData")}</li>)
                 ]}</ul>
               </EffectPrecursors>
             </EntryDescription>
             <EntryDescription style={{fontSize:"75%"}}>
-              The information on this product has been 
-              provided by volunteers and comes without any warranty 
-              for correctness. All trademarks belong to their respective 
-              owners.
+              {t ("effectDetails.disclaimer")} {t ("effectDetails.TMInfo")}
             </EntryDescription>
           </div>
         </EntryDetailPage>
@@ -167,4 +165,4 @@ import Actions                from "../Actions";
   }
 }
 
-module.exports = pure(ProductDetails)
+module.exports = translate('effectsTranslation')(ProductDetails)

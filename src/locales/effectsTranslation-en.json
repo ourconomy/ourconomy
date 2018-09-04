@@ -29,6 +29,16 @@
     "upstreamNoMissing":"No. is required",
     "upstreamAmountMissing":"Amount is required"
 	},
+	"effectDetails":{
+		"loadingEffect": "loading entry...",
+		"back": "back",
+    "category": "Product/Service",
+    "by": "By",
+    "madeFrom": "Made from",
+    "noData": "no data entered, yet",
+    "disclaimer": "The information on this product has been provided by volunteers and comes without any warranty for correctness.",
+    "TMInfo": "All trademarks belong to their respective owners."
+	},
   "landingPage":{
     "claim":"A product enhancement of",
     "menu" : {

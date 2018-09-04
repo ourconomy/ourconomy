@@ -29,6 +29,16 @@
     "upstreamNoMissing":"Nr. ist Pflichtangabe",
     "upstreamAmountMissing":"Betrag ist erforderlich"
   },
+	"effectDetails":{
+		"loadingEffect": "Eintrag wird geladen ...",
+		"back": "zurück",
+    "category": "PRODUKT/SERVICE",
+    "by": "Von",
+    "madeFrom": "Gemacht aus",
+    "noData": "noch keine Angaben vorhanden",
+    "disclaimer": "Die Informationen über diese Produkt/Service wurden von Freiwilligen bereitgestellt ohne Garantie für ihre Korrektheit.",
+    "TMInfo": "Alle erwähnten Marken gehören ihre jeweiligen Eigentümer*innen."
+	},
 	"landingPage" : {
     "claim":"Eine Produkterweiterung für",
     "menu" : {
