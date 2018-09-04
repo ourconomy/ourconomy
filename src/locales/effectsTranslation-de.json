@@ -85,5 +85,9 @@
         "trademark" : "ourconomy ist zurzeit noch eine eingetragene Marke von Oliver Sendelbach",
         "heading" : "Mach mit"
     }
+  },
+	"effectResultList":{
+		"addEffect":"neues Produkt hinzufügen",
+    "noEntriesFound": "Keine Einträge gefunden"
   }
 }

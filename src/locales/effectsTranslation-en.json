@@ -30,9 +30,9 @@
     "upstreamAmountMissing":"Amount is required"
 	},
 	"effectDetails":{
-		"loadingEffect": "loading entry...",
+		"loadingEffect": "loading entry ...",
 		"back": "back",
-    "category": "Product/Service",
+    "category": "PRODUCT/SERVICE",
     "by": "By",
     "madeFrom": "Made from",
     "noData": "no data entered, yet",
@@ -85,5 +85,8 @@
         "trademark" : "ourconomy is currently  a trade mark of Oliver Sendelbach",
         "heading" : "Let's go."
     }
+  },
+	"effectResultList":{
+		"addEffect":"add a new product"
   }
 }

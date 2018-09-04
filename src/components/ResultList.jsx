@@ -103,7 +103,7 @@ const ResultList = ({ dispatch, waiting, entries, ratings, highlight, onClick,
       <nav className="menu pure-g">
         <NavButton
           key = "back"
-          classname = "pure-u-1-2"
+          classname = "pure-u-1-1"
           icon = "fa fa-plus"
           text = {t("resultlist.addEntry")}
           onClick = {() => {

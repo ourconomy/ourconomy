@@ -1,15 +1,16 @@
-import React    from "react"
-import Actions  from "../Actions"
-import Address  from "./AddressLine"
-import { pure } from "recompose"
+import React    from "react";
+import Actions  from "../Actions";
+import Address  from "./AddressLine";
+import { pure } from "recompose";
 //import Flower   from "./Flower";
 import NavButton from "./NavButton";
 import styled    from "styled-components";
+import i18n      from "../i18n";
+import { translate          } from "react-i18next";
 
-//import { NAMES, CSS_CLASSES } from "../constants/Categories"
 
 
-const ProductResultListElement = ({entry, onClick}) => {
+const ProductResultListElement = ({entry, onClick, t}) => {
   return (
     <li
       key           = { entry.id }
@@ -19,7 +20,7 @@ const ProductResultListElement = ({entry, onClick}) => {
         <div className = "pure-u-23-24">
           <div>
             <span className="category" style={{color:'rgb(255, 221,   0)'}}>
-             Produkt/Service
+             {t("effectDetails.category")}
             </span>
           </div>
           <div>
@@ -33,7 +34,9 @@ const ProductResultListElement = ({entry, onClick}) => {
           </div>
           <div><span className="subtitle">{[
             ((entry.upstreams.length > 0)
-              ? <span>{'\(gemacht aus: '}{entry.upstreams[0].upstreamEffect.label}</span> : null),
+              ? <span>{'\('}
+                {t("effectsTranslation:effectDetails.madeFrom")}{': '}
+                {entry.upstreams[0].upstreamEffect.label}</span> : null),
             ((entry.upstreams.length > 1)
               ? <span>{', '}{entry.upstreams[1].upstreamEffect.label}</span> : null),
             ((entry.upstreams.length > 2)
@@ -60,13 +63,13 @@ const ProductResultListElement = ({entry, onClick}) => {
     </li>)
 }
 
-const ProductResultList = ({ dispatch, waiting, products, onClick }) => {
+const ProductResultList = ({ dispatch, waiting, products, onClick, t }) => {
   let results = products.map( e =>
     <ProductResultListElement
       entry        = { e            }
-      //ratings      = { (e.ratings || []).map(id => ratings[id])}
       key          = { e.id         }
       onClick      = { onClick      }
+      t            = { t }
     />);
 
   return (
@@ -76,13 +79,13 @@ const ProductResultList = ({ dispatch, waiting, products, onClick }) => {
         (results.length > 0)
           ? <ul>{results}</ul>
   //oc: waiting is for entry results which might never stop?
-  //      : (waiting ? 
+  //      : (waiting ?
   //      <p className= "loading">
   //        <span>Produkte werden geladen...</span>
   //      </p>
           : <p className= "no-results">
               <i className= "fa fa-frown-o" />
-              <span>Es konnten keine Produkte gefunden werden</span>
+              <span>{t("effectResultList.noEntriesFound")}</span>
             </p>
   //      )
       }
@@ -90,10 +93,9 @@ const ProductResultList = ({ dispatch, waiting, products, onClick }) => {
       <nav className="menu pure-g">
         <NavButton
           key = "newprod"
-          classname = "pure-u-1-2"
+          classname = "pure-u-1-1"
           icon = "fa fa-plus"
-          //text = {"add new product"}
-          text = "add new product"
+          text = {t("effectResultList.addEffect")}
           onClick = {() => {
             dispatch(Actions.showNewProduct());
           }}
@@ -102,4 +104,4 @@ const ProductResultList = ({ dispatch, waiting, products, onClick }) => {
     </div>)
 }
 
-module.exports = pure(ProductResultList)
+module.exports = translate("effectsTranslation")(pure(ProductResultList))
