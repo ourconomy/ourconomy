@@ -248,7 +248,7 @@ class ProductForm extends Component {
                     placeholder={t("producer")}
                     searchPromptText={t("searchPrompt")}
                     loadingPlaceholder={t("loadingPlaceholder")}
-                    promptTextCreator={ label => t("creatingOptions") + label + t("effectsTranslation:productForm.creatingOptionsEnd")}
+                    promptTextCreator={ label => t("creatingOptions") + label + t("creatingOptionsEnd")}
                   />
                 }
                 />
