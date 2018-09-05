@@ -37,8 +37,15 @@
     "madeFrom": "Gemacht aus",
     "noData": "noch keine Angaben vorhanden",
     "disclaimer": "Die Informationen über diese Produkt/Service wurden von Freiwilligen bereitgestellt ohne Garantie für ihre Korrektheit.",
-    "TMInfo": "Alle erwähnten Marken gehören ihre jeweiligen Eigentümer*innen."
+    "TMInfo": "Alle erwähnten Marken gehören ihren jeweiligen Eigentümer*innen."
 	},
+  "search-results": {
+    "projects-businesses": "Initiativen und Unternehmen",
+    "clickHere": "Klick hier für",
+    "availableEffects": "Produkte und Services",
+    "effects": "Produkte und Dienstleistungen",
+    "availablePlaces": "Initiativen/Unternehmen"
+  },
 	"landingPage" : {
     "claim":"Eine Produkterweiterung für",
     "menu" : {

@@ -39,6 +39,13 @@
     "disclaimer": "The information on this product has been provided by volunteers and comes without any warranty for correctness.",
     "TMInfo": "All trademarks belong to their respective owners."
 	},
+  "search-results": {
+    "projects-businesses": "Projects and businesses",
+    "clickHere": "Click here for",
+    "availableEffects": "products",
+    "effects": "Products and services",
+    "availablePlaces": "initiatives/businesses"
+  },
   "landingPage":{
     "claim":"A product enhancement of",
     "menu" : {
@@ -87,6 +94,7 @@
     }
   },
 	"effectResultList":{
-		"addEffect":"add a new product"
+		"addEffect":"add a new product",
+    "noEntriesFound": "No entries found"
   }
 }

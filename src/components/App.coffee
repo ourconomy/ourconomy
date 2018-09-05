@@ -397,14 +397,14 @@ Main = React.createClass
                         dispatch Actions.showProductSearchResults()
                       ),
                         """
-                        Klick hier für #{resultProducts.length} Produkte
+                        #{t "effectsTranslation:search-results.clickHere"} #{resultProducts.length} #{t "effectsTranslation:search-results.availableEffects"}
                         """
                   #end
 
                   div null,
                     div className: 'group-header',
                       """
-                      Initiativen\\Business:
+                      #{t "effectsTranslation:search-results.projects-businesses"}
                       """
                   React.createElement ResultList,
                     waiting     : waiting_for_search_results
@@ -452,13 +452,13 @@ Main = React.createClass
                         dispatch Actions.showSearchResults()
                       ),
                         """
-                        Klick hier für #{totalEntryNo} Initiativen/Businessprojekte
+                        #{t "effectsTranslation:search-results.clickHere"} #{totalEntryNo} #{t "effectsTranslation:search-results.availablePlaces"}
                         """
                   #end
                   div null,
                     div className: 'group-header',
                       """
-                      Produkte/Services:
+                      #{t "effectsTranslation:search-results.effects"}
                       """
                   React.createElement ProductResultList,
                     waiting     : waiting_for_search_results
